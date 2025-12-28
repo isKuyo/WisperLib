@@ -1058,7 +1058,7 @@ function WisperLib:CreateWindow(Config)
                 })
 
                 local ColorFrameCorner = Create("UICorner", {
-                    CornerRadius = UDim.new(0, 4),
+                    CornerRadius = UDim.new(0, 6),
                     Parent = ColorFrame
                 })
 
@@ -1419,7 +1419,7 @@ function WisperLib:CreateWindow(Config)
                     Parent = ToggleFrame,
                     BackgroundTransparency = 1,
                     Position = UDim2.new(0, 0, 0, 0),
-                    Size = UDim2.new(1, -50, 1, 0),
+                    Size = UDim2.new(1, -75, 1, 0),
                     Text = "",
                     AutoButtonColor = false
                 })
