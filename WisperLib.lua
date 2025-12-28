@@ -9,37 +9,17 @@ local CoreGui = game:GetService("CoreGui")
 local Player = Players.LocalPlayer
 
 local function GetExecutor()
-    local Executors = {
-        {Name = "Synapse X", Check = function() return syn and syn.protect_gui end},
-        {Name = "Script-Ware", Check = function() return identifyexecutor and identifyexecutor():find("Script-Ware") end},
-        {Name = "KRNL", Check = function() return KRNL_LOADED or (identifyexecutor and identifyexecutor():find("KRNL")) end},
-        {Name = "Fluxus", Check = function() return fluxus and fluxus.request end},
-        {Name = "Oxygen U", Check = function() return pebc_execute end},
-        {Name = "Electron", Check = function() return Electron end},
-        {Name = "Comet", Check = function() return Comet end},
-        {Name = "Trigon", Check = function() return TRIGON_EXECUTOR end},
-        {Name = "Delta", Check = function() return Delta end},
-        {Name = "Hydrogen", Check = function() return Hydrogen end},
-        {Name = "Arceus X", Check = function() return Arceus end},
-        {Name = "Solara", Check = function() return Solara end},
-        {Name = "Wave", Check = function() return Wave end},
-        {Name = "Codex", Check = function() return Codex end}
-    }
-
-    if identifyexecutor then
-        local Success, Result = pcall(identifyexecutor)
-        if Success and Result then
-            return Result
+    local Success, Name, Version = pcall(function()
+        return identifyexecutor()
+    end)
+    
+    if Success and Name then
+        if Version then
+            return Name .. " " .. Version
         end
+        return Name
     end
-
-    for _, Executor in ipairs(Executors) do
-        local Success, Result = pcall(Executor.Check)
-        if Success and Result then
-            return Executor.Name
-        end
-    end
-
+    
     return "Unknown"
 end
 
@@ -106,8 +86,8 @@ local Theme = {
     GroupBackground = Color3.fromRGB(22, 25, 30),
     GroupStroke = Color3.fromRGB(26, 30, 36),
     ButtonInactive = Color3.fromRGB(13, 15, 18),
-    GradientColor1 = Color3.fromRGB(181, 208, 251),
-    GradientColor2 = Color3.fromRGB(126, 144, 174),
+    GradientColor1 = Color3.fromRGB(179, 206, 248),
+    GradientColor2 = Color3.fromRGB(125, 143, 172),
     AvatarStroke = Color3.fromRGB(26, 30, 36),
     Accent = Color3.fromRGB(181, 208, 251),
     Text = Color3.fromRGB(255, 255, 255),
