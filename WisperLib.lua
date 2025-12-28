@@ -389,8 +389,8 @@ function WisperLib:CreateWindow(Config)
         Size = UDim2.new(1, 0, 1, -101)
     })
 
-    local ContentInner = Create("Frame", {
-        Name = "ContentInner",
+    local ContentArea = Create("Frame", {
+        Name = "ContentArea",
         Parent = ContentContainer,
         BackgroundTransparency = 1,
         BorderSizePixel = 0,
@@ -400,7 +400,7 @@ function WisperLib:CreateWindow(Config)
 
     PageContainer = Create("Folder", {
         Name = "Pages",
-        Parent = ContentInner
+        Parent = ContentArea
     })
 
     local Footer = Create("Frame", {
@@ -567,12 +567,12 @@ function WisperLib:CreateWindow(Config)
             Name = "LeftColumn",
             Parent = TabPage,
             BackgroundTransparency = 1,
-            BorderSizePixel = 0,
             Size = UDim2.new(0.5, -5, 1, 0),
             CanvasSize = UDim2.new(0, 0, 0, 0),
             AutomaticCanvasSize = Enum.AutomaticSize.Y,
             ScrollBarThickness = 3,
             ScrollBarImageColor3 = Theme.Accent,
+            BorderSizePixel = 0,
             LayoutOrder = 1
         })
 
@@ -586,12 +586,12 @@ function WisperLib:CreateWindow(Config)
             Name = "RightColumn",
             Parent = TabPage,
             BackgroundTransparency = 1,
-            BorderSizePixel = 0,
             Size = UDim2.new(0.5, -5, 1, 0),
             CanvasSize = UDim2.new(0, 0, 0, 0),
             AutomaticCanvasSize = Enum.AutomaticSize.Y,
             ScrollBarThickness = 3,
             ScrollBarImageColor3 = Theme.Accent,
+            BorderSizePixel = 0,
             LayoutOrder = 2
         })
 
@@ -1234,9 +1234,10 @@ function WisperLib:CreateWindow(Config)
                     Parent = ComboboxFrame,
                     BackgroundColor3 = Color3.fromRGB(28, 32, 38),
                     BorderSizePixel = 0,
-                    AnchorPoint = Vector2.new(0.5, 0),
-                    Position = UDim2.new(0.5, 0, 0, 54),
-                    Size = UDim2.new(0, 0, 0, 0),
+                    Position = UDim2.new(0, 0, 0, 54),
+                    Size = UDim2.new(1, 0, 0, 0),
+                    AutomaticSize = Enum.AutomaticSize.Y,
+                    Visible = false,
                     ZIndex = 10,
                     ClipsDescendants = true
                 })
@@ -1273,13 +1274,29 @@ function WisperLib:CreateWindow(Config)
                         ZIndex = 11
                     })
 
-                    local OptionFill = Create("Frame", {
-                        Name = "Fill",
+                    local OptionFillContainer = Create("Frame", {
+                        Name = "FillContainer",
                         Parent = OptionButton,
-                        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-                        BorderSizePixel = 0,
+                        BackgroundTransparency = 1,
                         Position = UDim2.new(0, 4, 0, 2),
                         Size = UDim2.new(1, -8, 1, -4),
+                        ZIndex = 11,
+                        ClipsDescendants = true
+                    })
+
+                    local OptionFillContainerCorner = Create("UICorner", {
+                        CornerRadius = UDim.new(0, 4),
+                        Parent = OptionFillContainer
+                    })
+
+                    local OptionFill = Create("Frame", {
+                        Name = "Fill",
+                        Parent = OptionFillContainer,
+                        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+                        BorderSizePixel = 0,
+                        AnchorPoint = Vector2.new(0.5, 0.5),
+                        Position = UDim2.new(0.5, 0, 0.5, 0),
+                        Size = Selected[Option] and UDim2.new(1, 0, 1, 0) or UDim2.new(0, 0, 1, 0),
                         ZIndex = 11
                     })
 
@@ -1297,8 +1314,6 @@ function WisperLib:CreateWindow(Config)
                         Rotation = 0
                     })
 
-                    OptionFill.Visible = Selected[Option] or false
-
                     local OptionLabel = Create("TextLabel", {
                         Name = "OptionLabel",
                         Parent = OptionButton,
@@ -1307,7 +1322,7 @@ function WisperLib:CreateWindow(Config)
                         Size = UDim2.new(1, -24, 1, 0),
                         Font = Enum.Font.Gotham,
                         Text = Option,
-                        TextColor3 = Selected[Option] and Color3.fromRGB(0, 0, 0) or Theme.Text,
+                        TextColor3 = Selected[Option] and Color3.fromRGB(0, 0, 0) or Theme.SubText,
                         TextSize = 13,
                         TextXAlignment = Enum.TextXAlignment.Left,
                         ZIndex = 12
@@ -1327,8 +1342,13 @@ function WisperLib:CreateWindow(Config)
 
                     OptionButton.MouseButton1Click:Connect(function()
                         Selected[Option] = not Selected[Option]
-                        OptionFill.Visible = Selected[Option]
-                        OptionLabel.TextColor3 = Selected[Option] and Color3.fromRGB(0, 0, 0) or Theme.Text
+                        if Selected[Option] then
+                            Tween(OptionFill, {Size = UDim2.new(1, 0, 1, 0)}, 0.15)
+                            OptionLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+                        else
+                            Tween(OptionFill, {Size = UDim2.new(0, 0, 1, 0)}, 0.15)
+                            OptionLabel.TextColor3 = Theme.SubText
+                        end
                         ComboboxText.Text = GetSelectedText()
 
                         local SelectedItems = {}
@@ -1354,32 +1374,18 @@ function WisperLib:CreateWindow(Config)
 
                 ComboboxFrame.MouseEnter:Connect(function()
                     Tween(ComboboxLabel, {TextColor3 = Theme.Text}, 0.15)
-                    Tween(ComboboxText, {TextColor3 = Theme.Text}, 0.15)
                 end)
 
                 ComboboxFrame.MouseLeave:Connect(function()
                     if not IsOpen then
                         Tween(ComboboxLabel, {TextColor3 = Theme.SubText}, 0.15)
-                        Tween(ComboboxText, {TextColor3 = Theme.SubText}, 0.15)
                     end
                 end)
 
-                local DropdownHeight = #ComboboxConfig.Options * 28 + 8
-
                 ComboboxClickArea.MouseButton1Click:Connect(function()
                     IsOpen = not IsOpen
-                    if IsOpen then
-                        ComboboxDropdown.Visible = true
-                        Tween(ComboboxDropdown, {Size = UDim2.new(1, 0, 0, DropdownHeight)}, 0.2)
-                    else
-                        Tween(ComboboxDropdown, {Size = UDim2.new(0, 0, 0, 0)}, 0.15)
-                        task.delay(0.15, function()
-                            if not IsOpen then
-                                ComboboxDropdown.Visible = false
-                            end
-                        end)
-                    end
-                    Tween(ComboboxIcon, {Rotation = IsOpen and 180 or 0}, 0.15)
+                    ComboboxDropdown.Visible = IsOpen
+                    ComboboxIcon.Rotation = IsOpen and 180 or 0
                 end)
 
                 local ComboboxAPI = {}
