@@ -1,4 +1,3 @@
-print("ks")
 local WisperLib = {}
 
 local Development = true
@@ -1282,6 +1281,8 @@ function WisperLib:CreateWindow(Config)
                 local SatValTargetY = 0
                 local HueTargetY = 0
 
+                local GuiInset = game:GetService("GuiService"):GetGuiInset()
+
                 RunService.RenderStepped:Connect(function()
                     if DraggingSatVal then
                         local MousePos = UserInputService:GetMouseLocation()
@@ -1289,7 +1290,7 @@ function WisperLib:CreateWindow(Config)
                         local BoxSize = SatValBox.AbsoluteSize
 
                         local RelX = math.clamp((MousePos.X - BoxPos.X) / BoxSize.X, 0, 1)
-                        local RelY = math.clamp((MousePos.Y - BoxPos.Y) / BoxSize.Y, 0, 1)
+                        local RelY = math.clamp((MousePos.Y - BoxPos.Y - GuiInset.Y) / BoxSize.Y, 0, 1)
 
                         ColorPickerSat = RelX
                         ColorPickerVal = 1 - RelY
@@ -1304,7 +1305,7 @@ function WisperLib:CreateWindow(Config)
                         local BarPos = HueBar.AbsolutePosition
                         local BarSize = HueBar.AbsoluteSize
 
-                        local RelY = math.clamp((MousePos.Y - BarPos.Y) / BarSize.Y, 0, 1)
+                        local RelY = math.clamp((MousePos.Y - BarPos.Y - GuiInset.Y) / BarSize.Y, 0, 1)
 
                         ColorPickerHue = RelY
                         HueTargetY = RelY
@@ -1330,10 +1331,10 @@ function WisperLib:CreateWindow(Config)
                     if ColorPickerOpen then
                         UpdatePickerPosition()
                         ColorPickerPopup.Visible = true
-                        ColorPickerPopup.Size = UDim2.new(0, 0, 0, 0)
-                        Tween(ColorPickerPopup, {Size = UDim2.new(0, 174, 0, 150)}, 0.2)
+                        ColorPickerPopup.BackgroundTransparency = 1
+                        Tween(ColorPickerPopup, {BackgroundTransparency = 0}, 0.2)
                     else
-                        Tween(ColorPickerPopup, {Size = UDim2.new(0, 0, 0, 0)}, 0.2)
+                        Tween(ColorPickerPopup, {BackgroundTransparency = 1}, 0.2)
                         task.delay(0.2, function()
                             if not ColorPickerOpen then
                                 ColorPickerPopup.Visible = false
