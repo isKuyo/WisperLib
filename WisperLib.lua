@@ -1,3 +1,4 @@
+print("rs")
 local WisperLib = {}
 
 local TweenService = game:GetService("TweenService")
@@ -1959,14 +1960,22 @@ function WisperLib:CreateWindow(Config)
         local ContentWidth = math.max(TitleWidth, DescWidth)
         local NotificationWidth = 50 + ContentWidth + 15
 
-        local NotificationFrame = Create("Frame", {
-            Name = "Notification_" .. NotificationCount,
+        local NotificationHolder = Create("Frame", {
+            Name = "NotificationHolder_" .. NotificationCount,
             Parent = NotificationContainer,
+            BackgroundTransparency = 1,
+            Size = UDim2.new(0, NotificationWidth, 0, 50),
+            LayoutOrder = -NotificationCount,
+            ClipsDescendants = true
+        })
+
+        local NotificationFrame = Create("Frame", {
+            Name = "Notification",
+            Parent = NotificationHolder,
             BackgroundColor3 = Color3.fromRGB(28, 32, 38),
             BorderSizePixel = 0,
-            Position = UDim2.new(0, 350, 0, 0),
-            Size = UDim2.new(0, NotificationWidth, 0, 50),
-            LayoutOrder = -NotificationCount
+            Position = UDim2.new(1, 0, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0)
         })
 
         local NotificationCorner = Create("UICorner", {
@@ -2056,9 +2065,9 @@ function WisperLib:CreateWindow(Config)
         Tween(NotificationFrame, {Position = UDim2.new(0, 0, 0, 0)}, 0.3)
 
         local function CloseNotification()
-            Tween(NotificationFrame, {Position = UDim2.new(0, 350, 0, 0)}, 0.3)
+            Tween(NotificationFrame, {Position = UDim2.new(1, 0, 0, 0)}, 0.3)
             task.delay(0.3, function()
-                NotificationFrame:Destroy()
+                NotificationHolder:Destroy()
             end)
         end
 
