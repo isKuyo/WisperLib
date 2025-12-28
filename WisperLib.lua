@@ -1,4 +1,3 @@
-print("kj")
 local WisperLib = {}
 
 local TweenService = game:GetService("TweenService")
@@ -1932,8 +1931,8 @@ function WisperLib:CreateWindow(Config)
         BackgroundTransparency = 1,
         AnchorPoint = Vector2.new(1, 1),
         Position = UDim2.new(1, -20, 1, -20),
-        Size = UDim2.new(0, 400, 0, 500),
-        ClipsDescendants = false
+        Size = UDim2.new(0, 350, 0, 0),
+        AutomaticSize = Enum.AutomaticSize.Y
     })
 
     local NotificationLayout = Create("UIListLayout", {
@@ -1955,29 +1954,19 @@ function WisperLib:CreateWindow(Config)
 
         NotificationCount = NotificationCount + 1
 
-        local NotificationHolder = Create("Frame", {
-            Name = "NotificationHolder_" .. NotificationCount,
-            Parent = NotificationContainer,
-            BackgroundTransparency = 1,
-            Size = UDim2.new(0, 0, 0, 50),
-            AutomaticSize = Enum.AutomaticSize.X,
-            LayoutOrder = -NotificationCount,
-            ClipsDescendants = true
-        })
+        local TitleWidth = game:GetService("TextService"):GetTextSize(NotifyConfig.Title, 13, Enum.Font.GothamBold, Vector2.new(math.huge, 16)).X
+        local DescWidth = game:GetService("TextService"):GetTextSize(NotifyConfig.Description, 12, Enum.Font.Gotham, Vector2.new(math.huge, 16)).X
+        local ContentWidth = math.max(TitleWidth, DescWidth)
+        local NotificationWidth = 50 + ContentWidth + 15
 
         local NotificationFrame = Create("Frame", {
-            Name = "Notification",
-            Parent = NotificationHolder,
+            Name = "Notification_" .. NotificationCount,
+            Parent = NotificationContainer,
             BackgroundColor3 = Color3.fromRGB(28, 32, 38),
             BorderSizePixel = 0,
-            AnchorPoint = Vector2.new(1, 0),
-            Position = UDim2.new(1, 300, 0, 0),
-            Size = UDim2.new(1, 0, 1, 0)
-        })
-
-        local NotificationPadding = Create("UIPadding", {
-            Parent = NotificationHolder,
-            PaddingRight = UDim.new(0, 15)
+            Position = UDim2.new(0, 350, 0, 0),
+            Size = UDim2.new(0, NotificationWidth, 0, 50),
+            LayoutOrder = -NotificationCount
         })
 
         local NotificationCorner = Create("UICorner", {
@@ -2043,8 +2032,7 @@ function WisperLib:CreateWindow(Config)
             Parent = NotificationFrame,
             BackgroundTransparency = 1,
             Position = UDim2.new(0, 50, 0, 8),
-            Size = UDim2.new(0, 0, 0, 16),
-            AutomaticSize = Enum.AutomaticSize.X,
+            Size = UDim2.new(1, -60, 0, 16),
             Font = Enum.Font.GothamBold,
             Text = NotifyConfig.Title,
             TextColor3 = Theme.Text,
@@ -2057,8 +2045,7 @@ function WisperLib:CreateWindow(Config)
             Parent = NotificationFrame,
             BackgroundTransparency = 1,
             Position = UDim2.new(0, 50, 0, 26),
-            Size = UDim2.new(0, 0, 0, 16),
-            AutomaticSize = Enum.AutomaticSize.X,
+            Size = UDim2.new(1, -60, 0, 16),
             Font = Enum.Font.Gotham,
             Text = NotifyConfig.Description,
             TextColor3 = Theme.SubText,
@@ -2066,12 +2053,12 @@ function WisperLib:CreateWindow(Config)
             TextXAlignment = Enum.TextXAlignment.Left
         })
 
-        Tween(NotificationFrame, {Position = UDim2.new(1, 0, 0, 0)}, 0.3)
+        Tween(NotificationFrame, {Position = UDim2.new(0, 0, 0, 0)}, 0.3)
 
         local function CloseNotification()
-            Tween(NotificationFrame, {Position = UDim2.new(1, 300, 0, 0)}, 0.3)
+            Tween(NotificationFrame, {Position = UDim2.new(0, 350, 0, 0)}, 0.3)
             task.delay(0.3, function()
-                NotificationHolder:Destroy()
+                NotificationFrame:Destroy()
             end)
         end
 
