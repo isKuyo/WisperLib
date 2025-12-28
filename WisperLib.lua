@@ -1,4 +1,4 @@
-print("a")
+print("bbb")
 local WisperLib = {}
 
 local TweenService = game:GetService("TweenService")
@@ -371,8 +371,6 @@ function WisperLib:CreateWindow(Config)
         ClearTextOnFocus = false
     })
 
-    local SearchExpanded = false
-
     local function UpdateSearchPosition()
         local MainPos = MainFrame.AbsolutePosition
         local MainSize = MainFrame.AbsoluteSize
@@ -381,24 +379,25 @@ function WisperLib:CreateWindow(Config)
 
     RunService.RenderStepped:Connect(UpdateSearchPosition)
 
-    local function ExpandSearch()
-        if not SearchExpanded then
-            SearchExpanded = true
-            Tween(SearchContainer, {Size = UDim2.new(0, 200, 0, 36)}, 0.2)
+    local function UpdateSearchSize()
+        local TextWidth = SearchInput.TextBounds.X
+        local MinWidth = 36
+        local Padding = 44
+        local TargetWidth = math.max(MinWidth, TextWidth + Padding)
+        
+        if SearchInput.Text == "" then
+            Tween(SearchContainer, {Size = UDim2.new(0, MinWidth, 0, 36)}, 0.15)
+            Tween(SearchIcon, {ImageColor3 = Theme.SubText}, 0.15)
+        else
+            Tween(SearchContainer, {Size = UDim2.new(0, TargetWidth, 0, 36)}, 0.15)
             Tween(SearchIcon, {ImageColor3 = Theme.Text}, 0.15)
         end
     end
 
-    local function CollapseSearch()
-        if SearchExpanded and SearchInput.Text == "" then
-            SearchExpanded = false
-            Tween(SearchContainer, {Size = UDim2.new(0, 36, 0, 36)}, 0.2)
-            Tween(SearchIcon, {ImageColor3 = Theme.SubText}, 0.15)
-        end
-    end
-
-    SearchInput.Focused:Connect(ExpandSearch)
-    SearchInput.FocusLost:Connect(CollapseSearch)
+    SearchInput:GetPropertyChangedSignal("Text"):Connect(function()
+        UpdateSearchSize()
+        PerformSearch(SearchInput.Text)
+    end)
 
     local function SetTabActive(TabButtonData, IsActive, TabName)
         if IsActive then
@@ -466,10 +465,6 @@ function WisperLib:CreateWindow(Config)
             SelectTabByIndex(FoundTabIndex)
         end
     end
-
-    SearchInput:GetPropertyChangedSignal("Text"):Connect(function()
-        PerformSearch(SearchInput.Text)
-    end)
 
     local function CreateTabButton(Icon, Order, TabName)
         local ButtonContainer = Create("Frame", {
