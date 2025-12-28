@@ -1,4 +1,3 @@
-print("rw")
 local WisperLib = {}
 
 local TweenService = game:GetService("TweenService")
@@ -1924,6 +1923,155 @@ function WisperLib:CreateWindow(Config)
 
     function Window:Toggle()
         ScreenGui.Enabled = not ScreenGui.Enabled
+    end
+
+    local NotificationContainer = Create("Frame", {
+        Name = "NotificationContainer",
+        Parent = ScreenGui,
+        BackgroundTransparency = 1,
+        AnchorPoint = Vector2.new(1, 1),
+        Position = UDim2.new(1, -20, 1, -20),
+        Size = UDim2.new(0, 300, 0, 400),
+        ClipsDescendants = false
+    })
+
+    local NotificationLayout = Create("UIListLayout", {
+        Parent = NotificationContainer,
+        SortOrder = Enum.SortOrder.LayoutOrder,
+        VerticalAlignment = Enum.VerticalAlignment.Bottom,
+        Padding = UDim.new(0, 10)
+    })
+
+    local NotificationCount = 0
+
+    function Window:Notify(NotifyConfig)
+        NotifyConfig = NotifyConfig or {}
+        NotifyConfig.Title = NotifyConfig.Title or "Notification"
+        NotifyConfig.Description = NotifyConfig.Description or ""
+        NotifyConfig.Duration = NotifyConfig.Duration or 4
+        NotifyConfig.Callback = NotifyConfig.Callback or function() end
+
+        NotificationCount = NotificationCount + 1
+
+        local NotificationFrame = Create("Frame", {
+            Name = "Notification_" .. NotificationCount,
+            Parent = NotificationContainer,
+            BackgroundColor3 = Color3.fromRGB(28, 32, 38),
+            BorderSizePixel = 0,
+            Size = UDim2.new(1, 0, 0, 50),
+            LayoutOrder = -NotificationCount,
+            ClipsDescendants = true
+        })
+
+        local NotificationCorner = Create("UICorner", {
+            CornerRadius = UDim.new(0, 8),
+            Parent = NotificationFrame
+        })
+
+        local NotificationStroke = Create("UIStroke", {
+            Parent = NotificationFrame,
+            Color = Theme.GroupStroke,
+            Thickness = 1
+        })
+
+        local CheckContainer = Create("Frame", {
+            Name = "CheckContainer",
+            Parent = NotificationFrame,
+            BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+            BorderSizePixel = 0,
+            Position = UDim2.new(0, 10, 0.5, -15),
+            Size = UDim2.new(0, 30, 0, 30),
+            ClipsDescendants = true
+        })
+
+        local CheckCorner = Create("UICorner", {
+            CornerRadius = UDim.new(0, 6),
+            Parent = CheckContainer
+        })
+
+        local CheckGradient = Create("UIGradient", {
+            Parent = CheckContainer,
+            Color = ColorSequence.new({
+                ColorSequenceKeypoint.new(0, Theme.GradientColor1),
+                ColorSequenceKeypoint.new(1, Theme.GradientColor2)
+            }),
+            Rotation = 0
+        })
+
+        local CheckIcon = Create("ImageLabel", {
+            Name = "CheckIcon",
+            Parent = CheckContainer,
+            BackgroundTransparency = 1,
+            AnchorPoint = Vector2.new(0.5, 0.5),
+            Position = UDim2.new(0.5, 0, 0.5, 0),
+            Size = UDim2.new(0, 20, 0, 20),
+            Image = "rbxassetid://3926305904",
+            ImageRectOffset = Vector2.new(312, 4),
+            ImageRectSize = Vector2.new(24, 24),
+            ImageColor3 = Color3.fromRGB(0, 0, 0)
+        })
+
+        local CheckButton = Create("TextButton", {
+            Name = "CheckButton",
+            Parent = CheckContainer,
+            BackgroundTransparency = 1,
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "",
+            AutoButtonColor = false,
+            ZIndex = 2
+        })
+
+        local NotificationTitle = Create("TextLabel", {
+            Name = "Title",
+            Parent = NotificationFrame,
+            BackgroundTransparency = 1,
+            Position = UDim2.new(0, 50, 0, 8),
+            Size = UDim2.new(1, -60, 0, 16),
+            Font = Enum.Font.GothamBold,
+            Text = NotifyConfig.Title,
+            TextColor3 = Theme.Text,
+            TextSize = 13,
+            TextXAlignment = Enum.TextXAlignment.Left
+        })
+
+        local NotificationDescription = Create("TextLabel", {
+            Name = "Description",
+            Parent = NotificationFrame,
+            BackgroundTransparency = 1,
+            Position = UDim2.new(0, 50, 0, 26),
+            Size = UDim2.new(1, -60, 0, 16),
+            Font = Enum.Font.Gotham,
+            Text = NotifyConfig.Description,
+            TextColor3 = Theme.SubText,
+            TextSize = 12,
+            TextXAlignment = Enum.TextXAlignment.Left
+        })
+
+        NotificationFrame.Size = UDim2.new(1, 0, 0, 0)
+        NotificationFrame.BackgroundTransparency = 1
+        Tween(NotificationFrame, {Size = UDim2.new(1, 0, 0, 50), BackgroundTransparency = 0}, 0.3)
+
+        local function CloseNotification()
+            Tween(NotificationFrame, {Size = UDim2.new(1, 0, 0, 0), BackgroundTransparency = 1}, 0.3)
+            task.delay(0.3, function()
+                NotificationFrame:Destroy()
+            end)
+        end
+
+        CheckButton.MouseButton1Click:Connect(function()
+            NotifyConfig.Callback()
+            CloseNotification()
+        end)
+
+        task.delay(NotifyConfig.Duration, function()
+            if NotificationFrame and NotificationFrame.Parent then
+                CloseNotification()
+            end
+        end)
+
+        return {
+            Close = CloseNotification
+        }
     end
 
     return Window
