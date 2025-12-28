@@ -911,7 +911,7 @@ function WisperLib:CreateWindow(Config)
                     BackgroundColor3 = Theme.SliderBackground,
                     BorderSizePixel = 0,
                     Position = UDim2.new(0, 0, 0, 24),
-                    Size = UDim2.new(1, -60, 0, 12)
+                    Size = UDim2.new(1, -50, 0, 12)
                 })
 
                 local SliderBackgroundCorner = Create("UICorner", {
