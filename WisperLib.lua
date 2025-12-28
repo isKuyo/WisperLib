@@ -25,6 +25,22 @@ end
 
 local ExecutorName = GetExecutor()
 
+local function GetGameName()
+    local Success, Result = pcall(function()
+        local MarketplaceService = game:GetService("MarketplaceService")
+        local Info = MarketplaceService:GetProductInfo(game.PlaceId)
+        return Info.Name
+    end)
+    
+    if Success and Result then
+        return Result
+    end
+    
+    return "Unknown Game"
+end
+
+local GameName = GetGameName()
+
 local function Create(ClassName, Properties)
     local Instance_ = Instance.new(ClassName)
     for Property, Value in pairs(Properties) do
@@ -211,7 +227,7 @@ function WisperLib:CreateWindow(Config)
         Position = UDim2.new(0, 54, 0, 8),
         Size = UDim2.new(0, 200, 0, 18),
         Font = Enum.Font.GothamBold,
-        Text = Config.Title,
+        Text = Player.Name,
         TextColor3 = Theme.Text,
         TextSize = 13,
         TextXAlignment = Enum.TextXAlignment.Left
@@ -287,7 +303,7 @@ function WisperLib:CreateWindow(Config)
                 ColorSequenceKeypoint.new(0, Theme.GradientColor1),
                 ColorSequenceKeypoint.new(1, Theme.GradientColor2)
             }),
-            Rotation = 90,
+            Rotation = 0,
             Enabled = false
         })
 
@@ -403,7 +419,7 @@ function WisperLib:CreateWindow(Config)
         Position = UDim2.new(0, 48, 0, 10),
         Size = UDim2.new(0, 150, 0, 16),
         Font = Enum.Font.GothamBold,
-        Text = "IceWare",
+        Text = "Wisper Hub",
         TextColor3 = Theme.Text,
         TextSize = 13,
         TextXAlignment = Enum.TextXAlignment.Left
@@ -426,7 +442,7 @@ function WisperLib:CreateWindow(Config)
         Position = UDim2.new(0, 48, 0, 28),
         Size = UDim2.new(0, 200, 0, 14),
         Font = Enum.Font.Gotham,
-        Text = "99 Nights In A Forest",
+        Text = GameName,
         TextColor3 = Theme.SubText,
         TextSize = 11,
         TextXAlignment = Enum.TextXAlignment.Left
@@ -624,7 +640,7 @@ function WisperLib:CreateWindow(Config)
                 local ToggleButton = Create("Frame", {
                     Name = "ToggleButton",
                     Parent = ToggleFrame,
-                    BackgroundColor3 = Toggled and Theme.CheckboxEnabled or Theme.CheckboxDisabled,
+                    BackgroundColor3 = Toggled and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(28, 32, 38),
                     BorderSizePixel = 0,
                     Size = UDim2.new(0, 18, 0, 18),
                     Position = UDim2.new(0, 0, 0.5, -9)
@@ -635,6 +651,17 @@ function WisperLib:CreateWindow(Config)
                     Parent = ToggleButton
                 })
 
+                local ToggleGradient = Create("UIGradient", {
+                    Name = "Gradient",
+                    Parent = ToggleButton,
+                    Color = ColorSequence.new({
+                        ColorSequenceKeypoint.new(0, Theme.GradientColor1),
+                        ColorSequenceKeypoint.new(1, Theme.GradientColor2)
+                    }),
+                    Rotation = 0,
+                    Enabled = Toggled
+                })
+
                 local ToggleCheck = Create("ImageLabel", {
                     Name = "ToggleCheck",
                     Parent = ToggleButton,
@@ -642,7 +669,7 @@ function WisperLib:CreateWindow(Config)
                     Position = UDim2.new(0.5, -6, 0.5, -6),
                     Size = UDim2.new(0, 12, 0, 12),
                     Image = "rbxassetid://7743871962",
-                    ImageColor3 = Color3.fromRGB(255, 255, 255),
+                    ImageColor3 = Toggled and Color3.fromRGB(0, 0, 0) or Color3.fromRGB(255, 255, 255),
                     ImageTransparency = Toggled and 0 or 1
                 })
 
@@ -669,7 +696,15 @@ function WisperLib:CreateWindow(Config)
                 })
 
                 local function UpdateToggle()
-                    Tween(ToggleButton, {BackgroundColor3 = Toggled and Theme.CheckboxEnabled or Theme.CheckboxDisabled}, 0.15)
+                    if Toggled then
+                        ToggleButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        ToggleGradient.Enabled = true
+                        ToggleCheck.ImageColor3 = Color3.fromRGB(0, 0, 0)
+                    else
+                        ToggleGradient.Enabled = false
+                        ToggleButton.BackgroundColor3 = Color3.fromRGB(28, 32, 38)
+                        ToggleCheck.ImageColor3 = Color3.fromRGB(255, 255, 255)
+                    end
                     Tween(ToggleCheck, {ImageTransparency = Toggled and 0 or 1}, 0.15)
                     ToggleConfig.Callback(Toggled)
                 end
@@ -772,8 +807,8 @@ function WisperLib:CreateWindow(Config)
                 local SliderFillGradient = Create("UIGradient", {
                     Parent = SliderFill,
                     Color = ColorSequence.new({
-                        ColorSequenceKeypoint.new(0, Color3.fromRGB(90, 130, 170)),
-                        ColorSequenceKeypoint.new(1, Color3.fromRGB(120, 160, 200))
+                        ColorSequenceKeypoint.new(0, Color3.fromRGB(184, 212, 255)),
+                        ColorSequenceKeypoint.new(1, Color3.fromRGB(126, 144, 174))
                     }),
                     Rotation = 0
                 })
