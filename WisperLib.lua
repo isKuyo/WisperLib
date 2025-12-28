@@ -1236,7 +1236,6 @@ function WisperLib:CreateWindow(Config)
                     BorderSizePixel = 0,
                     Position = UDim2.new(0, 0, 0, 54),
                     Size = UDim2.new(1, 0, 0, 0),
-                    AutomaticSize = Enum.AutomaticSize.Y,
                     Visible = false,
                     ZIndex = 10,
                     ClipsDescendants = true
@@ -1372,20 +1371,35 @@ function WisperLib:CreateWindow(Config)
                     AutoButtonColor = false
                 })
 
-                ComboboxFrame.MouseEnter:Connect(function()
+                ComboboxButton.MouseEnter:Connect(function()
                     Tween(ComboboxLabel, {TextColor3 = Theme.Text}, 0.15)
+                    Tween(ComboboxText, {TextColor3 = Theme.Text}, 0.15)
                 end)
 
-                ComboboxFrame.MouseLeave:Connect(function()
+                ComboboxButton.MouseLeave:Connect(function()
                     if not IsOpen then
                         Tween(ComboboxLabel, {TextColor3 = Theme.SubText}, 0.15)
+                        Tween(ComboboxText, {TextColor3 = Theme.SubText}, 0.15)
                     end
                 end)
 
+                local DropdownHeight = #ComboboxConfig.Options * 28 + 8
+
                 ComboboxClickArea.MouseButton1Click:Connect(function()
                     IsOpen = not IsOpen
-                    ComboboxDropdown.Visible = IsOpen
-                    ComboboxIcon.Rotation = IsOpen and 180 or 0
+                    if IsOpen then
+                        ComboboxDropdown.Visible = true
+                        ComboboxDropdown.Size = UDim2.new(1, 0, 0, 0)
+                        Tween(ComboboxDropdown, {Size = UDim2.new(1, 0, 0, DropdownHeight)}, 0.15)
+                    else
+                        Tween(ComboboxDropdown, {Size = UDim2.new(1, 0, 0, 0)}, 0.15)
+                        task.delay(0.15, function()
+                            if not IsOpen then
+                                ComboboxDropdown.Visible = false
+                            end
+                        end)
+                    end
+                    Tween(ComboboxIcon, {Rotation = IsOpen and 180 or 0}, 0.15)
                 end)
 
                 local ComboboxAPI = {}
