@@ -291,7 +291,10 @@ function WisperLib:CreateWindow(Config)
 
     MainFrame:GetPropertyChangedSignal("AbsolutePosition"):Connect(UpdateNavPosition)
     MainFrame:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateNavPosition)
-    task.defer(UpdateNavPosition)
+    task.spawn(function()
+        task.wait()
+        UpdateNavPosition()
+    end)
 
     local NavContainerCorner = Create("UICorner", {
         CornerRadius = UDim.new(0, 16),
@@ -584,6 +587,7 @@ function WisperLib:CreateWindow(Config)
     UserInputService.InputBegan:Connect(function(Input, GameProcessed)
         if not GameProcessed and Input.KeyCode == Config.KeyBind then
             ScreenGui.Enabled = not ScreenGui.Enabled
+            NavContainer.Visible = ScreenGui.Enabled
         end
     end)
 
