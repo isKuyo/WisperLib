@@ -1,4 +1,3 @@
-print("rssw")
 local WisperLib = {}
 
 local TweenService = game:GetService("TweenService")
@@ -159,7 +158,8 @@ function WisperLib:CreateWindow(Config)
         Name = ScreenGuiName,
         Parent = CoreGui,
         ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
-        ResetOnSpawn = false
+        ResetOnSpawn = false,
+        DisplayOrder = -1
     })
 
     local MainFrame = Create("Frame", {
