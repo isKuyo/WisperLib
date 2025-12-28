@@ -1036,13 +1036,297 @@ function WisperLib:CreateWindow(Config)
                     Parent = ToggleFrame,
                     BackgroundTransparency = 1,
                     Position = UDim2.new(0, 28, 0, 0),
-                    Size = UDim2.new(1, -78, 1, 0),
+                    Size = UDim2.new(1, -100, 1, 0),
                     Font = Enum.Font.GothamMedium,
                     Text = ToggleConfig.Name,
                     TextColor3 = Toggled and Theme.Text or Theme.SubText,
                     TextSize = 14,
                     TextXAlignment = Enum.TextXAlignment.Left
                 })
+
+                local CurrentColor = ToggleConfig.Color or Color3.fromRGB(255, 255, 255)
+                local ColorPickerOpen = false
+
+                local ColorFrame = Create("Frame", {
+                    Name = "ColorFrame",
+                    Parent = ToggleFrame,
+                    BackgroundColor3 = CurrentColor,
+                    BorderSizePixel = 0,
+                    AnchorPoint = Vector2.new(1, 0.5),
+                    Position = UDim2.new(1, -50, 0.5, 0),
+                    Size = UDim2.new(0, 20, 0, 20)
+                })
+
+                local ColorFrameCorner = Create("UICorner", {
+                    CornerRadius = UDim.new(0, 4),
+                    Parent = ColorFrame
+                })
+
+                local ColorFrameButton = Create("TextButton", {
+                    Name = "ColorFrameButton",
+                    Parent = ColorFrame,
+                    BackgroundTransparency = 1,
+                    Size = UDim2.new(1, 0, 1, 0),
+                    Text = "",
+                    AutoButtonColor = false,
+                    ZIndex = 2
+                })
+
+                local ColorPickerPopup = Create("Frame", {
+                    Name = "ColorPickerPopup",
+                    Parent = ScreenGui,
+                    BackgroundColor3 = Color3.fromRGB(28, 32, 38),
+                    BorderSizePixel = 0,
+                    Size = UDim2.new(0, 180, 0, 150),
+                    Visible = false,
+                    ZIndex = 100
+                })
+
+                local ColorPickerCorner = Create("UICorner", {
+                    CornerRadius = UDim.new(0, 8),
+                    Parent = ColorPickerPopup
+                })
+
+                local ColorPickerStroke = Create("UIStroke", {
+                    Parent = ColorPickerPopup,
+                    Color = Theme.GroupStroke,
+                    Thickness = 1
+                })
+
+                local ColorPickerHue = 0
+                local ColorPickerSat = 1
+                local ColorPickerVal = 1
+
+                local SatValBox = Create("Frame", {
+                    Name = "SatValBox",
+                    Parent = ColorPickerPopup,
+                    BackgroundColor3 = Color3.fromHSV(ColorPickerHue, 1, 1),
+                    BorderSizePixel = 0,
+                    Position = UDim2.new(0, 10, 0, 10),
+                    Size = UDim2.new(0, 130, 0, 130),
+                    ZIndex = 101
+                })
+
+                local SatValCorner = Create("UICorner", {
+                    CornerRadius = UDim.new(0, 4),
+                    Parent = SatValBox
+                })
+
+                local WhiteGradient = Create("UIGradient", {
+                    Parent = SatValBox,
+                    Color = ColorSequence.new({
+                        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+                        ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))
+                    }),
+                    Transparency = NumberSequence.new({
+                        NumberSequenceKeypoint.new(0, 0),
+                        NumberSequenceKeypoint.new(1, 1)
+                    }),
+                    Rotation = 0
+                })
+
+                local BlackOverlay = Create("Frame", {
+                    Name = "BlackOverlay",
+                    Parent = SatValBox,
+                    BackgroundColor3 = Color3.fromRGB(0, 0, 0),
+                    BackgroundTransparency = 0,
+                    BorderSizePixel = 0,
+                    Size = UDim2.new(1, 0, 1, 0),
+                    ZIndex = 102
+                })
+
+                local BlackOverlayCorner = Create("UICorner", {
+                    CornerRadius = UDim.new(0, 4),
+                    Parent = BlackOverlay
+                })
+
+                local BlackGradient = Create("UIGradient", {
+                    Parent = BlackOverlay,
+                    Color = ColorSequence.new({
+                        ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
+                        ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
+                    }),
+                    Transparency = NumberSequence.new({
+                        NumberSequenceKeypoint.new(0, 1),
+                        NumberSequenceKeypoint.new(1, 0)
+                    }),
+                    Rotation = 90
+                })
+
+                local SatValCursor = Create("Frame", {
+                    Name = "SatValCursor",
+                    Parent = SatValBox,
+                    BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+                    BorderSizePixel = 0,
+                    AnchorPoint = Vector2.new(0.5, 0.5),
+                    Position = UDim2.new(1, 0, 0, 0),
+                    Size = UDim2.new(0, 10, 0, 10),
+                    ZIndex = 104
+                })
+
+                local SatValCursorCorner = Create("UICorner", {
+                    CornerRadius = UDim.new(1, 0),
+                    Parent = SatValCursor
+                })
+
+                local SatValCursorStroke = Create("UIStroke", {
+                    Parent = SatValCursor,
+                    Color = Color3.fromRGB(0, 0, 0),
+                    Thickness = 2
+                })
+
+                local HueBar = Create("Frame", {
+                    Name = "HueBar",
+                    Parent = ColorPickerPopup,
+                    BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+                    BorderSizePixel = 0,
+                    Position = UDim2.new(0, 150, 0, 10),
+                    Size = UDim2.new(0, 20, 0, 130),
+                    ZIndex = 101
+                })
+
+                local HueBarCorner = Create("UICorner", {
+                    CornerRadius = UDim.new(0, 4),
+                    Parent = HueBar
+                })
+
+                local HueGradient = Create("UIGradient", {
+                    Parent = HueBar,
+                    Color = ColorSequence.new({
+                        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0)),
+                        ColorSequenceKeypoint.new(0.167, Color3.fromRGB(255, 255, 0)),
+                        ColorSequenceKeypoint.new(0.333, Color3.fromRGB(0, 255, 0)),
+                        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(0, 255, 255)),
+                        ColorSequenceKeypoint.new(0.667, Color3.fromRGB(0, 0, 255)),
+                        ColorSequenceKeypoint.new(0.833, Color3.fromRGB(255, 0, 255)),
+                        ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 0, 0))
+                    }),
+                    Rotation = 90
+                })
+
+                local HueCursor = Create("Frame", {
+                    Name = "HueCursor",
+                    Parent = HueBar,
+                    BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+                    BorderSizePixel = 0,
+                    AnchorPoint = Vector2.new(0.5, 0.5),
+                    Position = UDim2.new(0.5, 0, 0, 0),
+                    Size = UDim2.new(0, 16, 0, 8),
+                    ZIndex = 104
+                })
+
+                local HueCursorCorner = Create("UICorner", {
+                    CornerRadius = UDim.new(0, 3),
+                    Parent = HueCursor
+                })
+
+                local HueCursorStroke = Create("UIStroke", {
+                    Parent = HueCursor,
+                    Color = Color3.fromRGB(0, 0, 0),
+                    Thickness = 1
+                })
+
+                local function UpdateColorFromHSV()
+                    CurrentColor = Color3.fromHSV(ColorPickerHue, ColorPickerSat, ColorPickerVal)
+                    ColorFrame.BackgroundColor3 = CurrentColor
+                    SatValBox.BackgroundColor3 = Color3.fromHSV(ColorPickerHue, 1, 1)
+                    if ToggleConfig.ColorCallback then
+                        ToggleConfig.ColorCallback(CurrentColor)
+                    end
+                end
+
+                local function UpdatePickerPosition()
+                    local ColorFramePos = ColorFrame.AbsolutePosition
+                    local ColorFrameSize = ColorFrame.AbsoluteSize
+                    ColorPickerPopup.Position = UDim2.new(0, ColorFramePos.X - 190, 0, ColorFramePos.Y - 65)
+                end
+
+                local DraggingSatVal = false
+                local DraggingHue = false
+
+                SatValBox.InputBegan:Connect(function(Input)
+                    if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+                        DraggingSatVal = true
+                    end
+                end)
+
+                SatValBox.InputEnded:Connect(function(Input)
+                    if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+                        DraggingSatVal = false
+                    end
+                end)
+
+                HueBar.InputBegan:Connect(function(Input)
+                    if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+                        DraggingHue = true
+                    end
+                end)
+
+                HueBar.InputEnded:Connect(function(Input)
+                    if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+                        DraggingHue = false
+                    end
+                end)
+
+                UserInputService.InputEnded:Connect(function(Input)
+                    if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+                        DraggingSatVal = false
+                        DraggingHue = false
+                    end
+                end)
+
+                RunService.RenderStepped:Connect(function()
+                    if DraggingSatVal then
+                        local MousePos = UserInputService:GetMouseLocation()
+                        local BoxPos = SatValBox.AbsolutePosition
+                        local BoxSize = SatValBox.AbsoluteSize
+
+                        local RelX = math.clamp((MousePos.X - BoxPos.X) / BoxSize.X, 0, 1)
+                        local RelY = math.clamp((MousePos.Y - BoxPos.Y - 36) / BoxSize.Y, 0, 1)
+
+                        ColorPickerSat = RelX
+                        ColorPickerVal = 1 - RelY
+
+                        local TargetPos = UDim2.new(RelX, 0, RelY, 0)
+                        Tween(SatValCursor, {Position = TargetPos}, 0.05)
+                        UpdateColorFromHSV()
+                    end
+
+                    if DraggingHue then
+                        local MousePos = UserInputService:GetMouseLocation()
+                        local BarPos = HueBar.AbsolutePosition
+                        local BarSize = HueBar.AbsoluteSize
+
+                        local RelY = math.clamp((MousePos.Y - BarPos.Y - 36) / BarSize.Y, 0, 1)
+
+                        ColorPickerHue = RelY
+
+                        local TargetPos = UDim2.new(0.5, 0, RelY, 0)
+                        Tween(HueCursor, {Position = TargetPos}, 0.05)
+                        UpdateColorFromHSV()
+                    end
+
+                    if ColorPickerOpen then
+                        UpdatePickerPosition()
+                    end
+                end)
+
+                ColorFrameButton.MouseButton1Click:Connect(function()
+                    ColorPickerOpen = not ColorPickerOpen
+                    if ColorPickerOpen then
+                        UpdatePickerPosition()
+                        ColorPickerPopup.Visible = true
+                        ColorPickerPopup.Size = UDim2.new(0, 0, 0, 0)
+                        Tween(ColorPickerPopup, {Size = UDim2.new(0, 180, 0, 150)}, 0.2)
+                    else
+                        Tween(ColorPickerPopup, {Size = UDim2.new(0, 0, 0, 0)}, 0.2)
+                        task.delay(0.2, function()
+                            if not ColorPickerOpen then
+                                ColorPickerPopup.Visible = false
+                            end
+                        end)
+                    end
+                end)
 
                 local KeybindFrame = Create("Frame", {
                     Name = "KeybindFrame",
@@ -1179,6 +1463,22 @@ function WisperLib:CreateWindow(Config)
 
                 function ToggleAPI:GetKeybind()
                     return CurrentKeybind
+                end
+
+                function ToggleAPI:SetColor(Color)
+                    CurrentColor = Color
+                    ColorFrame.BackgroundColor3 = Color
+                    local H, S, V = Color:ToHSV()
+                    ColorPickerHue = H
+                    ColorPickerSat = S
+                    ColorPickerVal = V
+                    SatValCursor.Position = UDim2.new(S, 0, 1 - V, 0)
+                    HueCursor.Position = UDim2.new(0.5, 0, H, 0)
+                    SatValBox.BackgroundColor3 = Color3.fromHSV(H, 1, 1)
+                end
+
+                function ToggleAPI:GetColor()
+                    return CurrentColor
                 end
 
                 return ToggleAPI
