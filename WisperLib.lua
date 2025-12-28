@@ -1065,10 +1065,36 @@ function WisperLib:CreateWindow(Config)
                 local CurrentKeybind = nil
                 local WaitingForKey = false
 
+                local function UpdateToggle()
+                    if Toggled then
+                        Tween(ToggleFill, {Size = UDim2.new(1, 0, 1, 0)}, 0.15)
+                        ToggleCheck.ImageColor3 = Color3.fromRGB(0, 0, 0)
+                        ToggleLabel.TextColor3 = Theme.Text
+                    else
+                        Tween(ToggleFill, {Size = UDim2.new(0, 0, 0, 0)}, 0.15)
+                        ToggleCheck.ImageColor3 = Color3.fromRGB(255, 255, 255)
+                        ToggleLabel.TextColor3 = Theme.SubText
+                    end
+                    Tween(ToggleCheck, {ImageTransparency = Toggled and 0 or 1}, 0.1)
+                    ToggleConfig.Callback(Toggled)
+                end
+
                 KeybindButton.MouseButton1Click:Connect(function()
                     WaitingForKey = true
                     KeybindText.Text = "..."
                     KeybindText.TextColor3 = Theme.Text
+                end)
+
+                KeybindFrame.MouseEnter:Connect(function()
+                    if not WaitingForKey then
+                        Tween(KeybindText, {TextColor3 = Theme.Text}, 0.15)
+                    end
+                end)
+
+                KeybindFrame.MouseLeave:Connect(function()
+                    if not WaitingForKey then
+                        Tween(KeybindText, {TextColor3 = Theme.SubText}, 0.15)
+                    end
                 end)
 
                 local KeybindConnection
@@ -1107,20 +1133,6 @@ function WisperLib:CreateWindow(Config)
                         Tween(ToggleLabel, {TextColor3 = Theme.SubText}, 0.15)
                     end
                 end)
-
-                local function UpdateToggle()
-                    if Toggled then
-                        Tween(ToggleFill, {Size = UDim2.new(1, 0, 1, 0)}, 0.15)
-                        ToggleCheck.ImageColor3 = Color3.fromRGB(0, 0, 0)
-                        ToggleLabel.TextColor3 = Theme.Text
-                    else
-                        Tween(ToggleFill, {Size = UDim2.new(0, 0, 0, 0)}, 0.15)
-                        ToggleCheck.ImageColor3 = Color3.fromRGB(255, 255, 255)
-                        ToggleLabel.TextColor3 = Theme.SubText
-                    end
-                    Tween(ToggleCheck, {ImageTransparency = Toggled and 0 or 1}, 0.1)
-                    ToggleConfig.Callback(Toggled)
-                end
 
                 ToggleClickArea.MouseButton1Click:Connect(function()
                     Toggled = not Toggled
@@ -1841,9 +1853,9 @@ function WisperLib:CreateWindow(Config)
                 local ButtonContainer = Create("Frame", {
                     Name = "ButtonContainer",
                     Parent = ButtonFrame,
-                    BackgroundColor3 = Theme.InputBackground,
+                    BackgroundColor3 = Color3.fromRGB(28, 32, 38),
                     BorderSizePixel = 0,
-                    Size = UDim2.new(1, 0, 0, 28)
+                    Size = UDim2.new(1, 0, 0, 30)
                 })
 
                 local ButtonContainerCorner = Create("UICorner", {
@@ -1879,7 +1891,7 @@ function WisperLib:CreateWindow(Config)
 
                 ButtonClickArea.MouseLeave:Connect(function()
                     Tween(ButtonText, {TextColor3 = Theme.SubText}, 0.15)
-                    Tween(ButtonContainer, {BackgroundColor3 = Theme.InputBackground}, 0.15)
+                    Tween(ButtonContainer, {BackgroundColor3 = Color3.fromRGB(28, 32, 38)}, 0.15)
                 end)
 
                 ButtonClickArea.MouseButton1Click:Connect(function()
