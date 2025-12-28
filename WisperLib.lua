@@ -275,15 +275,23 @@ function WisperLib:CreateWindow(Config)
 
     local NavContainer = Create("Frame", {
         Name = "NavContainer",
-        Parent = MainFrame,
+        Parent = ScreenGui,
         BackgroundColor3 = Theme.ButtonInactive,
         AnchorPoint = Vector2.new(0.5, 0),
-        Position = UDim2.new(0.5, 0, 1, -16),
+        Position = UDim2.new(0, 0, 0, 0),
         Size = UDim2.new(0, 0, 0, 32),
-        AutomaticSize = Enum.AutomaticSize.X,
-        ClipsDescendants = true,
-        ZIndex = 5
+        AutomaticSize = Enum.AutomaticSize.X
     })
+
+    local function UpdateNavPosition()
+        local MainPos = MainFrame.AbsolutePosition
+        local MainSize = MainFrame.AbsoluteSize
+        NavContainer.Position = UDim2.new(0, MainPos.X + MainSize.X / 2, 0, MainPos.Y + MainSize.Y + 10)
+    end
+
+    MainFrame:GetPropertyChangedSignal("AbsolutePosition"):Connect(UpdateNavPosition)
+    MainFrame:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateNavPosition)
+    task.defer(UpdateNavPosition)
 
     local NavContainerCorner = Create("UICorner", {
         CornerRadius = UDim.new(0, 16),
