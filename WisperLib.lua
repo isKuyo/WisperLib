@@ -271,13 +271,11 @@ function WisperLib:CreateWindow(Config)
         if IsActive then
             TabButtonData.Icon.ImageTransparency = 0
             TabButtonData.Icon.ImageColor3 = Color3.fromRGB(0, 0, 0)
-            TabButtonData.Container.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            TabButtonData.Gradient.Enabled = true
+            Tween(TabButtonData.Fill, {Size = UDim2.new(1, 0, 1, 0)}, 0.2)
         else
             TabButtonData.Icon.ImageTransparency = 0.5
             TabButtonData.Icon.ImageColor3 = Theme.Text
-            TabButtonData.Gradient.Enabled = false
-            TabButtonData.Container.BackgroundColor3 = Theme.ButtonInactive
+            Tween(TabButtonData.Fill, {Size = UDim2.new(0, 0, 0, 0)}, 0.2)
         end
     end
 
@@ -288,7 +286,8 @@ function WisperLib:CreateWindow(Config)
             BackgroundColor3 = Theme.ButtonInactive,
             BorderSizePixel = 0,
             Size = UDim2.new(0, 32, 0, 32),
-            LayoutOrder = Order
+            LayoutOrder = Order,
+            ClipsDescendants = true
         })
 
         local ButtonCorner = Create("UICorner", {
@@ -296,15 +295,29 @@ function WisperLib:CreateWindow(Config)
             Parent = ButtonContainer
         })
 
-        local ButtonGradient = Create("UIGradient", {
-            Name = "Gradient",
+        local ButtonFill = Create("Frame", {
+            Name = "Fill",
             Parent = ButtonContainer,
+            BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+            BorderSizePixel = 0,
+            AnchorPoint = Vector2.new(0.5, 0.5),
+            Position = UDim2.new(0.5, 0, 0.5, 0),
+            Size = UDim2.new(0, 0, 0, 0)
+        })
+
+        local ButtonFillCorner = Create("UICorner", {
+            CornerRadius = UDim.new(0, 6),
+            Parent = ButtonFill
+        })
+
+        local ButtonFillGradient = Create("UIGradient", {
+            Name = "Gradient",
+            Parent = ButtonFill,
             Color = ColorSequence.new({
                 ColorSequenceKeypoint.new(0, Theme.GradientColor1),
                 ColorSequenceKeypoint.new(1, Theme.GradientColor2)
             }),
-            Rotation = 0,
-            Enabled = false
+            Rotation = 0
         })
 
         local ButtonIcon = Create("ImageLabel", {
@@ -316,7 +329,8 @@ function WisperLib:CreateWindow(Config)
             Size = UDim2.new(0, 16, 0, 16),
             Image = Icon,
             ImageColor3 = Theme.Text,
-            ImageTransparency = 0.5
+            ImageTransparency = 0.5,
+            ZIndex = 2
         })
 
         local Button = Create("TextButton", {
@@ -325,12 +339,13 @@ function WisperLib:CreateWindow(Config)
             BackgroundTransparency = 1,
             Size = UDim2.new(1, 0, 1, 0),
             Text = "",
-            AutoButtonColor = false
+            AutoButtonColor = false,
+            ZIndex = 3
         })
 
         local TabButtonData = {
             Container = ButtonContainer,
-            Gradient = ButtonGradient,
+            Fill = ButtonFill,
             Icon = ButtonIcon,
             ClickArea = Button
         }
@@ -528,15 +543,49 @@ function WisperLib:CreateWindow(Config)
             Name = "TabPage_" .. TabConfig.Name,
             Parent = PageContainer,
             BackgroundTransparency = 1,
-            Size = UDim2.new(1, 0, 1, 0),
+            Size = UDim2.new(1, 0, 0, 0),
+            AutomaticSize = Enum.AutomaticSize.Y,
             Visible = false
         })
 
         local TabPageLayout = Create("UIListLayout", {
             Parent = TabPage,
+            FillDirection = Enum.FillDirection.Horizontal,
             SortOrder = Enum.SortOrder.LayoutOrder,
             Padding = UDim.new(0, 10)
         })
+
+        local LeftColumn = Create("Frame", {
+            Name = "LeftColumn",
+            Parent = TabPage,
+            BackgroundTransparency = 1,
+            Size = UDim2.new(0, 290, 0, 0),
+            AutomaticSize = Enum.AutomaticSize.Y,
+            LayoutOrder = 1
+        })
+
+        local LeftColumnLayout = Create("UIListLayout", {
+            Parent = LeftColumn,
+            SortOrder = Enum.SortOrder.LayoutOrder,
+            Padding = UDim.new(0, 10)
+        })
+
+        local RightColumn = Create("Frame", {
+            Name = "RightColumn",
+            Parent = TabPage,
+            BackgroundTransparency = 1,
+            Size = UDim2.new(0, 290, 0, 0),
+            AutomaticSize = Enum.AutomaticSize.Y,
+            LayoutOrder = 2
+        })
+
+        local RightColumnLayout = Create("UIListLayout", {
+            Parent = RightColumn,
+            SortOrder = Enum.SortOrder.LayoutOrder,
+            Padding = UDim.new(0, 10)
+        })
+
+        local GroupCount = 0
 
         table.insert(Tabs, {ButtonData = TabButtonData, Page = TabPage})
         table.insert(TabButtons, TabButtonData)
@@ -564,14 +613,19 @@ function WisperLib:CreateWindow(Config)
             GroupConfig = GroupConfig or {}
             GroupConfig.Name = GroupConfig.Name or "Group"
             GroupConfig.Icon = GroupConfig.Icon or "rbxassetid://7733960981"
+            GroupConfig.Column = GroupConfig.Column or "Left"
+
+            GroupCount = GroupCount + 1
+            local TargetColumn = GroupConfig.Column == "Right" and RightColumn or LeftColumn
 
             local GroupFrame = Create("Frame", {
                 Name = "Group_" .. GroupConfig.Name,
-                Parent = TabPage,
+                Parent = TargetColumn,
                 BackgroundColor3 = Theme.GroupBackground,
                 BorderSizePixel = 0,
                 Size = UDim2.new(1, 0, 0, 40),
-                AutomaticSize = Enum.AutomaticSize.Y
+                AutomaticSize = Enum.AutomaticSize.Y,
+                LayoutOrder = GroupCount
             })
 
             local GroupCorner = Create("UICorner", {
@@ -696,10 +750,10 @@ function WisperLib:CreateWindow(Config)
                     BackgroundTransparency = 1,
                     Position = UDim2.new(0, 28, 0, 0),
                     Size = UDim2.new(1, -28, 1, 0),
-                    Font = Enum.Font.Gotham,
+                    Font = Enum.Font.GothamMedium,
                     Text = ToggleConfig.Name,
-                    TextColor3 = Theme.Text,
-                    TextSize = 12,
+                    TextColor3 = Toggled and Theme.Text or Theme.SubText,
+                    TextSize = 13,
                     TextXAlignment = Enum.TextXAlignment.Left
                 })
 
@@ -712,15 +766,29 @@ function WisperLib:CreateWindow(Config)
                     AutoButtonColor = false
                 })
 
+                ToggleClickArea.MouseEnter:Connect(function()
+                    if not Toggled then
+                        Tween(ToggleLabel, {TextColor3 = Theme.Text}, 0.15)
+                    end
+                end)
+
+                ToggleClickArea.MouseLeave:Connect(function()
+                    if not Toggled then
+                        Tween(ToggleLabel, {TextColor3 = Theme.SubText}, 0.15)
+                    end
+                end)
+
                 local function UpdateToggle()
                     if Toggled then
                         ToggleButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
                         ToggleGradient.Enabled = true
                         ToggleCheck.ImageColor3 = Color3.fromRGB(0, 0, 0)
+                        ToggleLabel.TextColor3 = Theme.Text
                     else
                         ToggleGradient.Enabled = false
                         ToggleButton.BackgroundColor3 = Color3.fromRGB(28, 32, 38)
                         ToggleCheck.ImageColor3 = Color3.fromRGB(255, 255, 255)
+                        ToggleLabel.TextColor3 = Theme.SubText
                     end
                     Tween(ToggleCheck, {ImageTransparency = Toggled and 0 or 1}, 0.15)
                     ToggleConfig.Callback(Toggled)
@@ -764,7 +832,7 @@ function WisperLib:CreateWindow(Config)
                     Name = "Slider_" .. SliderConfig.Name,
                     Parent = GroupContent,
                     BackgroundTransparency = 1,
-                    Size = UDim2.new(1, 0, 0, 45)
+                    Size = UDim2.new(1, 0, 0, 50)
                 })
 
                 local SliderLabel = Create("TextLabel", {
@@ -776,7 +844,7 @@ function WisperLib:CreateWindow(Config)
                     Font = Enum.Font.Gotham,
                     Text = SliderConfig.Name,
                     TextColor3 = Theme.SubText,
-                    TextSize = 12,
+                    TextSize = 13,
                     TextXAlignment = Enum.TextXAlignment.Left
                 })
 
@@ -789,7 +857,7 @@ function WisperLib:CreateWindow(Config)
                     Font = Enum.Font.GothamBold,
                     Text = tostring(Value) .. SliderConfig.Suffix,
                     TextColor3 = Theme.Text,
-                    TextSize = 12,
+                    TextSize = 13,
                     TextXAlignment = Enum.TextXAlignment.Right
                 })
 
@@ -798,8 +866,8 @@ function WisperLib:CreateWindow(Config)
                     Parent = SliderFrame,
                     BackgroundColor3 = Theme.SliderBackground,
                     BorderSizePixel = 0,
-                    Position = UDim2.new(0, 0, 0, 22),
-                    Size = UDim2.new(1, 0, 0, 10)
+                    Position = UDim2.new(0, 0, 0, 24),
+                    Size = UDim2.new(1, 0, 0, 12)
                 })
 
                 local SliderBackgroundCorner = Create("UICorner", {
@@ -850,8 +918,8 @@ function WisperLib:CreateWindow(Config)
                     Name = "SliderClickArea",
                     Parent = SliderFrame,
                     BackgroundTransparency = 1,
-                    Position = UDim2.new(0, 0, 0, 18),
-                    Size = UDim2.new(1, 0, 0, 18),
+                    Position = UDim2.new(0, 0, 0, 20),
+                    Size = UDim2.new(1, 0, 0, 22),
                     Text = "",
                     AutoButtonColor = false
                 })
