@@ -8,6 +8,43 @@ local CoreGui = game:GetService("CoreGui")
 
 local Player = Players.LocalPlayer
 
+local function GetExecutor()
+    local Executors = {
+        {Name = "Synapse X", Check = function() return syn and syn.protect_gui end},
+        {Name = "Script-Ware", Check = function() return identifyexecutor and identifyexecutor():find("Script-Ware") end},
+        {Name = "KRNL", Check = function() return KRNL_LOADED or (identifyexecutor and identifyexecutor():find("KRNL")) end},
+        {Name = "Fluxus", Check = function() return fluxus and fluxus.request end},
+        {Name = "Oxygen U", Check = function() return pebc_execute end},
+        {Name = "Electron", Check = function() return Electron end},
+        {Name = "Comet", Check = function() return Comet end},
+        {Name = "Trigon", Check = function() return TRIGON_EXECUTOR end},
+        {Name = "Delta", Check = function() return Delta end},
+        {Name = "Hydrogen", Check = function() return Hydrogen end},
+        {Name = "Arceus X", Check = function() return Arceus end},
+        {Name = "Solara", Check = function() return Solara end},
+        {Name = "Wave", Check = function() return Wave end},
+        {Name = "Codex", Check = function() return Codex end}
+    }
+
+    if identifyexecutor then
+        local Success, Result = pcall(identifyexecutor)
+        if Success and Result then
+            return Result
+        end
+    end
+
+    for _, Executor in ipairs(Executors) do
+        local Success, Result = pcall(Executor.Check)
+        if Success and Result then
+            return Executor.Name
+        end
+    end
+
+    return "Unknown"
+end
+
+local ExecutorName = GetExecutor()
+
 local function Create(ClassName, Properties)
     local Instance_ = Instance.new(ClassName)
     for Property, Value in pairs(Properties) do
@@ -78,8 +115,8 @@ local Theme = {
     Divider = Color3.fromRGB(26, 30, 36),
     CheckboxEnabled = Color3.fromRGB(181, 208, 251),
     CheckboxDisabled = Color3.fromRGB(60, 61, 66),
-    SliderBackground = Color3.fromRGB(60, 61, 66),
-    SliderFill = Color3.fromRGB(181, 208, 251),
+    SliderBackground = Color3.fromRGB(35, 40, 50),
+    SliderFill = Color3.fromRGB(100, 150, 200),
     InputBackground = Color3.fromRGB(22, 25, 30),
     Footer = Color3.fromRGB(20, 23, 28)
 }
@@ -158,8 +195,8 @@ function WisperLib:CreateWindow(Config)
         Parent = Header,
         BackgroundTransparency = 1,
         BorderSizePixel = 0,
-        Position = UDim2.new(0, 15, 0.5, -16),
-        Size = UDim2.new(0, 32, 0, 32)
+        Position = UDim2.new(0, 12, 0.5, -17),
+        Size = UDim2.new(0, 34, 0, 34)
     })
 
     local AvatarCorner = Create("UICorner", {
@@ -191,7 +228,7 @@ function WisperLib:CreateWindow(Config)
         Name = "TitleLabel",
         Parent = Header,
         BackgroundTransparency = 1,
-        Position = UDim2.new(0, 55, 0, 8),
+        Position = UDim2.new(0, 54, 0, 8),
         Size = UDim2.new(0, 200, 0, 18),
         Font = Enum.Font.GothamBold,
         Text = Config.Title,
@@ -204,10 +241,10 @@ function WisperLib:CreateWindow(Config)
         Name = "SubtitleLabel",
         Parent = Header,
         BackgroundTransparency = 1,
-        Position = UDim2.new(0, 55, 0, 26),
+        Position = UDim2.new(0, 54, 0, 26),
         Size = UDim2.new(0, 200, 0, 14),
         Font = Enum.Font.Gotham,
-        Text = Config.Subtitle,
+        Text = ExecutorName,
         TextColor3 = Theme.SubText,
         TextSize = 11,
         TextXAlignment = Enum.TextXAlignment.Left
@@ -217,8 +254,8 @@ function WisperLib:CreateWindow(Config)
         Name = "HeaderButtons",
         Parent = Header,
         BackgroundTransparency = 1,
-        Position = UDim2.new(1, -160, 0.5, -14),
-        Size = UDim2.new(0, 145, 0, 28)
+        Position = UDim2.new(1, -170, 0.5, -16),
+        Size = UDim2.new(0, 155, 0, 32)
     })
 
     local HeaderButtonsLayout = Create("UIListLayout", {
@@ -236,40 +273,35 @@ function WisperLib:CreateWindow(Config)
 
     local function SetTabActive(TabButton, IsActive)
         if IsActive then
-            TabButton.ImageTransparency = 0
-            TabButton.ImageColor3 = Color3.fromRGB(0, 0, 0)
+            TabButton.Icon.ImageTransparency = 0
+            TabButton.Icon.ImageColor3 = Color3.fromRGB(0, 0, 0)
             TabButton.Gradient.Enabled = true
         else
-            TabButton.ImageTransparency = 0.5
-            TabButton.ImageColor3 = Theme.Text
+            TabButton.Icon.ImageTransparency = 0.5
+            TabButton.Icon.ImageColor3 = Theme.Text
             TabButton.Gradient.Enabled = false
             TabButton.BackgroundColor3 = Theme.ButtonInactive
         end
     end
 
     local function CreateTabButton(Icon, Order)
-        local Button = Create("ImageButton", {
-            Name = "TabButton",
+        local ButtonContainer = Create("Frame", {
+            Name = "TabButtonContainer",
             Parent = HeaderButtons,
             BackgroundColor3 = Theme.ButtonInactive,
             BorderSizePixel = 0,
-            Size = UDim2.new(0, 28, 0, 28),
-            Image = Icon,
-            ImageColor3 = Theme.Text,
-            ImageTransparency = 0.5,
-            LayoutOrder = Order,
-            ScaleType = Enum.ScaleType.Fit,
-            AutoButtonColor = false
+            Size = UDim2.new(0, 32, 0, 32),
+            LayoutOrder = Order
         })
 
         local ButtonCorner = Create("UICorner", {
             CornerRadius = UDim.new(0, 6),
-            Parent = Button
+            Parent = ButtonContainer
         })
 
         local ButtonGradient = Create("UIGradient", {
             Name = "Gradient",
-            Parent = Button,
+            Parent = ButtonContainer,
             Color = ColorSequence.new({
                 ColorSequenceKeypoint.new(0, Theme.GradientColor1),
                 ColorSequenceKeypoint.new(1, Theme.GradientColor2)
@@ -278,15 +310,32 @@ function WisperLib:CreateWindow(Config)
             Enabled = false
         })
 
-        local ButtonPadding = Create("UIPadding", {
-            Parent = Button,
-            PaddingTop = UDim.new(0, 6),
-            PaddingBottom = UDim.new(0, 6),
-            PaddingLeft = UDim.new(0, 6),
-            PaddingRight = UDim.new(0, 6)
+        local ButtonIcon = Create("ImageLabel", {
+            Name = "Icon",
+            Parent = ButtonContainer,
+            BackgroundTransparency = 1,
+            AnchorPoint = Vector2.new(0.5, 0.5),
+            Position = UDim2.new(0.5, 0, 0.5, 0),
+            Size = UDim2.new(0, 16, 0, 16),
+            Image = Icon,
+            ImageColor3 = Theme.Text,
+            ImageTransparency = 0.5
         })
 
-        return Button, ButtonGradient
+        local Button = Create("TextButton", {
+            Name = "ClickArea",
+            Parent = ButtonContainer,
+            BackgroundTransparency = 1,
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "",
+            AutoButtonColor = false
+        })
+
+        ButtonContainer.Gradient = ButtonGradient
+        ButtonContainer.Icon = ButtonIcon
+        ButtonContainer.ClickArea = Button
+
+        return ButtonContainer, ButtonGradient
     end
 
     local ContentContainer = Create("Frame", {
@@ -486,7 +535,7 @@ function WisperLib:CreateWindow(Config)
             CurrentTab = TabPage
         end
 
-        TabButton.MouseButton1Click:Connect(SelectTab)
+        TabButton.ClickArea.MouseButton1Click:Connect(SelectTab)
 
         if #Tabs == 1 then
             SelectTab()
@@ -713,12 +762,12 @@ function WisperLib:CreateWindow(Config)
                     Parent = SliderFrame,
                     BackgroundColor3 = Theme.SliderBackground,
                     BorderSizePixel = 0,
-                    Position = UDim2.new(0, 0, 0, 25),
-                    Size = UDim2.new(1, 0, 0, 6)
+                    Position = UDim2.new(0, 0, 0, 22),
+                    Size = UDim2.new(1, 0, 0, 10)
                 })
 
                 local SliderBackgroundCorner = Create("UICorner", {
-                    CornerRadius = UDim.new(1, 0),
+                    CornerRadius = UDim.new(0, 4),
                     Parent = SliderBackground
                 })
 
@@ -731,18 +780,19 @@ function WisperLib:CreateWindow(Config)
                 })
 
                 local SliderFillCorner = Create("UICorner", {
-                    CornerRadius = UDim.new(1, 0),
+                    CornerRadius = UDim.new(0, 4),
                     Parent = SliderFill
                 })
 
                 local SliderKnob = Create("Frame", {
                     Name = "SliderKnob",
                     Parent = SliderFill,
-                    BackgroundColor3 = Theme.Accent,
+                    BackgroundColor3 = Theme.Text,
                     BorderSizePixel = 0,
-                    AnchorPoint = Vector2.new(1, 0.5),
+                    AnchorPoint = Vector2.new(0.5, 0.5),
                     Position = UDim2.new(1, 0, 0.5, 0),
-                    Size = UDim2.new(0, 12, 0, 12)
+                    Size = UDim2.new(0, 8, 0, 8),
+                    Visible = false
                 })
 
                 local SliderKnobCorner = Create("UICorner", {
@@ -754,8 +804,8 @@ function WisperLib:CreateWindow(Config)
                     Name = "SliderClickArea",
                     Parent = SliderFrame,
                     BackgroundTransparency = 1,
-                    Position = UDim2.new(0, 0, 0, 20),
-                    Size = UDim2.new(1, 0, 0, 20),
+                    Position = UDim2.new(0, 0, 0, 18),
+                    Size = UDim2.new(1, 0, 0, 18),
                     Text = "",
                     AutoButtonColor = false
                 })
