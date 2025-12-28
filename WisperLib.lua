@@ -275,24 +275,33 @@ function WisperLib:CreateWindow(Config)
 
     local NavContainer = Create("Frame", {
         Name = "NavContainer",
-        Parent = Header,
+        Parent = MainFrame,
         BackgroundColor3 = Theme.ButtonInactive,
-        Position = UDim2.new(1, -200, 0.5, -16),
-        Size = UDim2.new(0, 185, 0, 32),
-        ClipsDescendants = true
+        AnchorPoint = Vector2.new(1, 0),
+        Position = UDim2.new(1, -15, 0, 60),
+        Size = UDim2.new(0, 0, 0, 28),
+        AutomaticSize = Enum.AutomaticSize.X,
+        ClipsDescendants = true,
+        ZIndex = 5
     })
 
     local NavContainerCorner = Create("UICorner", {
-        CornerRadius = UDim.new(0, 16),
+        CornerRadius = UDim.new(0, 14),
         Parent = NavContainer
+    })
+
+    local NavContainerPadding = Create("UIPadding", {
+        Parent = NavContainer,
+        PaddingLeft = UDim.new(0, 4),
+        PaddingRight = UDim.new(0, 4)
     })
 
     local NavButtonsHolder = Create("Frame", {
         Name = "NavButtonsHolder",
         Parent = NavContainer,
         BackgroundTransparency = 1,
-        Position = UDim2.new(0, 4, 0, 0),
-        Size = UDim2.new(1, -8, 1, 0)
+        Size = UDim2.new(0, 0, 1, 0),
+        AutomaticSize = Enum.AutomaticSize.X
     })
 
     local NavButtonsLayout = Create("UIListLayout", {
@@ -300,7 +309,7 @@ function WisperLib:CreateWindow(Config)
         FillDirection = Enum.FillDirection.Horizontal,
         VerticalAlignment = Enum.VerticalAlignment.Center,
         SortOrder = Enum.SortOrder.LayoutOrder,
-        Padding = UDim.new(0, 0)
+        Padding = UDim.new(0, 2)
     })
 
     local Tabs = {}
@@ -314,13 +323,13 @@ function WisperLib:CreateWindow(Config)
             TabButtonData.Icon.ImageColor3 = Color3.fromRGB(0, 0, 0)
             TabButtonData.Label.Visible = true
             Tween(TabButtonData.Fill, {Size = UDim2.new(1, 0, 1, 0)}, 0.2)
-            Tween(TabButtonData.Container, {Size = UDim2.new(0, 24 + TabButtonData.LabelWidth + 12, 0, 24)}, 0.2)
+            Tween(TabButtonData.Container, {Size = UDim2.new(0, 20 + TabButtonData.LabelWidth + 10, 0, 20)}, 0.2)
         else
             TabButtonData.Icon.ImageTransparency = 0
             TabButtonData.Icon.ImageColor3 = Theme.SubText
             TabButtonData.Label.Visible = false
             Tween(TabButtonData.Fill, {Size = UDim2.new(0, 0, 0, 0)}, 0.2)
-            Tween(TabButtonData.Container, {Size = UDim2.new(0, 32, 0, 24)}, 0.2)
+            Tween(TabButtonData.Container, {Size = UDim2.new(0, 24, 0, 20)}, 0.2)
         end
     end
 
@@ -329,7 +338,7 @@ function WisperLib:CreateWindow(Config)
             Name = "TabButtonContainer",
             Parent = NavButtonsHolder,
             BackgroundTransparency = 1,
-            Size = UDim2.new(0, 32, 0, 24),
+            Size = UDim2.new(0, 24, 0, 20),
             LayoutOrder = Order,
             ClipsDescendants = true
         })
@@ -345,7 +354,7 @@ function WisperLib:CreateWindow(Config)
         })
 
         local ButtonFillCorner = Create("UICorner", {
-            CornerRadius = UDim.new(0, 12),
+            CornerRadius = UDim.new(0, 10),
             Parent = ButtonFill
         })
 
@@ -363,8 +372,8 @@ function WisperLib:CreateWindow(Config)
             Name = "Icon",
             Parent = ButtonContainer,
             BackgroundTransparency = 1,
-            Position = UDim2.new(0, 8, 0.5, -7),
-            Size = UDim2.new(0, 14, 0, 14),
+            Position = UDim2.new(0, 5, 0.5, -6),
+            Size = UDim2.new(0, 12, 0, 12),
             Image = Icon,
             ImageColor3 = Theme.SubText,
             ImageTransparency = 0,
@@ -375,12 +384,12 @@ function WisperLib:CreateWindow(Config)
             Name = "Label",
             Parent = ButtonContainer,
             BackgroundTransparency = 1,
-            Position = UDim2.new(0, 24, 0, 0),
+            Position = UDim2.new(0, 20, 0, 0),
             Size = UDim2.new(0, 50, 1, 0),
             Font = Enum.Font.GothamMedium,
             Text = TabName,
             TextColor3 = Color3.fromRGB(0, 0, 0),
-            TextSize = 11,
+            TextSize = 10,
             TextXAlignment = Enum.TextXAlignment.Left,
             Visible = false,
             ZIndex = 2
@@ -694,11 +703,6 @@ function WisperLib:CreateWindow(Config)
                 ClipsDescendants = true
             })
 
-            local GroupHeaderCorner = Create("UICorner", {
-                CornerRadius = UDim.new(0, 8),
-                Parent = GroupHeader
-            })
-
             local GroupHeaderGradient = Create("UIGradient", {
                 Parent = GroupHeader,
                 Color = ColorSequence.new({
@@ -708,10 +712,13 @@ function WisperLib:CreateWindow(Config)
                 Rotation = 90
             })
 
-            local GroupHeaderStroke = Create("UIStroke", {
+            local GroupHeaderBottomLine = Create("Frame", {
+                Name = "BottomLine",
                 Parent = GroupHeader,
-                Color = Theme.GroupStroke,
-                Thickness = 1
+                BackgroundColor3 = Theme.GroupStroke,
+                BorderSizePixel = 0,
+                Position = UDim2.new(0, 0, 1, -1),
+                Size = UDim2.new(1, 0, 0, 1)
             })
 
             local GroupIcon = Create("ImageLabel", {
