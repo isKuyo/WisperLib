@@ -1100,11 +1100,12 @@ function WisperLib:CreateWindow(Config)
                 local SatValBox = Create("Frame", {
                     Name = "SatValBox",
                     Parent = ColorPickerPopup,
-                    BackgroundColor3 = Color3.fromHSV(ColorPickerHue, 1, 1),
+                    BackgroundColor3 = Color3.fromRGB(255, 255, 255),
                     BorderSizePixel = 0,
                     Position = UDim2.new(0, 10, 0, 10),
                     Size = UDim2.new(0, 130, 0, 130),
-                    ZIndex = 101
+                    ZIndex = 101,
+                    ClipsDescendants = true
                 })
 
                 local SatValCorner = Create("UICorner", {
@@ -1112,11 +1113,20 @@ function WisperLib:CreateWindow(Config)
                     Parent = SatValBox
                 })
 
-                local SaturationGradient = Create("UIGradient", {
+                local SaturationOverlay = Create("Frame", {
+                    Name = "SaturationOverlay",
                     Parent = SatValBox,
-                    Color = ColorSequence.new({
-                        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-                        ColorSequenceKeypoint.new(1, Color3.fromHSV(ColorPickerHue, 1, 1))
+                    BackgroundColor3 = Color3.fromHSV(ColorPickerHue, 1, 1),
+                    BorderSizePixel = 0,
+                    Size = UDim2.new(1, 0, 1, 0),
+                    ZIndex = 102
+                })
+
+                local SaturationGradient = Create("UIGradient", {
+                    Parent = SaturationOverlay,
+                    Transparency = NumberSequence.new({
+                        NumberSequenceKeypoint.new(0, 1),
+                        NumberSequenceKeypoint.new(1, 0)
                     }),
                     Rotation = 0
                 })
@@ -1128,7 +1138,7 @@ function WisperLib:CreateWindow(Config)
                     BackgroundTransparency = 0,
                     BorderSizePixel = 0,
                     Size = UDim2.new(1, 0, 1, 0),
-                    ZIndex = 102
+                    ZIndex = 103
                 })
 
                 local ValueGradientCorner = Create("UICorner", {
@@ -1203,12 +1213,12 @@ function WisperLib:CreateWindow(Config)
                     BorderSizePixel = 0,
                     AnchorPoint = Vector2.new(0.5, 0.5),
                     Position = UDim2.new(0.5, 0, 0, 0),
-                    Size = UDim2.new(1, 4, 0, 6),
+                    Size = UDim2.new(0, 12, 0, 12),
                     ZIndex = 104
                 })
 
                 local HueCursorCorner = Create("UICorner", {
-                    CornerRadius = UDim.new(0, 2),
+                    CornerRadius = UDim.new(1, 0),
                     Parent = HueCursor
                 })
 
@@ -1221,19 +1231,16 @@ function WisperLib:CreateWindow(Config)
                 local function UpdateColorFromHSV()
                     CurrentColor = Color3.fromHSV(ColorPickerHue, ColorPickerSat, ColorPickerVal)
                     ColorFrame.BackgroundColor3 = CurrentColor
-                    SaturationGradient.Color = ColorSequence.new({
-                        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-                        ColorSequenceKeypoint.new(1, Color3.fromHSV(ColorPickerHue, 1, 1))
-                    })
+                    SaturationOverlay.BackgroundColor3 = Color3.fromHSV(ColorPickerHue, 1, 1)
                     if ToggleConfig.ColorCallback then
                         ToggleConfig.ColorCallback(CurrentColor)
                     end
                 end
 
                 local function UpdatePickerPosition()
-                    local ColorFramePos = ColorFrame.AbsolutePosition
-                    local ColorFrameSize = ColorFrame.AbsoluteSize
-                    ColorPickerPopup.Position = UDim2.new(0, ColorFramePos.X - 190, 0, ColorFramePos.Y - 65)
+                    local MainFramePos = MainFrame.AbsolutePosition
+                    local MainFrameSize = MainFrame.AbsoluteSize
+                    ColorPickerPopup.Position = UDim2.new(0, MainFramePos.X + MainFrameSize.X + 10, 0, MainFramePos.Y + 50)
                 end
 
                 local DraggingSatVal = false
@@ -1469,10 +1476,7 @@ function WisperLib:CreateWindow(Config)
                     ColorPickerVal = V
                     SatValCursor.Position = UDim2.new(S, 0, 1 - V, 0)
                     HueCursor.Position = UDim2.new(0.5, 0, H, 0)
-                    SaturationGradient.Color = ColorSequence.new({
-                        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-                        ColorSequenceKeypoint.new(1, Color3.fromHSV(H, 1, 1))
-                    })
+                    SaturationOverlay.BackgroundColor3 = Color3.fromHSV(H, 1, 1)
                 end
 
                 function ToggleAPI:GetColor()
