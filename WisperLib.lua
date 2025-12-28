@@ -389,37 +389,18 @@ function WisperLib:CreateWindow(Config)
         Size = UDim2.new(1, 0, 1, -101)
     })
 
-    local ContentFrame = Create("Frame", {
-        Name = "ContentFrame",
+    local ContentInner = Create("Frame", {
+        Name = "ContentInner",
         Parent = ContentContainer,
         BackgroundTransparency = 1,
         BorderSizePixel = 0,
-        Position = UDim2.new(0, 0, 0, 0),
-        Size = UDim2.new(1, 0, 1, 0)
-    })
-
-    local ContentScroll = Create("ScrollingFrame", {
-        Name = "ContentScroll",
-        Parent = ContentFrame,
-        BackgroundTransparency = 1,
-        BorderSizePixel = 0,
         Position = UDim2.new(0, 15, 0, 15),
-        Size = UDim2.new(1, -30, 1, -30),
-        CanvasSize = UDim2.new(0, 0, 0, 0),
-        ScrollBarThickness = 3,
-        ScrollBarImageColor3 = Theme.Accent,
-        AutomaticCanvasSize = Enum.AutomaticSize.Y
-    })
-
-    local ContentLayout = Create("UIListLayout", {
-        Parent = ContentScroll,
-        SortOrder = Enum.SortOrder.LayoutOrder,
-        Padding = UDim.new(0, 10)
+        Size = UDim2.new(1, -30, 1, -30)
     })
 
     PageContainer = Create("Folder", {
         Name = "Pages",
-        Parent = ContentScroll
+        Parent = ContentInner
     })
 
     local Footer = Create("Frame", {
@@ -571,8 +552,7 @@ function WisperLib:CreateWindow(Config)
             Name = "TabPage_" .. TabConfig.Name,
             Parent = PageContainer,
             BackgroundTransparency = 1,
-            Size = UDim2.new(1, 0, 0, 0),
-            AutomaticSize = Enum.AutomaticSize.Y,
+            Size = UDim2.new(1, 0, 1, 0),
             Visible = false
         })
 
@@ -583,12 +563,16 @@ function WisperLib:CreateWindow(Config)
             Padding = UDim.new(0, 10)
         })
 
-        local LeftColumn = Create("Frame", {
+        local LeftColumn = Create("ScrollingFrame", {
             Name = "LeftColumn",
             Parent = TabPage,
             BackgroundTransparency = 1,
-            Size = UDim2.new(0.5, -5, 0, 0),
-            AutomaticSize = Enum.AutomaticSize.Y,
+            BorderSizePixel = 0,
+            Size = UDim2.new(0.5, -5, 1, 0),
+            CanvasSize = UDim2.new(0, 0, 0, 0),
+            AutomaticCanvasSize = Enum.AutomaticSize.Y,
+            ScrollBarThickness = 3,
+            ScrollBarImageColor3 = Theme.Accent,
             LayoutOrder = 1
         })
 
@@ -598,12 +582,16 @@ function WisperLib:CreateWindow(Config)
             Padding = UDim.new(0, 10)
         })
 
-        local RightColumn = Create("Frame", {
+        local RightColumn = Create("ScrollingFrame", {
             Name = "RightColumn",
             Parent = TabPage,
             BackgroundTransparency = 1,
-            Size = UDim2.new(0.5, -5, 0, 0),
-            AutomaticSize = Enum.AutomaticSize.Y,
+            BorderSizePixel = 0,
+            Size = UDim2.new(0.5, -5, 1, 0),
+            CanvasSize = UDim2.new(0, 0, 0, 0),
+            AutomaticCanvasSize = Enum.AutomaticSize.Y,
+            ScrollBarThickness = 3,
+            ScrollBarImageColor3 = Theme.Accent,
             LayoutOrder = 2
         })
 
@@ -1233,8 +1221,8 @@ function WisperLib:CreateWindow(Config)
                     Name = "ComboboxIcon",
                     Parent = ComboboxButton,
                     BackgroundTransparency = 1,
-                    Position = UDim2.new(1, -28, 0.5, -8),
-                    Size = UDim2.new(0, 16, 0, 16),
+                    Position = UDim2.new(1, -24, 0.5, -9),
+                    Size = UDim2.new(0, 18, 0, 18),
                     Image = "rbxassetid://3926307971",
                     ImageRectOffset = Vector2.new(564, 364),
                     ImageRectSize = Vector2.new(36, 36),
@@ -1246,10 +1234,9 @@ function WisperLib:CreateWindow(Config)
                     Parent = ComboboxFrame,
                     BackgroundColor3 = Color3.fromRGB(28, 32, 38),
                     BorderSizePixel = 0,
-                    Position = UDim2.new(0, 0, 0, 54),
-                    Size = UDim2.new(1, 0, 0, 0),
-                    AutomaticSize = Enum.AutomaticSize.Y,
-                    Visible = false,
+                    AnchorPoint = Vector2.new(0.5, 0),
+                    Position = UDim2.new(0.5, 0, 0, 54),
+                    Size = UDim2.new(0, 0, 0, 0),
                     ZIndex = 10,
                     ClipsDescendants = true
                 })
@@ -1367,18 +1354,32 @@ function WisperLib:CreateWindow(Config)
 
                 ComboboxFrame.MouseEnter:Connect(function()
                     Tween(ComboboxLabel, {TextColor3 = Theme.Text}, 0.15)
+                    Tween(ComboboxText, {TextColor3 = Theme.Text}, 0.15)
                 end)
 
                 ComboboxFrame.MouseLeave:Connect(function()
                     if not IsOpen then
                         Tween(ComboboxLabel, {TextColor3 = Theme.SubText}, 0.15)
+                        Tween(ComboboxText, {TextColor3 = Theme.SubText}, 0.15)
                     end
                 end)
 
+                local DropdownHeight = #ComboboxConfig.Options * 28 + 8
+
                 ComboboxClickArea.MouseButton1Click:Connect(function()
                     IsOpen = not IsOpen
-                    ComboboxDropdown.Visible = IsOpen
-                    ComboboxIcon.Rotation = IsOpen and 180 or 0
+                    if IsOpen then
+                        ComboboxDropdown.Visible = true
+                        Tween(ComboboxDropdown, {Size = UDim2.new(1, 0, 0, DropdownHeight)}, 0.2)
+                    else
+                        Tween(ComboboxDropdown, {Size = UDim2.new(0, 0, 0, 0)}, 0.15)
+                        task.delay(0.15, function()
+                            if not IsOpen then
+                                ComboboxDropdown.Visible = false
+                            end
+                        end)
+                    end
+                    Tween(ComboboxIcon, {Rotation = IsOpen and 180 or 0}, 0.15)
                 end)
 
                 local ComboboxAPI = {}
