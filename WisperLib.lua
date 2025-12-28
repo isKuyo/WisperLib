@@ -62,24 +62,26 @@ local function MakeDraggable(Frame, DragFrame)
 end
 
 local Theme = {
-    Background = Color3.fromRGB(30, 31, 35),
-    Header = Color3.fromRGB(26, 27, 31),
-    Sidebar = Color3.fromRGB(26, 27, 31),
-    ContentBackground = Color3.fromRGB(42, 43, 48),
-    ElementBackground = Color3.fromRGB(42, 43, 48),
-    GroupBackground = Color3.fromRGB(42, 43, 48),
-    Accent = Color3.fromRGB(74, 144, 217),
+    Background = Color3.fromRGB(13, 15, 18),
+    Header = Color3.fromRGB(20, 23, 28),
+    HeaderLine = Color3.fromRGB(26, 30, 36),
+    ContentBackground = Color3.fromRGB(13, 15, 18),
+    GroupBackground = Color3.fromRGB(22, 25, 30),
+    GroupStroke = Color3.fromRGB(26, 30, 36),
+    ButtonInactive = Color3.fromRGB(13, 15, 18),
+    GradientColor1 = Color3.fromRGB(181, 208, 251),
+    GradientColor2 = Color3.fromRGB(126, 144, 174),
+    AvatarStroke = Color3.fromRGB(26, 30, 36),
+    Accent = Color3.fromRGB(181, 208, 251),
     Text = Color3.fromRGB(255, 255, 255),
     SubText = Color3.fromRGB(150, 150, 150),
-    Divider = Color3.fromRGB(50, 51, 56),
-    TabHover = Color3.fromRGB(35, 36, 40),
-    TabSelected = Color3.fromRGB(42, 43, 48),
-    CheckboxEnabled = Color3.fromRGB(74, 144, 217),
+    Divider = Color3.fromRGB(26, 30, 36),
+    CheckboxEnabled = Color3.fromRGB(181, 208, 251),
     CheckboxDisabled = Color3.fromRGB(60, 61, 66),
     SliderBackground = Color3.fromRGB(60, 61, 66),
-    SliderFill = Color3.fromRGB(74, 144, 217),
-    InputBackground = Color3.fromRGB(50, 51, 56),
-    Footer = Color3.fromRGB(26, 27, 31)
+    SliderFill = Color3.fromRGB(181, 208, 251),
+    InputBackground = Color3.fromRGB(22, 25, 30),
+    Footer = Color3.fromRGB(20, 23, 28)
 }
 
 local ScreenGuiName = "WisperLib_" .. tostring(math.random(100000, 999999))
@@ -125,7 +127,7 @@ function WisperLib:CreateWindow(Config)
         Parent = MainFrame,
         BackgroundColor3 = Theme.Header,
         BorderSizePixel = 0,
-        Size = UDim2.new(1, 0, 0, 60)
+        Size = UDim2.new(1, 0, 0, 50)
     })
 
     local HeaderCorner = Create("UICorner", {
@@ -142,18 +144,33 @@ function WisperLib:CreateWindow(Config)
         Size = UDim2.new(1, 0, 0, 8)
     })
 
+    local HeaderLine = Create("Frame", {
+        Name = "HeaderLine",
+        Parent = Header,
+        BackgroundColor3 = Theme.HeaderLine,
+        BorderSizePixel = 0,
+        Position = UDim2.new(0, 0, 1, 0),
+        Size = UDim2.new(1, 0, 0, 1)
+    })
+
     local AvatarContainer = Create("Frame", {
         Name = "AvatarContainer",
         Parent = Header,
-        BackgroundColor3 = Color3.fromRGB(40, 41, 46),
+        BackgroundTransparency = 1,
         BorderSizePixel = 0,
-        Position = UDim2.new(0, 15, 0.5, -18),
-        Size = UDim2.new(0, 36, 0, 36)
+        Position = UDim2.new(0, 15, 0.5, -16),
+        Size = UDim2.new(0, 32, 0, 32)
     })
 
     local AvatarCorner = Create("UICorner", {
-        CornerRadius = UDim.new(0, 6),
+        CornerRadius = UDim.new(1, 0),
         Parent = AvatarContainer
+    })
+
+    local AvatarStroke = Create("UIStroke", {
+        Parent = AvatarContainer,
+        Color = Theme.AvatarStroke,
+        Thickness = 1
     })
 
     local AvatarImage = Create("ImageLabel", {
@@ -166,7 +183,7 @@ function WisperLib:CreateWindow(Config)
     })
 
     local AvatarImageCorner = Create("UICorner", {
-        CornerRadius = UDim.new(0, 6),
+        CornerRadius = UDim.new(1, 0),
         Parent = AvatarImage
     })
 
@@ -174,12 +191,12 @@ function WisperLib:CreateWindow(Config)
         Name = "TitleLabel",
         Parent = Header,
         BackgroundTransparency = 1,
-        Position = UDim2.new(0, 60, 0, 12),
-        Size = UDim2.new(0, 200, 0, 20),
+        Position = UDim2.new(0, 55, 0, 8),
+        Size = UDim2.new(0, 200, 0, 18),
         Font = Enum.Font.GothamBold,
         Text = Config.Title,
         TextColor3 = Theme.Text,
-        TextSize = 14,
+        TextSize = 13,
         TextXAlignment = Enum.TextXAlignment.Left
     })
 
@@ -187,12 +204,12 @@ function WisperLib:CreateWindow(Config)
         Name = "SubtitleLabel",
         Parent = Header,
         BackgroundTransparency = 1,
-        Position = UDim2.new(0, 60, 0, 32),
-        Size = UDim2.new(0, 200, 0, 16),
+        Position = UDim2.new(0, 55, 0, 26),
+        Size = UDim2.new(0, 200, 0, 14),
         Font = Enum.Font.Gotham,
         Text = Config.Subtitle,
         TextColor3 = Theme.SubText,
-        TextSize = 12,
+        TextSize = 11,
         TextXAlignment = Enum.TextXAlignment.Left
     })
 
@@ -200,8 +217,8 @@ function WisperLib:CreateWindow(Config)
         Name = "HeaderButtons",
         Parent = Header,
         BackgroundTransparency = 1,
-        Position = UDim2.new(1, -160, 0.5, -16),
-        Size = UDim2.new(0, 145, 0, 32)
+        Position = UDim2.new(1, -160, 0.5, -14),
+        Size = UDim2.new(0, 145, 0, 28)
     })
 
     local HeaderButtonsLayout = Create("UIListLayout", {
@@ -209,20 +226,40 @@ function WisperLib:CreateWindow(Config)
         FillDirection = Enum.FillDirection.Horizontal,
         HorizontalAlignment = Enum.HorizontalAlignment.Right,
         SortOrder = Enum.SortOrder.LayoutOrder,
-        Padding = UDim.new(0, 8)
+        Padding = UDim.new(0, 6)
     })
 
-    local function CreateHeaderButton(Icon, Order)
+    local Tabs = {}
+    local TabButtons = {}
+    local CurrentTab = nil
+    local PageContainer
+
+    local function SetTabActive(TabButton, IsActive)
+        if IsActive then
+            TabButton.ImageTransparency = 0
+            TabButton.ImageColor3 = Color3.fromRGB(0, 0, 0)
+            TabButton.Gradient.Enabled = true
+        else
+            TabButton.ImageTransparency = 0.5
+            TabButton.ImageColor3 = Theme.Text
+            TabButton.Gradient.Enabled = false
+            TabButton.BackgroundColor3 = Theme.ButtonInactive
+        end
+    end
+
+    local function CreateTabButton(Icon, Order)
         local Button = Create("ImageButton", {
-            Name = "HeaderButton",
+            Name = "TabButton",
             Parent = HeaderButtons,
-            BackgroundColor3 = Color3.fromRGB(45, 46, 51),
+            BackgroundColor3 = Theme.ButtonInactive,
             BorderSizePixel = 0,
-            Size = UDim2.new(0, 32, 0, 32),
+            Size = UDim2.new(0, 28, 0, 28),
             Image = Icon,
             ImageColor3 = Theme.Text,
+            ImageTransparency = 0.5,
             LayoutOrder = Order,
-            ScaleType = Enum.ScaleType.Fit
+            ScaleType = Enum.ScaleType.Fit,
+            AutoButtonColor = false
         })
 
         local ButtonCorner = Create("UICorner", {
@@ -230,78 +267,44 @@ function WisperLib:CreateWindow(Config)
             Parent = Button
         })
 
-        Button.MouseEnter:Connect(function()
-            Tween(Button, {BackgroundColor3 = Color3.fromRGB(55, 56, 61)}, 0.15)
-        end)
+        local ButtonGradient = Create("UIGradient", {
+            Name = "Gradient",
+            Parent = Button,
+            Color = ColorSequence.new({
+                ColorSequenceKeypoint.new(0, Theme.GradientColor1),
+                ColorSequenceKeypoint.new(1, Theme.GradientColor2)
+            }),
+            Rotation = 90,
+            Enabled = false
+        })
 
-        Button.MouseLeave:Connect(function()
-            Tween(Button, {BackgroundColor3 = Color3.fromRGB(45, 46, 51)}, 0.15)
-        end)
+        local ButtonPadding = Create("UIPadding", {
+            Parent = Button,
+            PaddingTop = UDim.new(0, 6),
+            PaddingBottom = UDim.new(0, 6),
+            PaddingLeft = UDim.new(0, 6),
+            PaddingRight = UDim.new(0, 6)
+        })
 
-        return Button
+        return Button, ButtonGradient
     end
-
-    local HomeButton = CreateHeaderButton("rbxassetid://7733960981", 1)
-    HomeButton.BackgroundColor3 = Theme.Accent
-    HomeButton.ImageColor3 = Color3.fromRGB(255, 255, 255)
-
-    local ExternalButton = CreateHeaderButton("rbxassetid://7743878857", 2)
-    local MenuButton = CreateHeaderButton("rbxassetid://7743870210", 3)
-    local SettingsButton = CreateHeaderButton("rbxassetid://7743871962", 4)
 
     local ContentContainer = Create("Frame", {
         Name = "ContentContainer",
         Parent = MainFrame,
-        BackgroundTransparency = 1,
-        Position = UDim2.new(0, 0, 0, 60),
-        Size = UDim2.new(1, 0, 1, -110)
-    })
-
-    local Sidebar = Create("Frame", {
-        Name = "Sidebar",
-        Parent = ContentContainer,
-        BackgroundColor3 = Theme.Sidebar,
+        BackgroundColor3 = Theme.ContentBackground,
         BorderSizePixel = 0,
-        Position = UDim2.new(0, 15, 0, 10),
-        Size = UDim2.new(0, 170, 1, -20)
-    })
-
-    local SidebarCorner = Create("UICorner", {
-        CornerRadius = UDim.new(0, 6),
-        Parent = Sidebar
-    })
-
-    local TabContainer = Create("ScrollingFrame", {
-        Name = "TabContainer",
-        Parent = Sidebar,
-        BackgroundTransparency = 1,
-        BorderSizePixel = 0,
-        Position = UDim2.new(0, 8, 0, 8),
-        Size = UDim2.new(1, -16, 1, -16),
-        CanvasSize = UDim2.new(0, 0, 0, 0),
-        ScrollBarThickness = 2,
-        ScrollBarImageColor3 = Theme.Accent,
-        AutomaticCanvasSize = Enum.AutomaticSize.Y
-    })
-
-    local TabLayout = Create("UIListLayout", {
-        Parent = TabContainer,
-        SortOrder = Enum.SortOrder.LayoutOrder,
-        Padding = UDim.new(0, 4)
+        Position = UDim2.new(0, 0, 0, 51),
+        Size = UDim2.new(1, 0, 1, -101)
     })
 
     local ContentFrame = Create("Frame", {
         Name = "ContentFrame",
         Parent = ContentContainer,
-        BackgroundColor3 = Theme.ContentBackground,
+        BackgroundTransparency = 1,
         BorderSizePixel = 0,
-        Position = UDim2.new(0, 200, 0, 10),
-        Size = UDim2.new(1, -215, 1, -20)
-    })
-
-    local ContentCorner = Create("UICorner", {
-        CornerRadius = UDim.new(0, 6),
-        Parent = ContentFrame
+        Position = UDim2.new(0, 0, 0, 0),
+        Size = UDim2.new(1, 0, 1, 0)
     })
 
     local ContentScroll = Create("ScrollingFrame", {
@@ -309,8 +312,8 @@ function WisperLib:CreateWindow(Config)
         Parent = ContentFrame,
         BackgroundTransparency = 1,
         BorderSizePixel = 0,
-        Position = UDim2.new(0, 10, 0, 10),
-        Size = UDim2.new(1, -20, 1, -20),
+        Position = UDim2.new(0, 15, 0, 15),
+        Size = UDim2.new(1, -30, 1, -30),
         CanvasSize = UDim2.new(0, 0, 0, 0),
         ScrollBarThickness = 3,
         ScrollBarImageColor3 = Theme.Accent,
@@ -323,7 +326,7 @@ function WisperLib:CreateWindow(Config)
         Padding = UDim.new(0, 10)
     })
 
-    local PageContainer = Create("Folder", {
+    PageContainer = Create("Folder", {
         Name = "Pages",
         Parent = ContentScroll
     })
@@ -440,8 +443,6 @@ function WisperLib:CreateWindow(Config)
 
     MakeDraggable(MainFrame, Header)
 
-    local Tabs = {}
-    local CurrentTab = nil
     local Window = {}
 
     UserInputService.InputBegan:Connect(function(Input, GameProcessed)
@@ -455,47 +456,7 @@ function WisperLib:CreateWindow(Config)
         TabConfig.Name = TabConfig.Name or "Tab"
         TabConfig.Icon = TabConfig.Icon or "rbxassetid://7733960981"
 
-        local TabButton = Create("TextButton", {
-            Name = "TabButton_" .. TabConfig.Name,
-            Parent = TabContainer,
-            BackgroundColor3 = Theme.TabHover,
-            BackgroundTransparency = 1,
-            BorderSizePixel = 0,
-            Size = UDim2.new(1, 0, 0, 36),
-            Font = Enum.Font.Gotham,
-            Text = "",
-            TextColor3 = Theme.Text,
-            TextSize = 13,
-            AutoButtonColor = false
-        })
-
-        local TabCorner = Create("UICorner", {
-            CornerRadius = UDim.new(0, 6),
-            Parent = TabButton
-        })
-
-        local TabIcon = Create("ImageLabel", {
-            Name = "TabIcon",
-            Parent = TabButton,
-            BackgroundTransparency = 1,
-            Position = UDim2.new(0, 10, 0.5, -8),
-            Size = UDim2.new(0, 16, 0, 16),
-            Image = TabConfig.Icon,
-            ImageColor3 = Theme.SubText
-        })
-
-        local TabLabel = Create("TextLabel", {
-            Name = "TabLabel",
-            Parent = TabButton,
-            BackgroundTransparency = 1,
-            Position = UDim2.new(0, 34, 0, 0),
-            Size = UDim2.new(1, -44, 1, 0),
-            Font = Enum.Font.Gotham,
-            Text = TabConfig.Name,
-            TextColor3 = Theme.SubText,
-            TextSize = 13,
-            TextXAlignment = Enum.TextXAlignment.Left
-        })
+        local TabButton, TabGradient = CreateTabButton(TabConfig.Icon, #Tabs + 1)
 
         local TabPage = Create("Frame", {
             Name = "TabPage_" .. TabConfig.Name,
@@ -511,36 +472,21 @@ function WisperLib:CreateWindow(Config)
             Padding = UDim.new(0, 10)
         })
 
-        table.insert(Tabs, {Button = TabButton, Page = TabPage, Icon = TabIcon, Label = TabLabel})
+        table.insert(Tabs, {Button = TabButton, Page = TabPage, Gradient = TabGradient})
+        table.insert(TabButtons, TabButton)
 
         local function SelectTab()
             for _, Tab in pairs(Tabs) do
                 Tab.Page.Visible = false
-                Tween(Tab.Button, {BackgroundTransparency = 1}, 0.15)
-                Tween(Tab.Icon, {ImageColor3 = Theme.SubText}, 0.15)
-                Tween(Tab.Label, {TextColor3 = Theme.SubText}, 0.15)
+                SetTabActive(Tab.Button, false)
             end
 
             TabPage.Visible = true
-            Tween(TabButton, {BackgroundTransparency = 0, BackgroundColor3 = Theme.TabSelected}, 0.15)
-            Tween(TabIcon, {ImageColor3 = Theme.Text}, 0.15)
-            Tween(TabLabel, {TextColor3 = Theme.Text}, 0.15)
+            SetTabActive(TabButton, true)
             CurrentTab = TabPage
         end
 
         TabButton.MouseButton1Click:Connect(SelectTab)
-
-        TabButton.MouseEnter:Connect(function()
-            if CurrentTab ~= TabPage then
-                Tween(TabButton, {BackgroundTransparency = 0.5, BackgroundColor3 = Theme.TabHover}, 0.15)
-            end
-        end)
-
-        TabButton.MouseLeave:Connect(function()
-            if CurrentTab ~= TabPage then
-                Tween(TabButton, {BackgroundTransparency = 1}, 0.15)
-            end
-        end)
 
         if #Tabs == 1 then
             SelectTab()
@@ -565,6 +511,12 @@ function WisperLib:CreateWindow(Config)
             local GroupCorner = Create("UICorner", {
                 CornerRadius = UDim.new(0, 6),
                 Parent = GroupFrame
+            })
+
+            local GroupStroke = Create("UIStroke", {
+                Parent = GroupFrame,
+                Color = Theme.GroupStroke,
+                Thickness = 1
             })
 
             local GroupHeader = Create("Frame", {
