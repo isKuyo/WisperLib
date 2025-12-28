@@ -41,6 +41,28 @@ end
 
 local GameName = GetGameName()
 
+local IconPatterns = {
+    Home = "rbxassetid://80485236798991",
+    Main = "rbxassetid://80485236798991",
+    General = "rbxassetid://80485236798991",
+    Visual = "rbxassetid://134539162713658",
+    ESP = "rbxassetid://134539162713658",
+    Visuals = "rbxassetid://134539162713658",
+    Settings = "rbxassetid://77861834748434",
+    Config = "rbxassetid://77861834748434",
+    Configuration = "rbxassetid://77861834748434"
+}
+
+local function GetAutoIcon(Name)
+    local LowerName = string.lower(Name)
+    for Pattern, Icon in pairs(IconPatterns) do
+        if string.find(LowerName, string.lower(Pattern)) then
+            return Icon
+        end
+    end
+    return nil
+end
+
 local function Create(ClassName, Properties)
     local Instance_ = Instance.new(ClassName)
     for Property, Value in pairs(Properties) do
@@ -535,9 +557,13 @@ function WisperLib:CreateWindow(Config)
     function Window:CreateTab(TabConfig)
         TabConfig = TabConfig or {}
         TabConfig.Name = TabConfig.Name or "Tab"
-        TabConfig.Icon = TabConfig.Icon or "rbxassetid://7733960981"
+        
+        local TabIcon = TabConfig.Icon
+        if not TabIcon then
+            TabIcon = GetAutoIcon(TabConfig.Name) or "rbxassetid://7733960981"
+        end
 
-        local TabButtonData = CreateTabButton(TabConfig.Icon, #Tabs + 1)
+        local TabButtonData = CreateTabButton(TabIcon, #Tabs + 1)
 
         local TabPage = Create("Frame", {
             Name = "TabPage_" .. TabConfig.Name,
@@ -756,7 +782,9 @@ function WisperLib:CreateWindow(Config)
                     AnchorPoint = Vector2.new(0.5, 0.5),
                     Position = UDim2.new(0.5, 0, 0.5, 0),
                     Size = UDim2.new(0, 12, 0, 12),
-                    Image = "rbxassetid://6031094678",
+                    Image = "rbxassetid://3926305904",
+                    ImageRectOffset = Vector2.new(312, 4),
+                    ImageRectSize = Vector2.new(24, 24),
                     ImageColor3 = Toggled and Color3.fromRGB(0, 0, 0) or Color3.fromRGB(255, 255, 255),
                     ImageTransparency = Toggled and 0 or 1,
                     ZIndex = 2
@@ -798,15 +826,15 @@ function WisperLib:CreateWindow(Config)
 
                 local function UpdateToggle()
                     if Toggled then
-                        Tween(ToggleFill, {Size = UDim2.new(1, 0, 1, 0)}, 0.2)
+                        Tween(ToggleFill, {Size = UDim2.new(1, 0, 1, 0)}, 0.15)
                         ToggleCheck.ImageColor3 = Color3.fromRGB(0, 0, 0)
                         ToggleLabel.TextColor3 = Theme.Text
                     else
-                        Tween(ToggleFill, {Size = UDim2.new(0, 0, 0, 0)}, 0.2)
+                        Tween(ToggleFill, {Size = UDim2.new(0, 0, 0, 0)}, 0.15)
                         ToggleCheck.ImageColor3 = Color3.fromRGB(255, 255, 255)
                         ToggleLabel.TextColor3 = Theme.SubText
                     end
-                    Tween(ToggleCheck, {ImageTransparency = Toggled and 0 or 1}, 0.15)
+                    Tween(ToggleCheck, {ImageTransparency = Toggled and 0 or 1}, 0.1)
                     ToggleConfig.Callback(Toggled)
                 end
 
@@ -883,7 +911,7 @@ function WisperLib:CreateWindow(Config)
                     BackgroundColor3 = Theme.SliderBackground,
                     BorderSizePixel = 0,
                     Position = UDim2.new(0, 0, 0, 24),
-                    Size = UDim2.new(1, 0, 0, 12)
+                    Size = UDim2.new(1, -60, 0, 12)
                 })
 
                 local SliderBackgroundCorner = Create("UICorner", {
