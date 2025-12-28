@@ -255,6 +255,7 @@ function WisperLib:CreateWindow(Config)
         if IsActive then
             TabButtonData.Icon.ImageTransparency = 0
             TabButtonData.Icon.ImageColor3 = Color3.fromRGB(0, 0, 0)
+            TabButtonData.Container.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
             TabButtonData.Gradient.Enabled = true
         else
             TabButtonData.Icon.ImageTransparency = 0.5
@@ -757,9 +758,10 @@ function WisperLib:CreateWindow(Config)
                 local SliderFill = Create("Frame", {
                     Name = "SliderFill",
                     Parent = SliderBackground,
-                    BackgroundColor3 = Theme.SliderFill,
+                    BackgroundColor3 = Color3.fromRGB(255, 255, 255),
                     BorderSizePixel = 0,
-                    Size = UDim2.new((Value - SliderConfig.Min) / (SliderConfig.Max - SliderConfig.Min), 0, 1, 0)
+                    Size = UDim2.new((Value - SliderConfig.Min) / (SliderConfig.Max - SliderConfig.Min), 0, 1, 0),
+                    ClipsDescendants = true
                 })
 
                 local SliderFillCorner = Create("UICorner", {
@@ -767,15 +769,24 @@ function WisperLib:CreateWindow(Config)
                     Parent = SliderFill
                 })
 
+                local SliderFillGradient = Create("UIGradient", {
+                    Parent = SliderFill,
+                    Color = ColorSequence.new({
+                        ColorSequenceKeypoint.new(0, Color3.fromRGB(90, 130, 170)),
+                        ColorSequenceKeypoint.new(1, Color3.fromRGB(120, 160, 200))
+                    }),
+                    Rotation = 0
+                })
+
                 local SliderKnob = Create("Frame", {
                     Name = "SliderKnob",
-                    Parent = SliderFill,
-                    BackgroundColor3 = Theme.Text,
+                    Parent = SliderBackground,
+                    BackgroundColor3 = Color3.fromRGB(255, 255, 255),
                     BorderSizePixel = 0,
                     AnchorPoint = Vector2.new(0.5, 0.5),
-                    Position = UDim2.new(1, 0, 0.5, 0),
-                    Size = UDim2.new(0, 8, 0, 8),
-                    Visible = false
+                    Position = UDim2.new((Value - SliderConfig.Min) / (SliderConfig.Max - SliderConfig.Min), 0, 0.5, 0),
+                    Size = UDim2.new(0, 14, 0, 14),
+                    ZIndex = 2
                 })
 
                 local SliderKnobCorner = Create("UICorner", {
@@ -800,6 +811,7 @@ function WisperLib:CreateWindow(Config)
                     Value = math.floor(SliderConfig.Min + (SliderConfig.Max - SliderConfig.Min) * Percent)
                     SliderValue.Text = tostring(Value) .. SliderConfig.Suffix
                     Tween(SliderFill, {Size = UDim2.new(Percent, 0, 1, 0)}, 0.05)
+                    Tween(SliderKnob, {Position = UDim2.new(Percent, 0, 0.5, 0)}, 0.05)
                     SliderConfig.Callback(Value)
                 end
 
@@ -831,6 +843,7 @@ function WisperLib:CreateWindow(Config)
                     local Percent = (Value - SliderConfig.Min) / (SliderConfig.Max - SliderConfig.Min)
                     SliderValue.Text = tostring(Value) .. SliderConfig.Suffix
                     Tween(SliderFill, {Size = UDim2.new(Percent, 0, 1, 0)}, 0.15)
+                    Tween(SliderKnob, {Position = UDim2.new(Percent, 0, 0.5, 0)}, 0.15)
                     SliderConfig.Callback(Value)
                 end
 
