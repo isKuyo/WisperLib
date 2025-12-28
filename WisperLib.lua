@@ -1,4 +1,3 @@
-print("ok")
 local WisperLib = {}
 
 local Development = true
@@ -1609,7 +1608,7 @@ function WisperLib:CreateWindow(Config)
                     BackgroundColor3 = Color3.fromRGB(255, 255, 255),
                     BorderSizePixel = 0,
                     AnchorPoint = Vector2.new(0.5, 0.5),
-                    Position = UDim2.new(0, KnobSize/2 + InitialPercent * (SliderBackground.AbsoluteSize.X - KnobSize), 0.5, 0),
+                    Position = UDim2.new(InitialPercent, 0, 0.5, 0),
                     Size = UDim2.new(0, KnobSize, 0, KnobSize),
                     ZIndex = 2
                 })
@@ -1636,8 +1635,7 @@ function WisperLib:CreateWindow(Config)
                     Value = math.floor(SliderConfig.Min + (SliderConfig.Max - SliderConfig.Min) * Percent)
                     SliderValue.Text = tostring(Value) .. SliderConfig.Suffix
                     Tween(SliderFill, {Size = UDim2.new(Percent, 0, 1, 0)}, 0.05)
-                    local KnobX = KnobSize/2 + Percent * (SliderBackground.AbsoluteSize.X - KnobSize)
-                    Tween(SliderKnob, {Position = UDim2.new(0, KnobX, 0.5, 0)}, 0.05)
+                    Tween(SliderKnob, {Position = UDim2.new(Percent, 0, 0.5, 0)}, 0.05)
                     SliderConfig.Callback(Value)
                 end
 
@@ -1669,8 +1667,7 @@ function WisperLib:CreateWindow(Config)
                     local Percent = (Value - SliderConfig.Min) / (SliderConfig.Max - SliderConfig.Min)
                     SliderValue.Text = tostring(Value) .. SliderConfig.Suffix
                     Tween(SliderFill, {Size = UDim2.new(Percent, 0, 1, 0)}, 0.15)
-                    local KnobX = KnobSize/2 + Percent * (SliderBackground.AbsoluteSize.X - KnobSize)
-                    Tween(SliderKnob, {Position = UDim2.new(0, KnobX, 0.5, 0)}, 0.15)
+                    Tween(SliderKnob, {Position = UDim2.new(Percent, 0, 0.5, 0)}, 0.15)
                     SliderConfig.Callback(Value)
                 end
 
