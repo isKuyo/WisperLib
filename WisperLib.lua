@@ -412,27 +412,44 @@ function WisperLib:CreateWindow(Config)
         ImageColor3 = Theme.Accent
     })
 
-    local FooterTitle = Create("TextLabel", {
-        Name = "FooterTitle",
+    local FooterTitleContainer = Create("Frame", {
+        Name = "FooterTitleContainer",
         Parent = Footer,
         BackgroundTransparency = 1,
         Position = UDim2.new(0, 48, 0, 10),
-        Size = UDim2.new(0, 150, 0, 16),
+        Size = UDim2.new(0, 0, 0, 16),
+        AutomaticSize = Enum.AutomaticSize.X
+    })
+
+    local FooterTitleLayout = Create("UIListLayout", {
+        Parent = FooterTitleContainer,
+        FillDirection = Enum.FillDirection.Horizontal,
+        VerticalAlignment = Enum.VerticalAlignment.Center,
+        SortOrder = Enum.SortOrder.LayoutOrder,
+        Padding = UDim.new(0, 6)
+    })
+
+    local FooterTitle = Create("TextLabel", {
+        Name = "FooterTitle",
+        Parent = FooterTitleContainer,
+        BackgroundTransparency = 1,
+        Size = UDim2.new(0, 0, 0, 16),
+        AutomaticSize = Enum.AutomaticSize.X,
         Font = Enum.Font.GothamBold,
         Text = "Wisper Hub",
         TextColor3 = Theme.Text,
         TextSize = 13,
-        TextXAlignment = Enum.TextXAlignment.Left
+        LayoutOrder = 1
     })
 
     local VerifiedIcon = Create("ImageLabel", {
         Name = "VerifiedIcon",
-        Parent = Footer,
+        Parent = FooterTitleContainer,
         BackgroundTransparency = 1,
-        Position = UDim2.new(0, 100, 0, 10),
-        Size = UDim2.new(0, 16, 0, 16),
+        Size = UDim2.new(0, 14, 0, 14),
         Image = "rbxassetid://7743878857",
-        ImageColor3 = Theme.Accent
+        ImageColor3 = Theme.Accent,
+        LayoutOrder = 2
     })
 
     local FooterSubtitle = Create("TextLabel", {
