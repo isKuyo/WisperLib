@@ -653,11 +653,12 @@ function WisperLib:CreateWindow(Config)
                 BorderSizePixel = 0,
                 Size = UDim2.new(1, 0, 0, 40),
                 AutomaticSize = Enum.AutomaticSize.Y,
-                LayoutOrder = GroupCount
+                LayoutOrder = GroupCount,
+                ClipsDescendants = true
             })
 
             local GroupCorner = Create("UICorner", {
-                CornerRadius = UDim.new(0, 6),
+                CornerRadius = UDim.new(0, 8),
                 Parent = GroupFrame
             })
 
@@ -709,15 +710,15 @@ function WisperLib:CreateWindow(Config)
             local GroupContentLayout = Create("UIListLayout", {
                 Parent = GroupContent,
                 SortOrder = Enum.SortOrder.LayoutOrder,
-                Padding = UDim.new(0, 8)
+                Padding = UDim.new(0, 4)
             })
 
             local GroupContentPadding = Create("UIPadding", {
                 Parent = GroupContent,
                 PaddingLeft = UDim.new(0, 12),
                 PaddingRight = UDim.new(0, 12),
-                PaddingTop = UDim.new(0, 4),
-                PaddingBottom = UDim.new(0, 12)
+                PaddingTop = UDim.new(0, 2),
+                PaddingBottom = UDim.new(0, 10)
             })
 
             local Group = {}
