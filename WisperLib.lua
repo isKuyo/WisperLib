@@ -1044,6 +1044,14 @@ function WisperLib:CreateWindow(Config)
                     TextXAlignment = Enum.TextXAlignment.Left
                 })
 
+                LabelFrame.MouseEnter:Connect(function()
+                    Tween(Label, {TextColor3 = Theme.Text}, 0.15)
+                end)
+
+                LabelFrame.MouseLeave:Connect(function()
+                    Tween(Label, {TextColor3 = Theme.SubText}, 0.15)
+                end)
+
                 local LabelAPI = {}
 
                 function LabelAPI:Set(Text)
@@ -1118,6 +1126,14 @@ function WisperLib:CreateWindow(Config)
                     ImageColor3 = Theme.SubText
                 })
 
+                InputFrame.MouseEnter:Connect(function()
+                    Tween(InputLabel, {TextColor3 = Theme.Text}, 0.15)
+                end)
+
+                InputFrame.MouseLeave:Connect(function()
+                    Tween(InputLabel, {TextColor3 = Theme.SubText}, 0.15)
+                end)
+
                 InputTextBox.FocusLost:Connect(function(EnterPressed)
                     if EnterPressed then
                         InputConfig.Callback(InputTextBox.Text)
@@ -1135,6 +1151,262 @@ function WisperLib:CreateWindow(Config)
                 end
 
                 return InputAPI
+            end
+
+            function Group:CreateCombobox(ComboboxConfig)
+                ComboboxConfig = ComboboxConfig or {}
+                ComboboxConfig.Name = ComboboxConfig.Name or "Combobox"
+                ComboboxConfig.Options = ComboboxConfig.Options or {}
+                ComboboxConfig.Default = ComboboxConfig.Default or {}
+                ComboboxConfig.Callback = ComboboxConfig.Callback or function() end
+
+                local Selected = {}
+                for _, v in ipairs(ComboboxConfig.Default) do
+                    Selected[v] = true
+                end
+
+                local IsOpen = false
+
+                local ComboboxFrame = Create("Frame", {
+                    Name = "Combobox_" .. ComboboxConfig.Name,
+                    Parent = GroupContent,
+                    BackgroundTransparency = 1,
+                    Size = UDim2.new(1, 0, 0, 50),
+                    AutomaticSize = Enum.AutomaticSize.Y,
+                    ClipsDescendants = false
+                })
+
+                local ComboboxLabel = Create("TextLabel", {
+                    Name = "ComboboxLabel",
+                    Parent = ComboboxFrame,
+                    BackgroundTransparency = 1,
+                    Size = UDim2.new(1, 0, 0, 18),
+                    Font = Enum.Font.Gotham,
+                    Text = ComboboxConfig.Name,
+                    TextColor3 = Theme.SubText,
+                    TextSize = 14,
+                    TextXAlignment = Enum.TextXAlignment.Left
+                })
+
+                local ComboboxButton = Create("Frame", {
+                    Name = "ComboboxButton",
+                    Parent = ComboboxFrame,
+                    BackgroundColor3 = Color3.fromRGB(28, 32, 38),
+                    BorderSizePixel = 0,
+                    Position = UDim2.new(0, 0, 0, 22),
+                    Size = UDim2.new(1, 0, 0, 30)
+                })
+
+                local ComboboxButtonCorner = Create("UICorner", {
+                    CornerRadius = UDim.new(0, 4),
+                    Parent = ComboboxButton
+                })
+
+                local function GetSelectedText()
+                    local Items = {}
+                    for _, Option in ipairs(ComboboxConfig.Options) do
+                        if Selected[Option] then
+                            table.insert(Items, Option)
+                        end
+                    end
+                    if #Items == 0 then
+                        return "None selected..."
+                    end
+                    return table.concat(Items, ", ")
+                end
+
+                local ComboboxText = Create("TextLabel", {
+                    Name = "ComboboxText",
+                    Parent = ComboboxButton,
+                    BackgroundTransparency = 1,
+                    Position = UDim2.new(0, 10, 0, 0),
+                    Size = UDim2.new(1, -40, 1, 0),
+                    Font = Enum.Font.Gotham,
+                    Text = GetSelectedText(),
+                    TextColor3 = Theme.SubText,
+                    TextSize = 13,
+                    TextXAlignment = Enum.TextXAlignment.Left,
+                    TextTruncate = Enum.TextTruncate.AtEnd
+                })
+
+                local ComboboxIcon = Create("ImageLabel", {
+                    Name = "ComboboxIcon",
+                    Parent = ComboboxButton,
+                    BackgroundTransparency = 1,
+                    Position = UDim2.new(1, -28, 0.5, -8),
+                    Size = UDim2.new(0, 16, 0, 16),
+                    Image = "rbxassetid://3926307971",
+                    ImageRectOffset = Vector2.new(564, 364),
+                    ImageRectSize = Vector2.new(36, 36),
+                    ImageColor3 = Theme.SubText
+                })
+
+                local ComboboxDropdown = Create("Frame", {
+                    Name = "ComboboxDropdown",
+                    Parent = ComboboxFrame,
+                    BackgroundColor3 = Color3.fromRGB(28, 32, 38),
+                    BorderSizePixel = 0,
+                    Position = UDim2.new(0, 0, 0, 54),
+                    Size = UDim2.new(1, 0, 0, 0),
+                    AutomaticSize = Enum.AutomaticSize.Y,
+                    Visible = false,
+                    ZIndex = 10,
+                    ClipsDescendants = true
+                })
+
+                local ComboboxDropdownCorner = Create("UICorner", {
+                    CornerRadius = UDim.new(0, 4),
+                    Parent = ComboboxDropdown
+                })
+
+                local ComboboxDropdownLayout = Create("UIListLayout", {
+                    Parent = ComboboxDropdown,
+                    SortOrder = Enum.SortOrder.LayoutOrder,
+                    Padding = UDim.new(0, 0)
+                })
+
+                local ComboboxDropdownPadding = Create("UIPadding", {
+                    Parent = ComboboxDropdown,
+                    PaddingTop = UDim.new(0, 4),
+                    PaddingBottom = UDim.new(0, 4)
+                })
+
+                local OptionButtons = {}
+
+                for i, Option in ipairs(ComboboxConfig.Options) do
+                    local OptionButton = Create("TextButton", {
+                        Name = "Option_" .. Option,
+                        Parent = ComboboxDropdown,
+                        BackgroundTransparency = 1,
+                        Size = UDim2.new(1, 0, 0, 28),
+                        Font = Enum.Font.Gotham,
+                        Text = "",
+                        AutoButtonColor = false,
+                        LayoutOrder = i,
+                        ZIndex = 11
+                    })
+
+                    local OptionFill = Create("Frame", {
+                        Name = "Fill",
+                        Parent = OptionButton,
+                        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+                        BorderSizePixel = 0,
+                        Position = UDim2.new(0, 4, 0, 2),
+                        Size = UDim2.new(1, -8, 1, -4),
+                        ZIndex = 11
+                    })
+
+                    local OptionFillCorner = Create("UICorner", {
+                        CornerRadius = UDim.new(0, 4),
+                        Parent = OptionFill
+                    })
+
+                    local OptionFillGradient = Create("UIGradient", {
+                        Parent = OptionFill,
+                        Color = ColorSequence.new({
+                            ColorSequenceKeypoint.new(0, Theme.GradientColor1),
+                            ColorSequenceKeypoint.new(1, Theme.GradientColor2)
+                        }),
+                        Rotation = 0
+                    })
+
+                    OptionFill.Visible = Selected[Option] or false
+
+                    local OptionLabel = Create("TextLabel", {
+                        Name = "OptionLabel",
+                        Parent = OptionButton,
+                        BackgroundTransparency = 1,
+                        Position = UDim2.new(0, 12, 0, 0),
+                        Size = UDim2.new(1, -24, 1, 0),
+                        Font = Enum.Font.Gotham,
+                        Text = Option,
+                        TextColor3 = Selected[Option] and Color3.fromRGB(0, 0, 0) or Theme.Text,
+                        TextSize = 13,
+                        TextXAlignment = Enum.TextXAlignment.Left,
+                        ZIndex = 12
+                    })
+
+                    OptionButton.MouseEnter:Connect(function()
+                        if not Selected[Option] then
+                            Tween(OptionLabel, {TextColor3 = Theme.Text}, 0.1)
+                        end
+                    end)
+
+                    OptionButton.MouseLeave:Connect(function()
+                        if not Selected[Option] then
+                            Tween(OptionLabel, {TextColor3 = Theme.SubText}, 0.1)
+                        end
+                    end)
+
+                    OptionButton.MouseButton1Click:Connect(function()
+                        Selected[Option] = not Selected[Option]
+                        OptionFill.Visible = Selected[Option]
+                        OptionLabel.TextColor3 = Selected[Option] and Color3.fromRGB(0, 0, 0) or Theme.Text
+                        ComboboxText.Text = GetSelectedText()
+
+                        local SelectedItems = {}
+                        for _, Opt in ipairs(ComboboxConfig.Options) do
+                            if Selected[Opt] then
+                                table.insert(SelectedItems, Opt)
+                            end
+                        end
+                        ComboboxConfig.Callback(SelectedItems)
+                    end)
+
+                    OptionButtons[Option] = {Button = OptionButton, Fill = OptionFill, Label = OptionLabel}
+                end
+
+                local ComboboxClickArea = Create("TextButton", {
+                    Name = "ComboboxClickArea",
+                    Parent = ComboboxButton,
+                    BackgroundTransparency = 1,
+                    Size = UDim2.new(1, 0, 1, 0),
+                    Text = "",
+                    AutoButtonColor = false
+                })
+
+                ComboboxFrame.MouseEnter:Connect(function()
+                    Tween(ComboboxLabel, {TextColor3 = Theme.Text}, 0.15)
+                end)
+
+                ComboboxFrame.MouseLeave:Connect(function()
+                    if not IsOpen then
+                        Tween(ComboboxLabel, {TextColor3 = Theme.SubText}, 0.15)
+                    end
+                end)
+
+                ComboboxClickArea.MouseButton1Click:Connect(function()
+                    IsOpen = not IsOpen
+                    ComboboxDropdown.Visible = IsOpen
+                    ComboboxIcon.Rotation = IsOpen and 180 or 0
+                end)
+
+                local ComboboxAPI = {}
+
+                function ComboboxAPI:Set(Items)
+                    Selected = {}
+                    for _, Item in ipairs(Items) do
+                        Selected[Item] = true
+                    end
+                    ComboboxText.Text = GetSelectedText()
+                    for Option, Data in pairs(OptionButtons) do
+                        Data.Fill.Visible = Selected[Option] or false
+                        Data.Label.TextColor3 = Selected[Option] and Color3.fromRGB(0, 0, 0) or Theme.Text
+                    end
+                    ComboboxConfig.Callback(Items)
+                end
+
+                function ComboboxAPI:Get()
+                    local Items = {}
+                    for _, Option in ipairs(ComboboxConfig.Options) do
+                        if Selected[Option] then
+                            table.insert(Items, Option)
+                        end
+                    end
+                    return Items
+                end
+
+                return ComboboxAPI
             end
 
             return Group
