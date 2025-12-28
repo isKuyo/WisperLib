@@ -688,6 +688,7 @@ function WisperLib:CreateWindow(Config)
                 Parent = GroupContent,
                 PaddingLeft = UDim.new(0, 12),
                 PaddingRight = UDim.new(0, 12),
+                PaddingTop = UDim.new(0, 4),
                 PaddingBottom = UDim.new(0, 12)
             })
 
@@ -711,10 +712,11 @@ function WisperLib:CreateWindow(Config)
                 local ToggleButton = Create("Frame", {
                     Name = "ToggleButton",
                     Parent = ToggleFrame,
-                    BackgroundColor3 = Toggled and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(28, 32, 38),
+                    BackgroundColor3 = Color3.fromRGB(28, 32, 38),
                     BorderSizePixel = 0,
                     Size = UDim2.new(0, 18, 0, 18),
-                    Position = UDim2.new(0, 0, 0.5, -9)
+                    Position = UDim2.new(0, 0, 0.5, -9),
+                    ClipsDescendants = true
                 })
 
                 local ToggleCorner = Create("UICorner", {
@@ -722,26 +724,42 @@ function WisperLib:CreateWindow(Config)
                     Parent = ToggleButton
                 })
 
-                local ToggleGradient = Create("UIGradient", {
-                    Name = "Gradient",
+                local ToggleFill = Create("Frame", {
+                    Name = "Fill",
                     Parent = ToggleButton,
+                    BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+                    BorderSizePixel = 0,
+                    AnchorPoint = Vector2.new(0.5, 0.5),
+                    Position = UDim2.new(0.5, 0, 0.5, 0),
+                    Size = Toggled and UDim2.new(1, 0, 1, 0) or UDim2.new(0, 0, 0, 0)
+                })
+
+                local ToggleFillCorner = Create("UICorner", {
+                    CornerRadius = UDim.new(0, 4),
+                    Parent = ToggleFill
+                })
+
+                local ToggleFillGradient = Create("UIGradient", {
+                    Name = "Gradient",
+                    Parent = ToggleFill,
                     Color = ColorSequence.new({
                         ColorSequenceKeypoint.new(0, Theme.GradientColor1),
                         ColorSequenceKeypoint.new(1, Theme.GradientColor2)
                     }),
-                    Rotation = 0,
-                    Enabled = Toggled
+                    Rotation = 0
                 })
 
                 local ToggleCheck = Create("ImageLabel", {
                     Name = "ToggleCheck",
                     Parent = ToggleButton,
                     BackgroundTransparency = 1,
-                    Position = UDim2.new(0.5, -6, 0.5, -6),
+                    AnchorPoint = Vector2.new(0.5, 0.5),
+                    Position = UDim2.new(0.5, 0, 0.5, 0),
                     Size = UDim2.new(0, 12, 0, 12),
-                    Image = "rbxassetid://7743871962",
+                    Image = "rbxassetid://6031094678",
                     ImageColor3 = Toggled and Color3.fromRGB(0, 0, 0) or Color3.fromRGB(255, 255, 255),
-                    ImageTransparency = Toggled and 0 or 1
+                    ImageTransparency = Toggled and 0 or 1,
+                    ZIndex = 2
                 })
 
                 local ToggleLabel = Create("TextLabel", {
@@ -780,13 +798,11 @@ function WisperLib:CreateWindow(Config)
 
                 local function UpdateToggle()
                     if Toggled then
-                        ToggleButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                        ToggleGradient.Enabled = true
+                        Tween(ToggleFill, {Size = UDim2.new(1, 0, 1, 0)}, 0.2)
                         ToggleCheck.ImageColor3 = Color3.fromRGB(0, 0, 0)
                         ToggleLabel.TextColor3 = Theme.Text
                     else
-                        ToggleGradient.Enabled = false
-                        ToggleButton.BackgroundColor3 = Color3.fromRGB(28, 32, 38)
+                        Tween(ToggleFill, {Size = UDim2.new(0, 0, 0, 0)}, 0.2)
                         ToggleCheck.ImageColor3 = Color3.fromRGB(255, 255, 255)
                         ToggleLabel.TextColor3 = Theme.SubText
                     end
@@ -871,7 +887,7 @@ function WisperLib:CreateWindow(Config)
                 })
 
                 local SliderBackgroundCorner = Create("UICorner", {
-                    CornerRadius = UDim.new(0, 4),
+                    CornerRadius = UDim.new(0, 6),
                     Parent = SliderBackground
                 })
 
@@ -885,7 +901,7 @@ function WisperLib:CreateWindow(Config)
                 })
 
                 local SliderFillCorner = Create("UICorner", {
-                    CornerRadius = UDim.new(0, 4),
+                    CornerRadius = UDim.new(0, 6),
                     Parent = SliderFill
                 })
 
