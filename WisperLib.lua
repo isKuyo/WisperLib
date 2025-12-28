@@ -8,6 +8,33 @@ local CoreGui = game:GetService("CoreGui")
 
 local Player = Players.LocalPlayer
 
+local IconKeywords = {
+    Home = {"home", "main", "general", "principal"},
+    Visual = {"visual", "esp", "render", "display"},
+    Settings = {"settings", "config", "configuration", "opcoes", "options"}
+}
+
+local IconAssets = {
+    Home = "rbxassetid://80485236798991",
+    Visual = "rbxassetid://134539162713658",
+    Settings = "rbxassetid://77861834748434",
+    Default = "rbxassetid://7733960981"
+}
+
+local function GetAutoIcon(TabName)
+    local LowerName = string.lower(TabName)
+    
+    for Category, Keywords in pairs(IconKeywords) do
+        for _, Keyword in ipairs(Keywords) do
+            if string.find(LowerName, Keyword) then
+                return IconAssets[Category]
+            end
+        end
+    end
+    
+    return IconAssets.Default
+end
+
 local function GetExecutor()
     local Success, Name, Version = pcall(function()
         return identifyexecutor()
@@ -40,28 +67,6 @@ local function GetGameName()
 end
 
 local GameName = GetGameName()
-
-local IconPatterns = {
-    Home = "rbxassetid://80485236798991",
-    Main = "rbxassetid://80485236798991",
-    General = "rbxassetid://80485236798991",
-    Visual = "rbxassetid://134539162713658",
-    ESP = "rbxassetid://134539162713658",
-    Visuals = "rbxassetid://134539162713658",
-    Settings = "rbxassetid://77861834748434",
-    Config = "rbxassetid://77861834748434",
-    Configuration = "rbxassetid://77861834748434"
-}
-
-local function GetAutoIcon(Name)
-    local LowerName = string.lower(Name)
-    for Pattern, Icon in pairs(IconPatterns) do
-        if string.find(LowerName, string.lower(Pattern)) then
-            return Icon
-        end
-    end
-    return nil
-end
 
 local function Create(ClassName, Properties)
     local Instance_ = Instance.new(ClassName)
@@ -558,10 +563,7 @@ function WisperLib:CreateWindow(Config)
         TabConfig = TabConfig or {}
         TabConfig.Name = TabConfig.Name or "Tab"
         
-        local TabIcon = TabConfig.Icon
-        if not TabIcon then
-            TabIcon = GetAutoIcon(TabConfig.Name) or "rbxassetid://7733960981"
-        end
+        local TabIcon = TabConfig.Icon or GetAutoIcon(TabConfig.Name)
 
         local TabButtonData = CreateTabButton(TabIcon, #Tabs + 1)
 
@@ -781,7 +783,7 @@ function WisperLib:CreateWindow(Config)
                     BackgroundTransparency = 1,
                     AnchorPoint = Vector2.new(0.5, 0.5),
                     Position = UDim2.new(0.5, 0, 0.5, 0),
-                    Size = UDim2.new(0, 12, 0, 12),
+                    Size = UDim2.new(0, 14, 0, 14),
                     Image = "rbxassetid://3926305904",
                     ImageRectOffset = Vector2.new(312, 4),
                     ImageRectSize = Vector2.new(24, 24),
@@ -879,19 +881,12 @@ function WisperLib:CreateWindow(Config)
                     Size = UDim2.new(1, 0, 0, 50)
                 })
 
-                local SliderTopRow = Create("Frame", {
-                    Name = "SliderTopRow",
-                    Parent = SliderFrame,
-                    BackgroundTransparency = 1,
-                    Size = UDim2.new(1, 0, 0, 18)
-                })
-
                 local SliderLabel = Create("TextLabel", {
                     Name = "SliderLabel",
-                    Parent = SliderTopRow,
+                    Parent = SliderFrame,
                     BackgroundTransparency = 1,
                     Position = UDim2.new(0, 0, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
+                    Size = UDim2.new(1, -50, 0, 18),
                     Font = Enum.Font.Gotham,
                     Text = SliderConfig.Name,
                     TextColor3 = Theme.SubText,
@@ -901,10 +896,10 @@ function WisperLib:CreateWindow(Config)
 
                 local SliderValue = Create("TextLabel", {
                     Name = "SliderValue",
-                    Parent = SliderTopRow,
+                    Parent = SliderFrame,
                     BackgroundTransparency = 1,
-                    Position = UDim2.new(0, 0, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
+                    Position = UDim2.new(1, -50, 0, 0),
+                    Size = UDim2.new(0, 50, 0, 18),
                     Font = Enum.Font.GothamBold,
                     Text = tostring(Value) .. SliderConfig.Suffix,
                     TextColor3 = Theme.Text,
