@@ -1,4 +1,3 @@
-print("sc")
 local WisperLib = {}
 
 local Development = true
@@ -1113,21 +1112,17 @@ function WisperLib:CreateWindow(Config)
                     Parent = SatValBox
                 })
 
-                local WhiteGradient = Create("UIGradient", {
+                local SaturationGradient = Create("UIGradient", {
                     Parent = SatValBox,
                     Color = ColorSequence.new({
                         ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-                        ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))
-                    }),
-                    Transparency = NumberSequence.new({
-                        NumberSequenceKeypoint.new(0, 0),
-                        NumberSequenceKeypoint.new(1, 1)
+                        ColorSequenceKeypoint.new(1, Color3.fromHSV(ColorPickerHue, 1, 1))
                     }),
                     Rotation = 0
                 })
 
-                local BlackOverlay = Create("Frame", {
-                    Name = "BlackOverlay",
+                local ValueGradient = Create("Frame", {
+                    Name = "ValueGradient",
                     Parent = SatValBox,
                     BackgroundColor3 = Color3.fromRGB(0, 0, 0),
                     BackgroundTransparency = 0,
@@ -1136,17 +1131,13 @@ function WisperLib:CreateWindow(Config)
                     ZIndex = 102
                 })
 
-                local BlackOverlayCorner = Create("UICorner", {
+                local ValueGradientCorner = Create("UICorner", {
                     CornerRadius = UDim.new(0, 4),
-                    Parent = BlackOverlay
+                    Parent = ValueGradient
                 })
 
-                local BlackGradient = Create("UIGradient", {
-                    Parent = BlackOverlay,
-                    Color = ColorSequence.new({
-                        ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
-                        ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
-                    }),
+                local ValueGradientUI = Create("UIGradient", {
+                    Parent = ValueGradient,
                     Transparency = NumberSequence.new({
                         NumberSequenceKeypoint.new(0, 1),
                         NumberSequenceKeypoint.new(1, 0)
@@ -1157,11 +1148,11 @@ function WisperLib:CreateWindow(Config)
                 local SatValCursor = Create("Frame", {
                     Name = "SatValCursor",
                     Parent = SatValBox,
-                    BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+                    BackgroundTransparency = 1,
                     BorderSizePixel = 0,
                     AnchorPoint = Vector2.new(0.5, 0.5),
                     Position = UDim2.new(1, 0, 0, 0),
-                    Size = UDim2.new(0, 10, 0, 10),
+                    Size = UDim2.new(0, 12, 0, 12),
                     ZIndex = 104
                 })
 
@@ -1172,8 +1163,8 @@ function WisperLib:CreateWindow(Config)
 
                 local SatValCursorStroke = Create("UIStroke", {
                     Parent = SatValCursor,
-                    Color = Color3.fromRGB(0, 0, 0),
-                    Thickness = 2
+                    Color = Color3.fromRGB(255, 255, 255),
+                    Thickness = 1.5
                 })
 
                 local HueBar = Create("Frame", {
@@ -1208,29 +1199,32 @@ function WisperLib:CreateWindow(Config)
                 local HueCursor = Create("Frame", {
                     Name = "HueCursor",
                     Parent = HueBar,
-                    BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+                    BackgroundTransparency = 1,
                     BorderSizePixel = 0,
                     AnchorPoint = Vector2.new(0.5, 0.5),
                     Position = UDim2.new(0.5, 0, 0, 0),
-                    Size = UDim2.new(0, 16, 0, 8),
+                    Size = UDim2.new(1, 4, 0, 6),
                     ZIndex = 104
                 })
 
                 local HueCursorCorner = Create("UICorner", {
-                    CornerRadius = UDim.new(0, 3),
+                    CornerRadius = UDim.new(0, 2),
                     Parent = HueCursor
                 })
 
                 local HueCursorStroke = Create("UIStroke", {
                     Parent = HueCursor,
-                    Color = Color3.fromRGB(0, 0, 0),
-                    Thickness = 1
+                    Color = Color3.fromRGB(255, 255, 255),
+                    Thickness = 1.5
                 })
 
                 local function UpdateColorFromHSV()
                     CurrentColor = Color3.fromHSV(ColorPickerHue, ColorPickerSat, ColorPickerVal)
                     ColorFrame.BackgroundColor3 = CurrentColor
-                    SatValBox.BackgroundColor3 = Color3.fromHSV(ColorPickerHue, 1, 1)
+                    SaturationGradient.Color = ColorSequence.new({
+                        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+                        ColorSequenceKeypoint.new(1, Color3.fromHSV(ColorPickerHue, 1, 1))
+                    })
                     if ToggleConfig.ColorCallback then
                         ToggleConfig.ColorCallback(CurrentColor)
                     end
@@ -1475,7 +1469,10 @@ function WisperLib:CreateWindow(Config)
                     ColorPickerVal = V
                     SatValCursor.Position = UDim2.new(S, 0, 1 - V, 0)
                     HueCursor.Position = UDim2.new(0.5, 0, H, 0)
-                    SatValBox.BackgroundColor3 = Color3.fromHSV(H, 1, 1)
+                    SaturationGradient.Color = ColorSequence.new({
+                        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+                        ColorSequenceKeypoint.new(1, Color3.fromHSV(H, 1, 1))
+                    })
                 end
 
                 function ToggleAPI:GetColor()
