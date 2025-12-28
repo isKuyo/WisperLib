@@ -1,3 +1,4 @@
+print("ks")
 local WisperLib = {}
 
 local Development = true
@@ -1077,7 +1078,7 @@ function WisperLib:CreateWindow(Config)
                     Parent = ScreenGui,
                     BackgroundColor3 = Color3.fromRGB(28, 32, 38),
                     BorderSizePixel = 0,
-                    Size = UDim2.new(0, 180, 0, 150),
+                    Size = UDim2.new(0, 174, 0, 150),
                     Visible = false,
                     ZIndex = 100
                 })
@@ -1183,7 +1184,7 @@ function WisperLib:CreateWindow(Config)
                     BackgroundColor3 = Color3.fromRGB(255, 255, 255),
                     BorderSizePixel = 0,
                     Position = UDim2.new(0, 150, 0, 10),
-                    Size = UDim2.new(0, 20, 0, 130),
+                    Size = UDim2.new(0, 14, 0, 130),
                     ZIndex = 101
                 })
 
@@ -1277,6 +1278,10 @@ function WisperLib:CreateWindow(Config)
                     end
                 end)
 
+                local SatValTargetX = 1
+                local SatValTargetY = 0
+                local HueTargetY = 0
+
                 RunService.RenderStepped:Connect(function()
                     if DraggingSatVal then
                         local MousePos = UserInputService:GetMouseLocation()
@@ -1284,13 +1289,13 @@ function WisperLib:CreateWindow(Config)
                         local BoxSize = SatValBox.AbsoluteSize
 
                         local RelX = math.clamp((MousePos.X - BoxPos.X) / BoxSize.X, 0, 1)
-                        local RelY = math.clamp((MousePos.Y - BoxPos.Y - 36) / BoxSize.Y, 0, 1)
+                        local RelY = math.clamp((MousePos.Y - BoxPos.Y) / BoxSize.Y, 0, 1)
 
                         ColorPickerSat = RelX
                         ColorPickerVal = 1 - RelY
 
-                        local TargetPos = UDim2.new(RelX, 0, RelY, 0)
-                        Tween(SatValCursor, {Position = TargetPos}, 0.05)
+                        SatValTargetX = RelX
+                        SatValTargetY = RelY
                         UpdateColorFromHSV()
                     end
 
@@ -1299,14 +1304,21 @@ function WisperLib:CreateWindow(Config)
                         local BarPos = HueBar.AbsolutePosition
                         local BarSize = HueBar.AbsoluteSize
 
-                        local RelY = math.clamp((MousePos.Y - BarPos.Y - 36) / BarSize.Y, 0, 1)
+                        local RelY = math.clamp((MousePos.Y - BarPos.Y) / BarSize.Y, 0, 1)
 
                         ColorPickerHue = RelY
-
-                        local TargetPos = UDim2.new(0.5, 0, RelY, 0)
-                        Tween(HueCursor, {Position = TargetPos}, 0.05)
+                        HueTargetY = RelY
                         UpdateColorFromHSV()
                     end
+
+                    local CurrentSatValPos = SatValCursor.Position
+                    local NewSatValX = CurrentSatValPos.X.Scale + (SatValTargetX - CurrentSatValPos.X.Scale) * 0.15
+                    local NewSatValY = CurrentSatValPos.Y.Scale + (SatValTargetY - CurrentSatValPos.Y.Scale) * 0.15
+                    SatValCursor.Position = UDim2.new(NewSatValX, 0, NewSatValY, 0)
+
+                    local CurrentHuePos = HueCursor.Position
+                    local NewHueY = CurrentHuePos.Y.Scale + (HueTargetY - CurrentHuePos.Y.Scale) * 0.15
+                    HueCursor.Position = UDim2.new(0.5, 0, NewHueY, 0)
 
                     if ColorPickerOpen then
                         UpdatePickerPosition()
@@ -1319,7 +1331,7 @@ function WisperLib:CreateWindow(Config)
                         UpdatePickerPosition()
                         ColorPickerPopup.Visible = true
                         ColorPickerPopup.Size = UDim2.new(0, 0, 0, 0)
-                        Tween(ColorPickerPopup, {Size = UDim2.new(0, 180, 0, 150)}, 0.2)
+                        Tween(ColorPickerPopup, {Size = UDim2.new(0, 174, 0, 150)}, 0.2)
                     else
                         Tween(ColorPickerPopup, {Size = UDim2.new(0, 0, 0, 0)}, 0.2)
                         task.delay(0.2, function()
