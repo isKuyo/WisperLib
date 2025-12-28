@@ -1,4 +1,4 @@
-print("bbb")
+print("a")
 local WisperLib = {}
 
 local TweenService = game:GetService("TweenService")
@@ -333,7 +333,7 @@ function WisperLib:CreateWindow(Config)
         BackgroundColor3 = Theme.ButtonInactive,
         AnchorPoint = Vector2.new(0.5, 1),
         Position = UDim2.new(0, 0, 0, 0),
-        Size = UDim2.new(0, 36, 0, 36),
+        Size = UDim2.new(0, 100, 0, 36),
         ClipsDescendants = true
     })
 
@@ -379,17 +379,22 @@ function WisperLib:CreateWindow(Config)
 
     RunService.RenderStepped:Connect(UpdateSearchPosition)
 
+    local SearchTween = nil
     local function UpdateSearchSize()
         local TextWidth = SearchInput.TextBounds.X
-        local MinWidth = 36
-        local Padding = 44
+        local MinWidth = 100
+        local Padding = 50
         local TargetWidth = math.max(MinWidth, TextWidth + Padding)
         
+        if SearchTween then
+            SearchTween:Cancel()
+        end
+        
         if SearchInput.Text == "" then
-            Tween(SearchContainer, {Size = UDim2.new(0, MinWidth, 0, 36)}, 0.15)
+            SearchTween = Tween(SearchContainer, {Size = UDim2.new(0, MinWidth, 0, 36)}, 0.2)
             Tween(SearchIcon, {ImageColor3 = Theme.SubText}, 0.15)
         else
-            Tween(SearchContainer, {Size = UDim2.new(0, TargetWidth, 0, 36)}, 0.15)
+            SearchContainer.Size = UDim2.new(0, TargetWidth, 0, 36)
             Tween(SearchIcon, {ImageColor3 = Theme.Text}, 0.15)
         end
     end
