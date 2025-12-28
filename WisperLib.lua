@@ -879,12 +879,19 @@ function WisperLib:CreateWindow(Config)
                     Size = UDim2.new(1, 0, 0, 50)
                 })
 
-                local SliderLabel = Create("TextLabel", {
-                    Name = "SliderLabel",
+                local SliderTopRow = Create("Frame", {
+                    Name = "SliderTopRow",
                     Parent = SliderFrame,
                     BackgroundTransparency = 1,
+                    Size = UDim2.new(1, 0, 0, 18)
+                })
+
+                local SliderLabel = Create("TextLabel", {
+                    Name = "SliderLabel",
+                    Parent = SliderTopRow,
+                    BackgroundTransparency = 1,
                     Position = UDim2.new(0, 0, 0, 0),
-                    Size = UDim2.new(1, -50, 0, 18),
+                    Size = UDim2.new(1, 0, 1, 0),
                     Font = Enum.Font.Gotham,
                     Text = SliderConfig.Name,
                     TextColor3 = Theme.SubText,
@@ -894,16 +901,15 @@ function WisperLib:CreateWindow(Config)
 
                 local SliderValue = Create("TextLabel", {
                     Name = "SliderValue",
-                    Parent = SliderFrame,
+                    Parent = SliderTopRow,
                     BackgroundTransparency = 1,
-                    Position = UDim2.new(1, 0, 0, 0),
-                    Size = UDim2.new(0, 0, 0, 18),
-                    AutomaticSize = Enum.AutomaticSize.X,
-                    AnchorPoint = Vector2.new(1, 0),
+                    Position = UDim2.new(0, 0, 0, 0),
+                    Size = UDim2.new(1, 0, 1, 0),
                     Font = Enum.Font.GothamBold,
                     Text = tostring(Value) .. SliderConfig.Suffix,
                     TextColor3 = Theme.Text,
-                    TextSize = 13
+                    TextSize = 13,
+                    TextXAlignment = Enum.TextXAlignment.Right
                 })
 
                 local SliderBackground = Create("Frame", {
