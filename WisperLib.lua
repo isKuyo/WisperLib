@@ -1,4 +1,3 @@
-print("ok")
 local WisperLib = {}
 
 local TweenService = game:GetService("TweenService")
@@ -421,6 +420,9 @@ function WisperLib:CreateWindow(Config)
     end
 
     local function SelectTabByIndex(TabIndex)
+        if not TabIndex or not Tabs[TabIndex] then
+            return
+        end
         for i, Tab in pairs(Tabs) do
             Tab.Page.Visible = false
             SetTabActive(Tab.ButtonData, false, Tab.Name)
@@ -1313,7 +1315,7 @@ function WisperLib:CreateWindow(Config)
                 local LeftLine = Create("Frame", {
                     Name = "LeftLine",
                     Parent = SeparatorFrame,
-                    BackgroundColor3 = Theme.GroupStroke,
+                    BackgroundColor3 = Color3.fromRGB(60, 65, 75),
                     BorderSizePixel = 0,
                     Position = UDim2.new(0, 0, 0.5, -1),
                     Size = UDim2.new(0.5, -30, 0, 2)
@@ -1328,15 +1330,15 @@ function WisperLib:CreateWindow(Config)
                     Size = UDim2.new(0, 60, 1, 0),
                     Font = Enum.Font.Gotham,
                     Text = SeparatorConfig.Text,
-                    TextColor3 = Theme.SubText,
-                    TextSize = 12,
+                    TextColor3 = Color3.fromRGB(180, 185, 195),
+                    TextSize = 13,
                     AutomaticSize = Enum.AutomaticSize.X
                 })
 
                 local RightLine = Create("Frame", {
                     Name = "RightLine",
                     Parent = SeparatorFrame,
-                    BackgroundColor3 = Theme.GroupStroke,
+                    BackgroundColor3 = Color3.fromRGB(60, 65, 75),
                     BorderSizePixel = 0,
                     AnchorPoint = Vector2.new(1, 0),
                     Position = UDim2.new(1, 0, 0.5, -1),
