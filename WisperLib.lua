@@ -587,7 +587,7 @@ function WisperLib:CreateWindow(Config)
             Name = "LeftColumn",
             Parent = TabPage,
             BackgroundTransparency = 1,
-            Size = UDim2.new(0, 290, 0, 0),
+            Size = UDim2.new(0.5, -5, 0, 0),
             AutomaticSize = Enum.AutomaticSize.Y,
             LayoutOrder = 1
         })
@@ -602,7 +602,7 @@ function WisperLib:CreateWindow(Config)
             Name = "RightColumn",
             Parent = TabPage,
             BackgroundTransparency = 1,
-            Size = UDim2.new(0, 290, 0, 0),
+            Size = UDim2.new(0.5, -5, 0, 0),
             AutomaticSize = Enum.AutomaticSize.Y,
             LayoutOrder = 2
         })
@@ -801,7 +801,7 @@ function WisperLib:CreateWindow(Config)
                     Font = Enum.Font.GothamMedium,
                     Text = ToggleConfig.Name,
                     TextColor3 = Toggled and Theme.Text or Theme.SubText,
-                    TextSize = 13,
+                    TextSize = 14,
                     TextXAlignment = Enum.TextXAlignment.Left
                 })
 
@@ -890,7 +890,7 @@ function WisperLib:CreateWindow(Config)
                     Font = Enum.Font.Gotham,
                     Text = SliderConfig.Name,
                     TextColor3 = Theme.SubText,
-                    TextSize = 13,
+                    TextSize = 14,
                     TextXAlignment = Enum.TextXAlignment.Left
                 })
 
@@ -903,7 +903,7 @@ function WisperLib:CreateWindow(Config)
                     Font = Enum.Font.GothamBold,
                     Text = tostring(Value) .. SliderConfig.Suffix,
                     TextColor3 = Theme.Text,
-                    TextSize = 13,
+                    TextSize = 14,
                     TextXAlignment = Enum.TextXAlignment.Right
                 })
 
@@ -1039,7 +1039,7 @@ function WisperLib:CreateWindow(Config)
                     Font = Enum.Font.Gotham,
                     Text = LabelConfig.Text,
                     TextColor3 = Theme.SubText,
-                    TextSize = 12,
+                    TextSize = 14,
                     TextXAlignment = Enum.TextXAlignment.Left
                 })
 
@@ -1073,7 +1073,7 @@ function WisperLib:CreateWindow(Config)
                     Font = Enum.Font.Gotham,
                     Text = InputConfig.Name,
                     TextColor3 = Theme.SubText,
-                    TextSize = 12,
+                    TextSize = 14,
                     TextXAlignment = Enum.TextXAlignment.Left
                 })
 
