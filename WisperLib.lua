@@ -879,7 +879,7 @@ function WisperLib:CreateWindow(Config)
                     Name = "Slider_" .. SliderConfig.Name,
                     Parent = GroupContent,
                     BackgroundTransparency = 1,
-                    Size = UDim2.new(1, 0, 0, 50)
+                    Size = UDim2.new(1, 0, 0, 40)
                 })
 
                 local SliderLabel = Create("TextLabel", {
@@ -913,7 +913,7 @@ function WisperLib:CreateWindow(Config)
                     Parent = SliderFrame,
                     BackgroundColor3 = Theme.SliderBackground,
                     BorderSizePixel = 0,
-                    Position = UDim2.new(0, 0, 0, 24),
+                    Position = UDim2.new(0, 0, 0, 22),
                     Size = UDim2.new(1, 0, 0, 12)
                 })
 
@@ -965,8 +965,8 @@ function WisperLib:CreateWindow(Config)
                     Name = "SliderClickArea",
                     Parent = SliderFrame,
                     BackgroundTransparency = 1,
-                    Position = UDim2.new(0, 0, 0, 20),
-                    Size = UDim2.new(1, 0, 0, 22),
+                    Position = UDim2.new(0, 0, 0, 18),
+                    Size = UDim2.new(1, 0, 0, 20),
                     Text = "",
                     AutoButtonColor = false
                 })
