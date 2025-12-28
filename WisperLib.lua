@@ -1931,13 +1931,14 @@ function WisperLib:CreateWindow(Config)
         BackgroundTransparency = 1,
         AnchorPoint = Vector2.new(1, 1),
         Position = UDim2.new(1, -20, 1, -20),
-        Size = UDim2.new(0, 300, 0, 400),
+        Size = UDim2.new(0, 400, 0, 500),
         ClipsDescendants = false
     })
 
     local NotificationLayout = Create("UIListLayout", {
         Parent = NotificationContainer,
         SortOrder = Enum.SortOrder.LayoutOrder,
+        HorizontalAlignment = Enum.HorizontalAlignment.Right,
         VerticalAlignment = Enum.VerticalAlignment.Bottom,
         Padding = UDim.new(0, 10)
     })
@@ -1958,9 +1959,15 @@ function WisperLib:CreateWindow(Config)
             Parent = NotificationContainer,
             BackgroundColor3 = Color3.fromRGB(28, 32, 38),
             BorderSizePixel = 0,
-            Size = UDim2.new(1, 0, 0, 50),
+            Size = UDim2.new(0, 0, 0, 50),
+            AutomaticSize = Enum.AutomaticSize.X,
             LayoutOrder = -NotificationCount,
             ClipsDescendants = true
+        })
+
+        local NotificationPadding = Create("UIPadding", {
+            Parent = NotificationFrame,
+            PaddingRight = UDim.new(0, 15)
         })
 
         local NotificationCorner = Create("UICorner", {
@@ -2026,7 +2033,8 @@ function WisperLib:CreateWindow(Config)
             Parent = NotificationFrame,
             BackgroundTransparency = 1,
             Position = UDim2.new(0, 50, 0, 8),
-            Size = UDim2.new(1, -60, 0, 16),
+            Size = UDim2.new(0, 0, 0, 16),
+            AutomaticSize = Enum.AutomaticSize.X,
             Font = Enum.Font.GothamBold,
             Text = NotifyConfig.Title,
             TextColor3 = Theme.Text,
@@ -2039,7 +2047,8 @@ function WisperLib:CreateWindow(Config)
             Parent = NotificationFrame,
             BackgroundTransparency = 1,
             Position = UDim2.new(0, 50, 0, 26),
-            Size = UDim2.new(1, -60, 0, 16),
+            Size = UDim2.new(0, 0, 0, 16),
+            AutomaticSize = Enum.AutomaticSize.X,
             Font = Enum.Font.Gotham,
             Text = NotifyConfig.Description,
             TextColor3 = Theme.SubText,
@@ -2047,12 +2056,11 @@ function WisperLib:CreateWindow(Config)
             TextXAlignment = Enum.TextXAlignment.Left
         })
 
-        NotificationFrame.Size = UDim2.new(1, 0, 0, 0)
-        NotificationFrame.BackgroundTransparency = 1
-        Tween(NotificationFrame, {Size = UDim2.new(1, 0, 0, 50), BackgroundTransparency = 0}, 0.3)
+        NotificationFrame.Position = UDim2.new(1, 50, 0, 0)
+        Tween(NotificationFrame, {Position = UDim2.new(0, 0, 0, 0)}, 0.3)
 
         local function CloseNotification()
-            Tween(NotificationFrame, {Size = UDim2.new(1, 0, 0, 0), BackgroundTransparency = 1}, 0.3)
+            Tween(NotificationFrame, {Position = UDim2.new(1, 50, 0, 0)}, 0.3)
             task.delay(0.3, function()
                 NotificationFrame:Destroy()
             end)
