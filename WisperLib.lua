@@ -1,4 +1,4 @@
-print("a")
+print("b")
 local WisperLib = {}
 
 local TweenService = game:GetService("TweenService")
@@ -280,7 +280,7 @@ function WisperLib:CreateWindow(Config)
         BackgroundColor3 = Theme.ButtonInactive,
         AnchorPoint = Vector2.new(0.5, 0),
         Position = UDim2.new(0, 0, 0, 0),
-        Size = UDim2.new(0, 0, 0, 32),
+        Size = UDim2.new(0, 0, 0, 36),
         AutomaticSize = Enum.AutomaticSize.X
     })
 
@@ -292,20 +292,17 @@ function WisperLib:CreateWindow(Config)
 
     MainFrame:GetPropertyChangedSignal("AbsolutePosition"):Connect(UpdateNavPosition)
     MainFrame:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateNavPosition)
-    task.spawn(function()
-        task.wait()
-        UpdateNavPosition()
-    end)
+    RunService.RenderStepped:Connect(UpdateNavPosition)
 
     local NavContainerCorner = Create("UICorner", {
-        CornerRadius = UDim.new(0, 16),
+        CornerRadius = UDim.new(0, 18),
         Parent = NavContainer
     })
 
     local NavContainerPadding = Create("UIPadding", {
         Parent = NavContainer,
-        PaddingLeft = UDim.new(0, 4),
-        PaddingRight = UDim.new(0, 4)
+        PaddingLeft = UDim.new(0, 6),
+        PaddingRight = UDim.new(0, 6)
     })
 
     local NavButtonsHolder = Create("Frame", {
@@ -777,7 +774,8 @@ function WisperLib:CreateWindow(Config)
                 BackgroundTransparency = 1,
                 Position = UDim2.new(0, 0, 0, 40),
                 Size = UDim2.new(1, 0, 0, 0),
-                AutomaticSize = Enum.AutomaticSize.Y
+                AutomaticSize = Enum.AutomaticSize.Y,
+                Visible = false
             })
 
             local GroupContentLayout = Create("UIListLayout", {
@@ -794,6 +792,12 @@ function WisperLib:CreateWindow(Config)
                 PaddingBottom = UDim.new(0, 10)
             })
 
+            local function ShowContentIfNeeded()
+                if not GroupContent.Visible then
+                    GroupContent.Visible = true
+                end
+            end
+
             local Group = {}
 
             function Group:CreateToggle(ToggleConfig)
@@ -801,6 +805,8 @@ function WisperLib:CreateWindow(Config)
                 ToggleConfig.Name = ToggleConfig.Name or "Toggle"
                 ToggleConfig.Default = ToggleConfig.Default or false
                 ToggleConfig.Callback = ToggleConfig.Callback or function() end
+
+                ShowContentIfNeeded()
 
                 local Toggled = ToggleConfig.Default
 
@@ -942,6 +948,8 @@ function WisperLib:CreateWindow(Config)
                 SliderConfig.Name = SliderConfig.Name or "Slider"
                 SliderConfig.Min = SliderConfig.Min or 0
                 SliderConfig.Max = SliderConfig.Max or 100
+
+                ShowContentIfNeeded()
                 SliderConfig.Default = SliderConfig.Default or SliderConfig.Min
                 SliderConfig.Suffix = SliderConfig.Suffix or "%"
                 SliderConfig.Callback = SliderConfig.Callback or function() end
@@ -1098,6 +1106,8 @@ function WisperLib:CreateWindow(Config)
                 LabelConfig = LabelConfig or {}
                 LabelConfig.Text = LabelConfig.Text or "Label"
 
+                ShowContentIfNeeded()
+
                 local LabelFrame = Create("Frame", {
                     Name = "Label",
                     Parent = GroupContent,
@@ -1139,6 +1149,8 @@ function WisperLib:CreateWindow(Config)
                 InputConfig.Name = InputConfig.Name or "Input"
                 InputConfig.Placeholder = InputConfig.Placeholder or "Enter text..."
                 InputConfig.Callback = InputConfig.Callback or function() end
+
+                ShowContentIfNeeded()
 
                 local InputFrame = Create("Frame", {
                     Name = "Input_" .. InputConfig.Name,
@@ -1232,6 +1244,8 @@ function WisperLib:CreateWindow(Config)
                 ComboboxConfig.Options = ComboboxConfig.Options or {}
                 ComboboxConfig.Default = ComboboxConfig.Default or {}
                 ComboboxConfig.Callback = ComboboxConfig.Callback or function() end
+
+                ShowContentIfNeeded()
 
                 local Selected = {}
                 for _, v in ipairs(ComboboxConfig.Default) do
