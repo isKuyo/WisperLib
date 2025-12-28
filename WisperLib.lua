@@ -398,11 +398,6 @@ function WisperLib:CreateWindow(Config)
         end
     end
 
-    SearchInput:GetPropertyChangedSignal("Text"):Connect(function()
-        UpdateSearchSize()
-        PerformSearch(SearchInput.Text)
-    end)
-
     local function SetTabActive(TabButtonData, IsActive, TabName)
         if IsActive then
             TabButtonData.Icon.ImageTransparency = 0
@@ -472,6 +467,11 @@ function WisperLib:CreateWindow(Config)
             SelectTabByIndex(FoundTabIndex)
         end
     end
+
+    SearchInput:GetPropertyChangedSignal("Text"):Connect(function()
+        UpdateSearchSize()
+        PerformSearch(SearchInput.Text)
+    end)
 
     local function CreateTabButton(Icon, Order, TabName)
         local ButtonContainer = Create("Frame", {
@@ -1018,7 +1018,7 @@ function WisperLib:CreateWindow(Config)
                     Parent = ToggleFrame,
                     BackgroundTransparency = 1,
                     Position = UDim2.new(0, 28, 0, 0),
-                    Size = UDim2.new(1, -28, 1, 0),
+                    Size = UDim2.new(1, -78, 1, 0),
                     Font = Enum.Font.GothamMedium,
                     Text = ToggleConfig.Name,
                     TextColor3 = Toggled and Theme.Text or Theme.SubText,
@@ -1026,11 +1026,72 @@ function WisperLib:CreateWindow(Config)
                     TextXAlignment = Enum.TextXAlignment.Left
                 })
 
+                local KeybindFrame = Create("Frame", {
+                    Name = "KeybindFrame",
+                    Parent = ToggleFrame,
+                    BackgroundColor3 = Theme.InputBackground,
+                    BorderSizePixel = 0,
+                    AnchorPoint = Vector2.new(1, 0.5),
+                    Position = UDim2.new(1, 0, 0.5, 0),
+                    Size = UDim2.new(0, 45, 0, 20)
+                })
+
+                local KeybindCorner = Create("UICorner", {
+                    CornerRadius = UDim.new(0, 4),
+                    Parent = KeybindFrame
+                })
+
+                local KeybindText = Create("TextLabel", {
+                    Name = "KeybindText",
+                    Parent = KeybindFrame,
+                    BackgroundTransparency = 1,
+                    Size = UDim2.new(1, 0, 1, 0),
+                    Font = Enum.Font.Gotham,
+                    Text = "None",
+                    TextColor3 = Theme.SubText,
+                    TextSize = 11
+                })
+
+                local KeybindButton = Create("TextButton", {
+                    Name = "KeybindButton",
+                    Parent = KeybindFrame,
+                    BackgroundTransparency = 1,
+                    Size = UDim2.new(1, 0, 1, 0),
+                    Text = "",
+                    AutoButtonColor = false,
+                    ZIndex = 2
+                })
+
+                local CurrentKeybind = nil
+                local WaitingForKey = false
+
+                KeybindButton.MouseButton1Click:Connect(function()
+                    WaitingForKey = true
+                    KeybindText.Text = "..."
+                    KeybindText.TextColor3 = Theme.Text
+                end)
+
+                local KeybindConnection
+                KeybindConnection = UserInputService.InputBegan:Connect(function(Input, GameProcessed)
+                    if WaitingForKey then
+                        if Input.UserInputType == Enum.UserInputType.Keyboard then
+                            CurrentKeybind = Input.KeyCode
+                            KeybindText.Text = Input.KeyCode.Name
+                            KeybindText.TextColor3 = Theme.SubText
+                            WaitingForKey = false
+                        end
+                    elseif CurrentKeybind and Input.KeyCode == CurrentKeybind then
+                        Toggled = not Toggled
+                        UpdateToggle()
+                    end
+                end)
+
                 local ToggleClickArea = Create("TextButton", {
                     Name = "ToggleClickArea",
                     Parent = ToggleFrame,
                     BackgroundTransparency = 1,
-                    Size = UDim2.new(1, 0, 1, 0),
+                    Position = UDim2.new(0, 0, 0, 0),
+                    Size = UDim2.new(1, -50, 1, 0),
                     Text = "",
                     AutoButtonColor = false
                 })
@@ -1079,6 +1140,15 @@ function WisperLib:CreateWindow(Config)
 
                 function ToggleAPI:Get()
                     return Toggled
+                end
+
+                function ToggleAPI:SetKeybind(Key)
+                    CurrentKeybind = Key
+                    KeybindText.Text = Key and Key.Name or "None"
+                end
+
+                function ToggleAPI:GetKeybind()
+                    return CurrentKeybind
                 end
 
                 return ToggleAPI
@@ -1745,6 +1815,78 @@ function WisperLib:CreateWindow(Config)
                 end
 
                 return ComboboxAPI
+            end
+
+            function Group:CreateButton(ButtonConfig)
+                ButtonConfig = ButtonConfig or {}
+                ButtonConfig.Name = ButtonConfig.Name or "Button"
+                ButtonConfig.Callback = ButtonConfig.Callback or function() end
+
+                ShowContentIfNeeded()
+
+                local ButtonFrame = Create("Frame", {
+                    Name = "Button_" .. ButtonConfig.Name,
+                    Parent = GroupContent,
+                    BackgroundTransparency = 1,
+                    Size = UDim2.new(1, 0, 0, 32)
+                })
+
+                table.insert(RegisteredElements, {
+                    Name = ButtonConfig.Name,
+                    Frame = ButtonFrame,
+                    GroupFrame = GroupFrame,
+                    TabIndex = CurrentTabIndex
+                })
+
+                local ButtonContainer = Create("Frame", {
+                    Name = "ButtonContainer",
+                    Parent = ButtonFrame,
+                    BackgroundColor3 = Theme.InputBackground,
+                    BorderSizePixel = 0,
+                    Size = UDim2.new(1, 0, 0, 28)
+                })
+
+                local ButtonContainerCorner = Create("UICorner", {
+                    CornerRadius = UDim.new(0, 4),
+                    Parent = ButtonContainer
+                })
+
+                local ButtonText = Create("TextLabel", {
+                    Name = "ButtonText",
+                    Parent = ButtonContainer,
+                    BackgroundTransparency = 1,
+                    Size = UDim2.new(1, 0, 1, 0),
+                    Font = Enum.Font.GothamMedium,
+                    Text = ButtonConfig.Name,
+                    TextColor3 = Theme.SubText,
+                    TextSize = 13
+                })
+
+                local ButtonClickArea = Create("TextButton", {
+                    Name = "ButtonClickArea",
+                    Parent = ButtonContainer,
+                    BackgroundTransparency = 1,
+                    Size = UDim2.new(1, 0, 1, 0),
+                    Text = "",
+                    AutoButtonColor = false,
+                    ZIndex = 2
+                })
+
+                ButtonClickArea.MouseEnter:Connect(function()
+                    Tween(ButtonText, {TextColor3 = Theme.Text}, 0.15)
+                    Tween(ButtonContainer, {BackgroundColor3 = Color3.fromRGB(35, 40, 48)}, 0.15)
+                end)
+
+                ButtonClickArea.MouseLeave:Connect(function()
+                    Tween(ButtonText, {TextColor3 = Theme.SubText}, 0.15)
+                    Tween(ButtonContainer, {BackgroundColor3 = Theme.InputBackground}, 0.15)
+                end)
+
+                ButtonClickArea.MouseButton1Click:Connect(function()
+                    ButtonConfig.Callback()
+                end)
+
+                return ButtonFrame
             end
 
             return Group
