@@ -1,5 +1,8 @@
 local WisperLib = {}
 
+local Development = true
+local DevelopmentUserId = 944604813
+
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
@@ -7,6 +10,11 @@ local Players = game:GetService("Players")
 local CoreGui = game:GetService("CoreGui")
 
 local Player = Players.LocalPlayer
+
+if _G.WisperLibInstance then
+    _G.WisperLibInstance:Destroy()
+    _G.WisperLibInstance = nil
+end
 
 local IconKeywords = {
     Home = {"home", "main", "general", "principal"},
@@ -36,6 +44,10 @@ local function GetAutoIcon(TabName)
 end
 
 local function GetExecutor()
+    if Development then
+        return "Roblox"
+    end
+    
     local Success, Name, Version = pcall(function()
         return identifyexecutor()
     end)
@@ -162,6 +174,8 @@ function WisperLib:CreateWindow(Config)
         DisplayOrder = -1
     })
 
+    _G.WisperLibInstance = ScreenGui
+
     local MainFrame = Create("Frame", {
         Name = "MainFrame",
         Parent = ScreenGui,
@@ -234,12 +248,15 @@ function WisperLib:CreateWindow(Config)
         Thickness = 1
     })
 
+    local DisplayUserId = Development and DevelopmentUserId or Player.UserId
+    local DisplayName = Development and "Development" or Player.Name
+
     local AvatarImage = Create("ImageLabel", {
         Name = "AvatarImage",
         Parent = AvatarContainer,
         BackgroundTransparency = 1,
         Size = UDim2.new(1, 0, 1, 0),
-        Image = "rbxthumb://type=AvatarHeadShot&id=" .. Player.UserId .. "&w=150&h=150",
+        Image = "rbxthumb://type=AvatarHeadShot&id=" .. DisplayUserId .. "&w=150&h=150",
         ScaleType = Enum.ScaleType.Crop
     })
 
@@ -255,7 +272,7 @@ function WisperLib:CreateWindow(Config)
         Position = UDim2.new(0, 54, 0, 8),
         Size = UDim2.new(0, 200, 0, 18),
         Font = Enum.Font.GothamBold,
-        Text = Player.Name,
+        Text = DisplayName,
         TextColor3 = Theme.Text,
         TextSize = 13,
         TextXAlignment = Enum.TextXAlignment.Left
