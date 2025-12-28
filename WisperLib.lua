@@ -251,16 +251,16 @@ function WisperLib:CreateWindow(Config)
     local CurrentTab = nil
     local PageContainer
 
-    local function SetTabActive(TabButton, IsActive)
+    local function SetTabActive(TabButtonData, IsActive)
         if IsActive then
-            TabButton.Icon.ImageTransparency = 0
-            TabButton.Icon.ImageColor3 = Color3.fromRGB(0, 0, 0)
-            TabButton.Gradient.Enabled = true
+            TabButtonData.Icon.ImageTransparency = 0
+            TabButtonData.Icon.ImageColor3 = Color3.fromRGB(0, 0, 0)
+            TabButtonData.Gradient.Enabled = true
         else
-            TabButton.Icon.ImageTransparency = 0.5
-            TabButton.Icon.ImageColor3 = Theme.Text
-            TabButton.Gradient.Enabled = false
-            TabButton.BackgroundColor3 = Theme.ButtonInactive
+            TabButtonData.Icon.ImageTransparency = 0.5
+            TabButtonData.Icon.ImageColor3 = Theme.Text
+            TabButtonData.Gradient.Enabled = false
+            TabButtonData.Container.BackgroundColor3 = Theme.ButtonInactive
         end
     end
 
@@ -311,11 +311,14 @@ function WisperLib:CreateWindow(Config)
             AutoButtonColor = false
         })
 
-        ButtonContainer.Gradient = ButtonGradient
-        ButtonContainer.Icon = ButtonIcon
-        ButtonContainer.ClickArea = Button
+        local TabButtonData = {
+            Container = ButtonContainer,
+            Gradient = ButtonGradient,
+            Icon = ButtonIcon,
+            ClickArea = Button
+        }
 
-        return ButtonContainer, ButtonGradient
+        return TabButtonData
     end
 
     local ContentContainer = Create("Frame", {
@@ -485,7 +488,7 @@ function WisperLib:CreateWindow(Config)
         TabConfig.Name = TabConfig.Name or "Tab"
         TabConfig.Icon = TabConfig.Icon or "rbxassetid://7733960981"
 
-        local TabButton, TabGradient = CreateTabButton(TabConfig.Icon, #Tabs + 1)
+        local TabButtonData = CreateTabButton(TabConfig.Icon, #Tabs + 1)
 
         local TabPage = Create("Frame", {
             Name = "TabPage_" .. TabConfig.Name,
@@ -501,21 +504,21 @@ function WisperLib:CreateWindow(Config)
             Padding = UDim.new(0, 10)
         })
 
-        table.insert(Tabs, {Button = TabButton, Page = TabPage, Gradient = TabGradient})
-        table.insert(TabButtons, TabButton)
+        table.insert(Tabs, {ButtonData = TabButtonData, Page = TabPage})
+        table.insert(TabButtons, TabButtonData)
 
         local function SelectTab()
             for _, Tab in pairs(Tabs) do
                 Tab.Page.Visible = false
-                SetTabActive(Tab.Button, false)
+                SetTabActive(Tab.ButtonData, false)
             end
 
             TabPage.Visible = true
-            SetTabActive(TabButton, true)
+            SetTabActive(TabButtonData, true)
             CurrentTab = TabPage
         end
 
-        TabButton.ClickArea.MouseButton1Click:Connect(SelectTab)
+        TabButtonData.ClickArea.MouseButton1Click:Connect(SelectTab)
 
         if #Tabs == 1 then
             SelectTab()
