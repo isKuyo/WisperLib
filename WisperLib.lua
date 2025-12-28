@@ -1,4 +1,4 @@
-print("b")
+print("a")
 local WisperLib = {}
 
 local TweenService = game:GetService("TweenService")
@@ -325,6 +325,80 @@ function WisperLib:CreateWindow(Config)
     local TabButtons = {}
     local CurrentTab = nil
     local PageContainer
+    local RegisteredElements = {}
+
+    local SearchContainer = Create("Frame", {
+        Name = "SearchContainer",
+        Parent = ScreenGui,
+        BackgroundColor3 = Theme.ButtonInactive,
+        AnchorPoint = Vector2.new(0.5, 1),
+        Position = UDim2.new(0, 0, 0, 0),
+        Size = UDim2.new(0, 36, 0, 36),
+        ClipsDescendants = true
+    })
+
+    local SearchContainerCorner = Create("UICorner", {
+        CornerRadius = UDim.new(0, 18),
+        Parent = SearchContainer
+    })
+
+    local SearchIcon = Create("ImageLabel", {
+        Name = "SearchIcon",
+        Parent = SearchContainer,
+        BackgroundTransparency = 1,
+        Position = UDim2.new(0, 9, 0.5, -9),
+        Size = UDim2.new(0, 18, 0, 18),
+        Image = "rbxassetid://3926305904",
+        ImageRectOffset = Vector2.new(964, 324),
+        ImageRectSize = Vector2.new(36, 36),
+        ImageColor3 = Theme.SubText,
+        Rotation = -270
+    })
+
+    local SearchInput = Create("TextBox", {
+        Name = "SearchInput",
+        Parent = SearchContainer,
+        BackgroundTransparency = 1,
+        Position = UDim2.new(0, 36, 0, 0),
+        Size = UDim2.new(1, -44, 1, 0),
+        Font = Enum.Font.Gotham,
+        Text = "",
+        PlaceholderText = "Search",
+        PlaceholderColor3 = Theme.SubText,
+        TextColor3 = Theme.Text,
+        TextSize = 12,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        ClearTextOnFocus = false
+    })
+
+    local SearchExpanded = false
+
+    local function UpdateSearchPosition()
+        local MainPos = MainFrame.AbsolutePosition
+        local MainSize = MainFrame.AbsoluteSize
+        SearchContainer.Position = UDim2.new(0, MainPos.X + MainSize.X / 2, 0, MainPos.Y - 10)
+    end
+
+    RunService.RenderStepped:Connect(UpdateSearchPosition)
+
+    local function ExpandSearch()
+        if not SearchExpanded then
+            SearchExpanded = true
+            Tween(SearchContainer, {Size = UDim2.new(0, 200, 0, 36)}, 0.2)
+            Tween(SearchIcon, {ImageColor3 = Theme.Text}, 0.15)
+        end
+    end
+
+    local function CollapseSearch()
+        if SearchExpanded and SearchInput.Text == "" then
+            SearchExpanded = false
+            Tween(SearchContainer, {Size = UDim2.new(0, 36, 0, 36)}, 0.2)
+            Tween(SearchIcon, {ImageColor3 = Theme.SubText}, 0.15)
+        end
+    end
+
+    SearchInput.Focused:Connect(ExpandSearch)
+    SearchInput.FocusLost:Connect(CollapseSearch)
 
     local function SetTabActive(TabButtonData, IsActive, TabName)
         if IsActive then
@@ -341,6 +415,61 @@ function WisperLib:CreateWindow(Config)
             Tween(TabButtonData.Container, {Size = UDim2.new(0, 32, 0, 24)}, 0.2)
         end
     end
+
+    local function SelectTabByIndex(TabIndex)
+        for i, Tab in pairs(Tabs) do
+            Tab.Page.Visible = false
+            SetTabActive(Tab.ButtonData, false, Tab.Name)
+        end
+        Tabs[TabIndex].Page.Visible = true
+        SetTabActive(Tabs[TabIndex].ButtonData, true, Tabs[TabIndex].Name)
+        CurrentTab = Tabs[TabIndex].Page
+    end
+
+    local function PerformSearch(Query)
+        Query = string.lower(Query)
+        
+        if Query == "" then
+            for _, Element in pairs(RegisteredElements) do
+                Element.GroupFrame.Visible = true
+                if Element.Frame then
+                    Element.Frame.Visible = true
+                end
+            end
+            return
+        end
+
+        local FoundTabIndex = nil
+        local FoundGroups = {}
+
+        for _, Element in pairs(RegisteredElements) do
+            Element.GroupFrame.Visible = false
+            if Element.Frame then
+                Element.Frame.Visible = false
+            end
+        end
+
+        for _, Element in pairs(RegisteredElements) do
+            if string.find(string.lower(Element.Name), Query) then
+                Element.GroupFrame.Visible = true
+                if Element.Frame then
+                    Element.Frame.Visible = true
+                end
+                FoundGroups[Element.GroupFrame] = true
+                if not FoundTabIndex then
+                    FoundTabIndex = Element.TabIndex
+                end
+            end
+        end
+
+        if FoundTabIndex then
+            SelectTabByIndex(FoundTabIndex)
+        end
+    end
+
+    SearchInput:GetPropertyChangedSignal("Text"):Connect(function()
+        PerformSearch(SearchInput.Text)
+    end)
 
     local function CreateTabButton(Icon, Order, TabName)
         local ButtonContainer = Create("Frame", {
@@ -586,6 +715,7 @@ function WisperLib:CreateWindow(Config)
         if not GameProcessed and Input.KeyCode == Config.KeyBind then
             ScreenGui.Enabled = not ScreenGui.Enabled
             NavContainer.Visible = ScreenGui.Enabled
+            SearchContainer.Visible = ScreenGui.Enabled
         end
     end)
 
@@ -673,6 +803,8 @@ function WisperLib:CreateWindow(Config)
         end
 
         local Tab = {}
+
+        local CurrentTabIndex = #Tabs
 
         function Tab:CreateGroup(GroupConfig)
             GroupConfig = GroupConfig or {}
@@ -815,6 +947,13 @@ function WisperLib:CreateWindow(Config)
                     Parent = GroupContent,
                     BackgroundTransparency = 1,
                     Size = UDim2.new(1, 0, 0, 24)
+                })
+
+                table.insert(RegisteredElements, {
+                    Name = ToggleConfig.Name,
+                    Frame = ToggleFrame,
+                    GroupFrame = GroupFrame,
+                    TabIndex = CurrentTabIndex
                 })
 
                 local ToggleButton = Create("Frame", {
@@ -961,6 +1100,13 @@ function WisperLib:CreateWindow(Config)
                     Parent = GroupContent,
                     BackgroundTransparency = 1,
                     Size = UDim2.new(1, 0, 0, 40)
+                })
+
+                table.insert(RegisteredElements, {
+                    Name = SliderConfig.Name,
+                    Frame = SliderFrame,
+                    GroupFrame = GroupFrame,
+                    TabIndex = CurrentTabIndex
                 })
 
                 local SliderLabel = Create("TextLabel", {
@@ -1115,6 +1261,13 @@ function WisperLib:CreateWindow(Config)
                     Size = UDim2.new(1, 0, 0, 20)
                 })
 
+                table.insert(RegisteredElements, {
+                    Name = LabelConfig.Text,
+                    Frame = LabelFrame,
+                    GroupFrame = GroupFrame,
+                    TabIndex = CurrentTabIndex
+                })
+
                 local Label = Create("TextLabel", {
                     Name = "LabelText",
                     Parent = LabelFrame,
@@ -1144,6 +1297,55 @@ function WisperLib:CreateWindow(Config)
                 return LabelAPI
             end
 
+            function Group:CreateSeparator(SeparatorConfig)
+                SeparatorConfig = SeparatorConfig or {}
+                SeparatorConfig.Text = SeparatorConfig.Text or "Separator"
+
+                ShowContentIfNeeded()
+
+                local SeparatorFrame = Create("Frame", {
+                    Name = "Separator_" .. SeparatorConfig.Text,
+                    Parent = GroupContent,
+                    BackgroundTransparency = 1,
+                    Size = UDim2.new(1, 0, 0, 24)
+                })
+
+                local LeftLine = Create("Frame", {
+                    Name = "LeftLine",
+                    Parent = SeparatorFrame,
+                    BackgroundColor3 = Theme.GroupStroke,
+                    BorderSizePixel = 0,
+                    Position = UDim2.new(0, 0, 0.5, 0),
+                    Size = UDim2.new(0.5, -30, 0, 1)
+                })
+
+                local SeparatorText = Create("TextLabel", {
+                    Name = "SeparatorText",
+                    Parent = SeparatorFrame,
+                    BackgroundTransparency = 1,
+                    AnchorPoint = Vector2.new(0.5, 0.5),
+                    Position = UDim2.new(0.5, 0, 0.5, 0),
+                    Size = UDim2.new(0, 60, 1, 0),
+                    Font = Enum.Font.Gotham,
+                    Text = SeparatorConfig.Text,
+                    TextColor3 = Theme.SubText,
+                    TextSize = 12,
+                    AutomaticSize = Enum.AutomaticSize.X
+                })
+
+                local RightLine = Create("Frame", {
+                    Name = "RightLine",
+                    Parent = SeparatorFrame,
+                    BackgroundColor3 = Theme.GroupStroke,
+                    BorderSizePixel = 0,
+                    AnchorPoint = Vector2.new(1, 0),
+                    Position = UDim2.new(1, 0, 0.5, 0),
+                    Size = UDim2.new(0.5, -30, 0, 1)
+                })
+
+                return SeparatorFrame
+            end
+
             function Group:CreateInput(InputConfig)
                 InputConfig = InputConfig or {}
                 InputConfig.Name = InputConfig.Name or "Input"
@@ -1157,6 +1359,13 @@ function WisperLib:CreateWindow(Config)
                     Parent = GroupContent,
                     BackgroundTransparency = 1,
                     Size = UDim2.new(1, 0, 0, 50)
+                })
+
+                table.insert(RegisteredElements, {
+                    Name = InputConfig.Name,
+                    Frame = InputFrame,
+                    GroupFrame = GroupFrame,
+                    TabIndex = CurrentTabIndex
                 })
 
                 local InputLabel = Create("TextLabel", {
@@ -1261,6 +1470,13 @@ function WisperLib:CreateWindow(Config)
                     Size = UDim2.new(1, 0, 0, 50),
                     AutomaticSize = Enum.AutomaticSize.Y,
                     ClipsDescendants = false
+                })
+
+                table.insert(RegisteredElements, {
+                    Name = ComboboxConfig.Name,
+                    Frame = ComboboxFrame,
+                    GroupFrame = GroupFrame,
+                    TabIndex = CurrentTabIndex
                 })
 
                 local ComboboxLabel = Create("TextLabel", {
