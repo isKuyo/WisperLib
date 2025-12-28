@@ -1,4 +1,3 @@
-print("rwq")
 local WisperLib = {}
 
 local TweenService = game:GetService("TweenService")
@@ -1955,19 +1954,28 @@ function WisperLib:CreateWindow(Config)
 
         NotificationCount = NotificationCount + 1
 
-        local NotificationFrame = Create("Frame", {
-            Name = "Notification_" .. NotificationCount,
+        local NotificationHolder = Create("Frame", {
+            Name = "NotificationHolder_" .. NotificationCount,
             Parent = NotificationContainer,
-            BackgroundColor3 = Color3.fromRGB(28, 32, 38),
-            BorderSizePixel = 0,
+            BackgroundTransparency = 1,
             Size = UDim2.new(0, 0, 0, 50),
             AutomaticSize = Enum.AutomaticSize.X,
             LayoutOrder = -NotificationCount,
             ClipsDescendants = true
         })
 
+        local NotificationFrame = Create("Frame", {
+            Name = "Notification",
+            Parent = NotificationHolder,
+            BackgroundColor3 = Color3.fromRGB(28, 32, 38),
+            BorderSizePixel = 0,
+            AnchorPoint = Vector2.new(1, 0),
+            Position = UDim2.new(1, 300, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0)
+        })
+
         local NotificationPadding = Create("UIPadding", {
-            Parent = NotificationFrame,
+            Parent = NotificationHolder,
             PaddingRight = UDim.new(0, 15)
         })
 
@@ -2057,13 +2065,12 @@ function WisperLib:CreateWindow(Config)
             TextXAlignment = Enum.TextXAlignment.Left
         })
 
-        NotificationFrame.Position = UDim2.new(1, 50, 0, 0)
-        Tween(NotificationFrame, {Position = UDim2.new(0, 0, 0, 0)}, 0.3)
+        Tween(NotificationFrame, {Position = UDim2.new(1, 0, 0, 0)}, 0.3)
 
         local function CloseNotification()
-            Tween(NotificationFrame, {Position = UDim2.new(1, 50, 0, 0)}, 0.3)
+            Tween(NotificationFrame, {Position = UDim2.new(1, 300, 0, 0)}, 0.3)
             task.delay(0.3, function()
-                NotificationFrame:Destroy()
+                NotificationHolder:Destroy()
             end)
         end
 
