@@ -273,20 +273,34 @@ function WisperLib:CreateWindow(Config)
         TextXAlignment = Enum.TextXAlignment.Left
     })
 
-    local HeaderButtons = Create("Frame", {
-        Name = "HeaderButtons",
+    local NavContainer = Create("Frame", {
+        Name = "NavContainer",
         Parent = Header,
-        BackgroundTransparency = 1,
-        Position = UDim2.new(1, -170, 0.5, -16),
-        Size = UDim2.new(0, 155, 0, 32)
+        BackgroundColor3 = Theme.ButtonInactive,
+        Position = UDim2.new(1, -200, 0.5, -16),
+        Size = UDim2.new(0, 185, 0, 32),
+        ClipsDescendants = true
     })
 
-    local HeaderButtonsLayout = Create("UIListLayout", {
-        Parent = HeaderButtons,
+    local NavContainerCorner = Create("UICorner", {
+        CornerRadius = UDim.new(0, 16),
+        Parent = NavContainer
+    })
+
+    local NavButtonsHolder = Create("Frame", {
+        Name = "NavButtonsHolder",
+        Parent = NavContainer,
+        BackgroundTransparency = 1,
+        Position = UDim2.new(0, 4, 0, 0),
+        Size = UDim2.new(1, -8, 1, 0)
+    })
+
+    local NavButtonsLayout = Create("UIListLayout", {
+        Parent = NavButtonsHolder,
         FillDirection = Enum.FillDirection.Horizontal,
-        HorizontalAlignment = Enum.HorizontalAlignment.Right,
+        VerticalAlignment = Enum.VerticalAlignment.Center,
         SortOrder = Enum.SortOrder.LayoutOrder,
-        Padding = UDim.new(0, 6)
+        Padding = UDim.new(0, 0)
     })
 
     local Tabs = {}
@@ -294,32 +308,30 @@ function WisperLib:CreateWindow(Config)
     local CurrentTab = nil
     local PageContainer
 
-    local function SetTabActive(TabButtonData, IsActive)
+    local function SetTabActive(TabButtonData, IsActive, TabName)
         if IsActive then
             TabButtonData.Icon.ImageTransparency = 0
             TabButtonData.Icon.ImageColor3 = Color3.fromRGB(0, 0, 0)
+            TabButtonData.Label.Visible = true
             Tween(TabButtonData.Fill, {Size = UDim2.new(1, 0, 1, 0)}, 0.2)
+            Tween(TabButtonData.Container, {Size = UDim2.new(0, 24 + TabButtonData.LabelWidth + 12, 0, 24)}, 0.2)
         else
-            TabButtonData.Icon.ImageTransparency = 0.5
-            TabButtonData.Icon.ImageColor3 = Theme.Text
+            TabButtonData.Icon.ImageTransparency = 0
+            TabButtonData.Icon.ImageColor3 = Theme.SubText
+            TabButtonData.Label.Visible = false
             Tween(TabButtonData.Fill, {Size = UDim2.new(0, 0, 0, 0)}, 0.2)
+            Tween(TabButtonData.Container, {Size = UDim2.new(0, 32, 0, 24)}, 0.2)
         end
     end
 
-    local function CreateTabButton(Icon, Order)
+    local function CreateTabButton(Icon, Order, TabName)
         local ButtonContainer = Create("Frame", {
             Name = "TabButtonContainer",
-            Parent = HeaderButtons,
-            BackgroundColor3 = Theme.ButtonInactive,
-            BorderSizePixel = 0,
-            Size = UDim2.new(0, 32, 0, 32),
+            Parent = NavButtonsHolder,
+            BackgroundTransparency = 1,
+            Size = UDim2.new(0, 32, 0, 24),
             LayoutOrder = Order,
             ClipsDescendants = true
-        })
-
-        local ButtonCorner = Create("UICorner", {
-            CornerRadius = UDim.new(0, 6),
-            Parent = ButtonContainer
         })
 
         local ButtonFill = Create("Frame", {
@@ -333,7 +345,7 @@ function WisperLib:CreateWindow(Config)
         })
 
         local ButtonFillCorner = Create("UICorner", {
-            CornerRadius = UDim.new(0, 6),
+            CornerRadius = UDim.new(0, 12),
             Parent = ButtonFill
         })
 
@@ -351,14 +363,30 @@ function WisperLib:CreateWindow(Config)
             Name = "Icon",
             Parent = ButtonContainer,
             BackgroundTransparency = 1,
-            AnchorPoint = Vector2.new(0.5, 0.5),
-            Position = UDim2.new(0.5, 0, 0.5, 0),
-            Size = UDim2.new(0, 16, 0, 16),
+            Position = UDim2.new(0, 8, 0.5, -7),
+            Size = UDim2.new(0, 14, 0, 14),
             Image = Icon,
-            ImageColor3 = Theme.Text,
-            ImageTransparency = 0.5,
+            ImageColor3 = Theme.SubText,
+            ImageTransparency = 0,
             ZIndex = 2
         })
+
+        local ButtonLabel = Create("TextLabel", {
+            Name = "Label",
+            Parent = ButtonContainer,
+            BackgroundTransparency = 1,
+            Position = UDim2.new(0, 24, 0, 0),
+            Size = UDim2.new(0, 50, 1, 0),
+            Font = Enum.Font.GothamMedium,
+            Text = TabName,
+            TextColor3 = Color3.fromRGB(0, 0, 0),
+            TextSize = 11,
+            TextXAlignment = Enum.TextXAlignment.Left,
+            Visible = false,
+            ZIndex = 2
+        })
+
+        local LabelWidth = ButtonLabel.TextBounds.X
 
         local Button = Create("TextButton", {
             Name = "ClickArea",
@@ -374,6 +402,8 @@ function WisperLib:CreateWindow(Config)
             Container = ButtonContainer,
             Fill = ButtonFill,
             Icon = ButtonIcon,
+            Label = ButtonLabel,
+            LabelWidth = LabelWidth,
             ClickArea = Button
         }
 
@@ -546,7 +576,7 @@ function WisperLib:CreateWindow(Config)
         
         local TabIcon = TabConfig.Icon or GetAutoIcon(TabConfig.Name)
 
-        local TabButtonData = CreateTabButton(TabIcon, #Tabs + 1)
+        local TabButtonData = CreateTabButton(TabIcon, #Tabs + 1, TabConfig.Name)
 
         local TabPage = Create("Frame", {
             Name = "TabPage_" .. TabConfig.Name,
@@ -603,17 +633,17 @@ function WisperLib:CreateWindow(Config)
 
         local GroupCount = 0
 
-        table.insert(Tabs, {ButtonData = TabButtonData, Page = TabPage})
+        table.insert(Tabs, {ButtonData = TabButtonData, Page = TabPage, Name = TabConfig.Name})
         table.insert(TabButtons, TabButtonData)
 
         local function SelectTab()
             for _, Tab in pairs(Tabs) do
                 Tab.Page.Visible = false
-                SetTabActive(Tab.ButtonData, false)
+                SetTabActive(Tab.ButtonData, false, Tab.Name)
             end
 
             TabPage.Visible = true
-            SetTabActive(TabButtonData, true)
+            SetTabActive(TabButtonData, true, TabConfig.Name)
             CurrentTab = TabPage
         end
 
@@ -659,8 +689,29 @@ function WisperLib:CreateWindow(Config)
             local GroupHeader = Create("Frame", {
                 Name = "GroupHeader",
                 Parent = GroupFrame,
-                BackgroundTransparency = 1,
-                Size = UDim2.new(1, 0, 0, 40)
+                BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+                Size = UDim2.new(1, 0, 0, 40),
+                ClipsDescendants = true
+            })
+
+            local GroupHeaderCorner = Create("UICorner", {
+                CornerRadius = UDim.new(0, 8),
+                Parent = GroupHeader
+            })
+
+            local GroupHeaderGradient = Create("UIGradient", {
+                Parent = GroupHeader,
+                Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(22, 25, 29)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 23, 27))
+                }),
+                Rotation = 90
+            })
+
+            local GroupHeaderStroke = Create("UIStroke", {
+                Parent = GroupHeader,
+                Color = Theme.GroupStroke,
+                Thickness = 1
             })
 
             local GroupIcon = Create("ImageLabel", {
