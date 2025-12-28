@@ -896,13 +896,14 @@ function WisperLib:CreateWindow(Config)
                     Name = "SliderValue",
                     Parent = SliderFrame,
                     BackgroundTransparency = 1,
-                    Position = UDim2.new(1, -50, 0, 0),
-                    Size = UDim2.new(0, 50, 0, 18),
+                    Position = UDim2.new(1, 0, 0, 0),
+                    Size = UDim2.new(0, 0, 0, 18),
+                    AutomaticSize = Enum.AutomaticSize.X,
+                    AnchorPoint = Vector2.new(1, 0),
                     Font = Enum.Font.GothamBold,
                     Text = tostring(Value) .. SliderConfig.Suffix,
                     TextColor3 = Theme.Text,
-                    TextSize = 13,
-                    TextXAlignment = Enum.TextXAlignment.Right
+                    TextSize = 13
                 })
 
                 local SliderBackground = Create("Frame", {
@@ -911,7 +912,7 @@ function WisperLib:CreateWindow(Config)
                     BackgroundColor3 = Theme.SliderBackground,
                     BorderSizePixel = 0,
                     Position = UDim2.new(0, 0, 0, 24),
-                    Size = UDim2.new(1, -50, 0, 12)
+                    Size = UDim2.new(1, 0, 0, 12)
                 })
 
                 local SliderBackgroundCorner = Create("UICorner", {
