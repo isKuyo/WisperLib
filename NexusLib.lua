@@ -1,4 +1,4 @@
-print("v10")
+print("v11")
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -3948,17 +3948,17 @@ Components.TitleBar = (function()
 
         local LogoIcon = New("ImageLabel", {
             Name = "Logo",
-            Size = UDim2.new(0, 28, 0, 28),
-            Position = UDim2.new(0, 8, 0.5, -14),
+            Size = UDim2.new(0, 32, 0, 32),
+            Position = UDim2.new(0, 6, 0.5, -16),
             BackgroundTransparency = 1,
             Image = "rbxassetid://129881854639379",
             ImageColor3 = Color3.fromRGB(255, 255, 255),
         })
 
-        -- Animação de flutuação da logo
+        -- Animação de flutuação da logo (suave)
         local TweenService = game:GetService("TweenService")
         local logoAnimationInfo = TweenInfo.new(
-            0.5,
+            1.2,
             Enum.EasingStyle.Sine,
             Enum.EasingDirection.InOut,
             -1,
@@ -3969,7 +3969,7 @@ Components.TitleBar = (function()
             LogoIcon,
             logoAnimationInfo,
             {
-                Position = UDim2.new(0, 8, 0.5, -14 + 3)
+                Position = UDim2.new(0, 6, 0.5, -16 + 4)
             }
         )
         logoTween:Play()
