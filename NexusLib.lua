@@ -1,4 +1,4 @@
-print("v7")
+print("v8")
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -11086,7 +11086,7 @@ function Library:AddSnowfallToWindow(Config)
             snowflake.Name = "Snowflake"..i
             snowflake.BackgroundTransparency = 1
             snowflake.BorderSizePixel = 0
-            snowflake.Image = "rbxassetid://68072539"
+            snowflake.Image = "rbxassetid://2607452366"
             snowflake.ImageColor3 = snowflakeColor
             
             local size = math.random(8, 16)
