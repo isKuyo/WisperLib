@@ -1,3 +1,4 @@
+print("v3")
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -9711,11 +9712,15 @@ Library.CreateWindow = function(self, Config)
     local snowfallEnabled = InterfaceManager.Settings.Snowfall == nil and true or InterfaceManager.Settings.Snowfall
     
     if snowfallEnabled then
-        task.wait(0.6)
-        Library:AddSnowfallToWindow({
-            Count = 38,
-            Speed = 9.5
-        })
+        task.spawn(function()
+            task.wait(1)
+            if Library.Window and Library.Window.Root then
+                Library:AddSnowfallToWindow({
+                    Count = 38,
+                    Speed = 9.5
+                })
+            end
+        end)
     end
     
     return Window
@@ -11048,6 +11053,7 @@ end)
 
 function Library:AddSnowfallToWindow(Config)
     if not Library.Window then return end
+    if not Library.Window.Root then return end
     
     if Library.Snowfall then
         return Library.Snowfall
