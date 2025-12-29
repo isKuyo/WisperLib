@@ -1,4 +1,4 @@
-print("v8")
+print("v9")
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -3951,6 +3951,16 @@ Components.TitleBar = (function()
             BackgroundTransparency = 1,
             Parent = Config.Parent,
         }, {
+            -- Logo no canto esquerdo
+            New("ImageLabel", {
+                Name = "Logo",
+                Size = UDim2.new(0, 28, 0, 28),
+                Position = UDim2.new(0, 8, 0.5, -14),
+                BackgroundTransparency = 1,
+                Image = "rbxassetid://129881854639379",
+                ImageColor3 = Color3.fromRGB(255, 255, 255),
+            }),
+
             -- Простой центральный контейнер
             New("Frame", {
                 Size = UDim2.new(1, 0, 1, 0),
@@ -11086,10 +11096,12 @@ function Library:AddSnowfallToWindow(Config)
             snowflake.Name = "Snowflake"..i
             snowflake.BackgroundTransparency = 1
             snowflake.BorderSizePixel = 0
-            snowflake.Image = "rbxassetid://2607452366"
+            snowflake.Image = "rbxassetid://6034509993"
             snowflake.ImageColor3 = snowflakeColor
+            snowflake.ImageTransparency = 0.1
+            snowflake.ScaleType = Enum.ScaleType.Fit
             
-            local size = math.random(8, 16)
+            local size = math.random(10, 18)
             snowflake.Size = UDim2.new(0, size, 0, size)
             
             snowflake.Position = UDim2.new(
@@ -11139,7 +11151,7 @@ function Library:AddSnowfallToWindow(Config)
                     newY = containerBounds.top - 0.1
                     newX = math.random() * 0.95
                     
-                    local newSize = math.random(8, 16)
+                    local newSize = math.random(10, 18)
                     frame.Size = UDim2.new(0, newSize, 0, newSize)
                     snowflake.size = newSize
                 end
