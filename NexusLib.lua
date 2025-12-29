@@ -1,4 +1,4 @@
-print("v11")
+print("v12")
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -3951,28 +3951,9 @@ Components.TitleBar = (function()
             Size = UDim2.new(0, 32, 0, 32),
             Position = UDim2.new(0, 6, 0.5, -16),
             BackgroundTransparency = 1,
-            Image = "rbxassetid://129881854639379",
+            Image = "rbxassetid://134661421479971",
             ImageColor3 = Color3.fromRGB(255, 255, 255),
         })
-
-        -- Animação de flutuação da logo (suave)
-        local TweenService = game:GetService("TweenService")
-        local logoAnimationInfo = TweenInfo.new(
-            1.2,
-            Enum.EasingStyle.Sine,
-            Enum.EasingDirection.InOut,
-            -1,
-            true,
-            0
-        )
-        local logoTween = TweenService:Create(
-            LogoIcon,
-            logoAnimationInfo,
-            {
-                Position = UDim2.new(0, 6, 0.5, -16 + 4)
-            }
-        )
-        logoTween:Play()
 
         TitleBar.Frame = New("Frame", {
             Size = UDim2.new(1, 0, 0, 42),
@@ -11117,7 +11098,7 @@ function Library:AddSnowfallToWindow(Config)
             snowflake.Name = "Snowflake"..i
             snowflake.BackgroundTransparency = 1
             snowflake.BorderSizePixel = 0
-            snowflake.Image = "rbxassetid://14443362080"
+            snowflake.Image = "rbxassetid://124338537670236"
             snowflake.ImageColor3 = snowflakeColor
             snowflake.ImageTransparency = 0.1
             snowflake.ScaleType = Enum.ScaleType.Fit
