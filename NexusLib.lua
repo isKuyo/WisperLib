@@ -1,4 +1,4 @@
-print("v2")
+print("a1")
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -3948,8 +3948,8 @@ Components.TitleBar = (function()
 
         local LogoIcon = New("ImageLabel", {
             Name = "Logo",
-            Size = UDim2.new(0, 38, 0, 38),
-            Position = UDim2.new(0, 4, 0.5, -19),
+            Size = UDim2.new(0, 45, 0, 45),
+            Position = UDim2.new(0, 2, 0.5, -21),
             BackgroundTransparency = 1,
             Image = "rbxassetid://78130135376005",
             ImageColor3 = Color3.fromRGB(255, 255, 255),
