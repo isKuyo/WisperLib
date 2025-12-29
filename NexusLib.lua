@@ -1,3 +1,4 @@
+print("rwque")
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -9706,20 +9707,6 @@ Library.CreateWindow = function(self, Config)
 
 	InterfaceManager:SetTheme(Config.Theme)
 	Library:SetTheme(Config.Theme)
-
-    if Config.Snowfall ~= false then 
-        task.wait(0.6) 
-
-local snowfallConfig = Config.SnowfallConfig or {
-   Count = 38,     
-   Speed = 9.5      
-}
-
-        Library:AddSnowfallToWindow(snowfallConfig)
-    end
-    
-    InterfaceManager:SetTheme(Config.Theme)
-    Library:SetTheme(Config.Theme)
     
     InterfaceManager:LoadSettings()
     local snowfallEnabled = InterfaceManager.Settings.Snowfall == nil and true or InterfaceManager.Settings.Snowfall
@@ -11063,18 +11050,23 @@ end)
 function Library:AddSnowfallToWindow(Config)
     if not Library.Window then return end
     
+    -- Evitar criar múltiplas instâncias de snowfall
+    if Library.Snowfall then
+        return Library.Snowfall
+    end
+    
     local snowfall = {}
     Config = Config or {}
     
     local SnowModule = {}
     
     function SnowModule:Init(Parent, Config)
-        local snowContainer = Instance.new("Frame")
-        snowContainer.Name = "SnowfallEffect"
-        snowContainer.Size = UDim2.new(1, 0, 1, 0)
-        snowContainer.BackgroundTransparency = 1
-        snowContainer.ClipsDescendants = true
-        snowContainer.Parent = Parent
+        local innerContainer = Instance.new("Frame")
+        innerContainer.Name = "SnowfallEffect"
+        innerContainer.Size = UDim2.new(1, 0, 1, 0)
+        innerContainer.BackgroundTransparency = 1
+        innerContainer.ClipsDescendants = true
+        innerContainer.Parent = Parent
         
         local snowflakeCount = Config.Count or 50
         local fallSpeed = Config.Speed or 60
@@ -11105,7 +11097,7 @@ function Library:AddSnowfallToWindow(Config)
                 math.random() * -0.5, 
                 0
             )
-            snowflake.Parent = snowContainer
+            snowflake.Parent = innerContainer
             
             local speed = math.random(fallSpeed * 0.5, fallSpeed * 1.5)
             
@@ -11180,7 +11172,7 @@ function Library:AddSnowfallToWindow(Config)
             for _, conn in ipairs(connections) do
                 conn:Disconnect()
             end
-            snowContainer:Destroy()
+            innerContainer:Destroy()
         end
         
         return SnowInstance
