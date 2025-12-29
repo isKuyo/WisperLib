@@ -1,4 +1,3 @@
-print("rwque")
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -9711,9 +9710,9 @@ Library.CreateWindow = function(self, Config)
     InterfaceManager:LoadSettings()
     local snowfallEnabled = InterfaceManager.Settings.Snowfall == nil and true or InterfaceManager.Settings.Snowfall
     
-    if Config.Snowfall ~= false and snowfallEnabled then
+    if snowfallEnabled then
         task.wait(0.6)
-        Library:AddSnowfallToWindow(Config.SnowfallConfig or {
+        Library:AddSnowfallToWindow({
             Count = 38,
             Speed = 9.5
         })
@@ -11050,7 +11049,6 @@ end)
 function Library:AddSnowfallToWindow(Config)
     if not Library.Window then return end
     
-    -- Evitar criar múltiplas instâncias de snowfall
     if Library.Snowfall then
         return Library.Snowfall
     end
