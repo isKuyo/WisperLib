@@ -1,4 +1,4 @@
-print("v5")
+print("v7")
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -11082,19 +11082,15 @@ function Library:AddSnowfallToWindow(Config)
         local connections = {}
 
         for i = 1, snowflakeCount do
-            local snowflake = Instance.new("Frame")
-            snowflake.Name = "SnowflakeCircle"..i
-            snowflake.BackgroundColor3 = snowflakeColor -- Яркий белый
+            local snowflake = Instance.new("ImageLabel")
+            snowflake.Name = "Snowflake"..i
+            snowflake.BackgroundTransparency = 1
             snowflake.BorderSizePixel = 0
+            snowflake.Image = "rbxassetid://68072539"
+            snowflake.ImageColor3 = snowflakeColor
             
-            local size = math.random(2, 6)
+            local size = math.random(8, 16)
             snowflake.Size = UDim2.new(0, size, 0, size)
-            
-            local corner = Instance.new("UICorner")
-            corner.CornerRadius = UDim.new(1, 0) -- Полностью круглые
-            corner.Parent = snowflake
-            
-            snowflake.BackgroundTransparency = 0
             
             snowflake.Position = UDim2.new(
                 math.random() * 0.95, 
@@ -11143,7 +11139,7 @@ function Library:AddSnowfallToWindow(Config)
                     newY = containerBounds.top - 0.1
                     newX = math.random() * 0.95
                     
-                    local newSize = math.random(2, 6)
+                    local newSize = math.random(8, 16)
                     frame.Size = UDim2.new(0, newSize, 0, newSize)
                     snowflake.size = newSize
                 end
