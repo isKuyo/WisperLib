@@ -1,4 +1,3 @@
-print("a")
 local WisperLib = {}
 
 local Development = true
@@ -980,7 +979,7 @@ function WisperLib:CreateWindow(Config)
                 local ToggleButton = Create("Frame", {
                     Name = "ToggleButton",
                     Parent = ToggleFrame,
-                    BackgroundColor3 = Color3.fromRGB(34, 39, 45),
+                    BackgroundColor3 = Color3.fromRGB(255, 255, 255),
                     BorderSizePixel = 0,
                     Size = UDim2.new(0, 18, 0, 18),
                     Position = UDim2.new(0, 0, 0.5, -9),
