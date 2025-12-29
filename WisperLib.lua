@@ -1,3 +1,4 @@
+print("a")
 local WisperLib = {}
 
 local Development = true
