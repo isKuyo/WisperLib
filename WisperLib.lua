@@ -1746,7 +1746,7 @@ function WisperLib:CreateWindow(Config)
                     BackgroundColor3 = Color3.fromRGB(60, 65, 75),
                     BorderSizePixel = 0,
                     Position = UDim2.new(0, 0, 0.5, -1),
-                    Size = UDim2.new(0.5, -30, 0, 2)
+                    Size = UDim2.new(0, 0, 0, 2)
                 })
 
                 local SeparatorText = Create("TextLabel", {
@@ -1770,8 +1770,26 @@ function WisperLib:CreateWindow(Config)
                     BorderSizePixel = 0,
                     AnchorPoint = Vector2.new(1, 0),
                     Position = UDim2.new(1, 0, 0.5, -1),
-                    Size = UDim2.new(0.5, -30, 0, 2)
+                    Size = UDim2.new(0, 0, 0, 2)
                 })
+
+                local function UpdateSeparatorLines()
+                    local halfFrameWidth = SeparatorFrame.AbsoluteSize.X / 2
+                    if halfFrameWidth <= 0 then
+                        return
+                    end
+
+                    local halfTextWidth = SeparatorText.TextBounds.X / 2
+                    local gap = 12
+                    local lineLength = math.max(halfFrameWidth - halfTextWidth - gap, 0)
+
+                    LeftLine.Size = UDim2.new(0, lineLength, 0, 2)
+                    RightLine.Size = UDim2.new(0, lineLength, 0, 2)
+                end
+
+                UpdateSeparatorLines()
+                SeparatorText:GetPropertyChangedSignal("TextBounds"):Connect(UpdateSeparatorLines)
+                SeparatorFrame:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateSeparatorLines)
 
                 return SeparatorFrame
             end
