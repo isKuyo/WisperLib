@@ -1,4 +1,4 @@
-print("v9")
+print("v10")
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -3946,20 +3946,41 @@ Components.TitleBar = (function()
             return Button
         end
 
+        local LogoIcon = New("ImageLabel", {
+            Name = "Logo",
+            Size = UDim2.new(0, 28, 0, 28),
+            Position = UDim2.new(0, 8, 0.5, -14),
+            BackgroundTransparency = 1,
+            Image = "rbxassetid://129881854639379",
+            ImageColor3 = Color3.fromRGB(255, 255, 255),
+        })
+
+        -- Animação de flutuação da logo
+        local TweenService = game:GetService("TweenService")
+        local logoAnimationInfo = TweenInfo.new(
+            0.5,
+            Enum.EasingStyle.Sine,
+            Enum.EasingDirection.InOut,
+            -1,
+            true,
+            0
+        )
+        local logoTween = TweenService:Create(
+            LogoIcon,
+            logoAnimationInfo,
+            {
+                Position = UDim2.new(0, 8, 0.5, -14 + 3)
+            }
+        )
+        logoTween:Play()
+
         TitleBar.Frame = New("Frame", {
             Size = UDim2.new(1, 0, 0, 42),
             BackgroundTransparency = 1,
             Parent = Config.Parent,
         }, {
-            -- Logo no canto esquerdo
-            New("ImageLabel", {
-                Name = "Logo",
-                Size = UDim2.new(0, 28, 0, 28),
-                Position = UDim2.new(0, 8, 0.5, -14),
-                BackgroundTransparency = 1,
-                Image = "rbxassetid://129881854639379",
-                ImageColor3 = Color3.fromRGB(255, 255, 255),
-            }),
+            -- Logo no canto esquerdo (com animação)
+            LogoIcon,
 
             -- Простой центральный контейнер
             New("Frame", {
@@ -11096,7 +11117,7 @@ function Library:AddSnowfallToWindow(Config)
             snowflake.Name = "Snowflake"..i
             snowflake.BackgroundTransparency = 1
             snowflake.BorderSizePixel = 0
-            snowflake.Image = "rbxassetid://6034509993"
+            snowflake.Image = "rbxassetid://14443362080"
             snowflake.ImageColor3 = snowflakeColor
             snowflake.ImageTransparency = 0.1
             snowflake.ScaleType = Enum.ScaleType.Fit
