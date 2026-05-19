@@ -59,6 +59,36 @@ local IconKeywords = {
     ["package"] = {"item", "inventory", "loot"},
 };
 
+local GroupIconKeywords = {
+    ["eye"]         = {"esp", "visual", "visuals", "entity", "render", "chams", "glow", "highlight"},
+    ["crosshair"]   = {"aim", "aimbot", "combat", "pvp", "target", "hitbox", "fov"},
+    ["user"]        = {"player", "players", "character", "local"},
+    ["zap"]         = {"speed", "movement", "move", "fly", "flight", "velocity", "noclip"},
+    ["map-pin"]     = {"teleport", "tp", "warp", "location"},
+    ["map"]         = {"world", "map", "radar", "minimap"},
+    ["palette"]     = {"color", "colors", "theme", "appearance", "ui"},
+    ["bell"]        = {"notification", "notifications", "alert", "alerts"},
+    ["keyboard"]    = {"keybind", "keybinds", "hotkey", "hotkeys", "key"},
+    ["shield"]      = {"anti", "safe", "protection", "bypass", "spoof"},
+    ["package"]     = {"item", "items", "inventory", "loot", "farm", "collect"},
+    ["sword"]       = {"weapon", "weapons", "kill", "damage", "attack"},
+    ["settings"]    = {"settings", "config", "configuration", "options"},
+    ["info"]        = {"info", "debug", "log", "status"},
+    ["layers"]      = {"misc", "other", "extra", "general"},
+};
+
+local function GetAutoGroupIcon(GroupName)
+    local LowerName = string.lower(GroupName);
+    for ShortName, Keywords in pairs(GroupIconKeywords) do
+        for _, Keyword in ipairs(Keywords) do
+            if string.find(LowerName, Keyword) then
+                return GetIcon(ShortName);
+            end;
+        end;
+    end;
+    return GetIcon("layers");
+end;
+
 local function GetAutoIcon(TabName)
     local LowerName = string.lower(TabName);
     for ShortName, Keywords in pairs(IconKeywords) do
@@ -316,9 +346,10 @@ function WisperLib:CreateWindow(Config)
     Config.Position = Config.Position or UDim2.new(0.5, -317, 0.5, -255)
     Config.KeyBind = Config.KeyBind or Enum.KeyCode.RightControl
 
+    local GuiParent = (typeof(gethui) == "function" and pcall(gethui) and gethui()) or CoreGui;
     local ScreenGui = Create("ScreenGui", {
         Name = ScreenGuiName,
-        Parent = CoreGui,
+        Parent = GuiParent,
         ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
         ResetOnSpawn = false,
         DisplayOrder = -1
@@ -1102,7 +1133,7 @@ function WisperLib:CreateWindow(Config)
         function Tab:CreateGroup(GroupConfig)
             GroupConfig = GroupConfig or {}
             GroupConfig.Name = GroupConfig.Name or "Group"
-            GroupConfig.Icon = GroupConfig.Icon and GetIcon(GroupConfig.Icon) or GetIcon("layers")
+            GroupConfig.Icon = GroupConfig.Icon and GetIcon(GroupConfig.Icon) or GetAutoGroupIcon(GroupConfig.Name)
             GroupConfig.Column = GroupConfig.Column or "Left"
 
             GroupCount = GroupCount + 1
