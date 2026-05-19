@@ -1309,7 +1309,7 @@ function WisperLib:CreateWindow(Config)
                 Size = UDim2.new(1, 0, 0, 40),
                 AutomaticSize = Enum.AutomaticSize.Y,
                 LayoutOrder = GroupCount,
-                ClipsDescendants = true
+                ClipsDescendants = false
             })
 
             local GroupCorner = Create("UICorner", {
