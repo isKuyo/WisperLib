@@ -1151,8 +1151,16 @@ function WisperLib:CreateWindow(Config)
     local Window = {}
     local NotificationsEnabled = true
 
-    local PreviousMouseBehavior = UserInputService.MouseBehavior;
+    local GameDesiredMouseBehavior = UserInputService.MouseBehavior;
     local IsRightMouseHeld = false;
+    local IsOverridingMouse = false;
+
+    -- Track what behavior the game wants while UI is open
+    UserInputService:GetPropertyChangedSignal(`MouseBehavior`):Connect(function()
+        if ScreenGui.Enabled and not IsOverridingMouse then
+            GameDesiredMouseBehavior = UserInputService.MouseBehavior;
+        end;
+    end);
 
     UserInputService.InputBegan:Connect(function(Input, GameProcessed)
         if Input.UserInputType == Enum.UserInputType.MouseButton2 then
@@ -1160,13 +1168,15 @@ function WisperLib:CreateWindow(Config)
         end;
         if not GameProcessed and Input.KeyCode == Config.KeyBind then
             if not ScreenGui.Enabled then
-                PreviousMouseBehavior = UserInputService.MouseBehavior;
+                GameDesiredMouseBehavior = UserInputService.MouseBehavior;
             end;
             ScreenGui.Enabled = not ScreenGui.Enabled;
             NavContainer.Visible = ScreenGui.Enabled;
             SearchContainer.Visible = ScreenGui.Enabled;
             if not ScreenGui.Enabled then
-                UserInputService.MouseBehavior = PreviousMouseBehavior;
+                IsOverridingMouse = true;
+                UserInputService.MouseBehavior = GameDesiredMouseBehavior;
+                IsOverridingMouse = false;
             end;
         end;
     end);
@@ -1179,8 +1189,10 @@ function WisperLib:CreateWindow(Config)
 
     RunService.RenderStepped:Connect(function()
         if ScreenGui.Enabled and not IsRightMouseHeld then
+            IsOverridingMouse = true;
             UserInputService.MouseBehavior = Enum.MouseBehavior.Default;
             UserInputService.MouseIconEnabled = true;
+            IsOverridingMouse = false;
         end;
     end);
 
