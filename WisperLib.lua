@@ -805,10 +805,11 @@ function WisperLib:CreateWindow(Config)
     function Window:CreateTab(TabConfig)
         TabConfig = TabConfig or {}
         TabConfig.Name = TabConfig.Name or "Tab"
+        TabConfig.Order = TabConfig.Order or (#Tabs + 1)
         
         local TabIcon = TabConfig.Icon or GetAutoIcon(TabConfig.Name)
 
-        local TabButtonData = CreateTabButton(TabIcon, #Tabs + 1, TabConfig.Name)
+        local TabButtonData = CreateTabButton(TabIcon, TabConfig.Order, TabConfig.Name)
 
         local TabPage = Create("Frame", {
             Name = "TabPage_" .. TabConfig.Name,
@@ -923,7 +924,7 @@ function WisperLib:CreateWindow(Config)
             local GroupHeader = Create("Frame", {
                 Name = "GroupHeader",
                 Parent = GroupFrame,
-                BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+                BackgroundColor3 = Theme.Header,
                 Size = UDim2.new(1, 0, 0, 40),
                 ClipsDescendants = true
             })
@@ -936,17 +937,18 @@ function WisperLib:CreateWindow(Config)
             local GroupHeaderBottomFix = Create("Frame", {
                 Name = "BottomFix",
                 Parent = GroupHeader,
-                BackgroundColor3 = Color3.fromRGB(20, 23, 27),
+                BackgroundColor3 = Theme.Header,
                 BorderSizePixel = 0,
                 Position = UDim2.new(0, 0, 1, -8),
                 Size = UDim2.new(1, 0, 0, 8)
             })
 
             local GroupHeaderGradient = Create("UIGradient", {
+                Name = "GroupHeaderGradient",
                 Parent = GroupHeader,
                 Color = ColorSequence.new({
-                    ColorSequenceKeypoint.new(0, Color3.fromRGB(22, 25, 29)),
-                    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 23, 27))
+                    ColorSequenceKeypoint.new(0, Theme.Header),
+                    ColorSequenceKeypoint.new(1, Theme.GroupBackground)
                 }),
                 Rotation = 90
             })
@@ -2419,12 +2421,12 @@ function WisperLib:CreateWindow(Config)
 
                 ButtonClickArea.MouseEnter:Connect(function()
                     Tween(ButtonText, {TextColor3 = Theme.Text}, 0.15)
-                    Tween(ButtonContainer, {BackgroundColor3 = Color3.fromRGB(35, 40, 48)}, 0.15)
+                    Tween(ButtonContainer, {BackgroundColor3 = Theme.ButtonInactive}, 0.15)
                 end)
 
                 ButtonClickArea.MouseLeave:Connect(function()
                     Tween(ButtonText, {TextColor3 = Theme.SubText}, 0.15)
-                    Tween(ButtonContainer, {BackgroundColor3 = Color3.fromRGB(28, 32, 38)}, 0.15)
+                    Tween(ButtonContainer, {BackgroundColor3 = Theme.InputBackground}, 0.15)
                 end)
 
                 ButtonClickArea.MouseButton1Click:Connect(function()
@@ -2504,35 +2506,45 @@ function WisperLib:CreateWindow(Config)
         DiscordButton.ImageColor3 = Theme.SubText
 
         for _, Descendant in ipairs(ScreenGui:GetDescendants()) do
-            if Descendant:IsA("UIStroke") and Descendant.Parent and Descendant.Parent.Name == "Group_" .. string.gsub(Descendant.Parent.Name, "^Group_", "") then
-                Descendant.Color = Theme.GroupStroke
-            end
-
             if Descendant:IsA("Frame") then
                 if string.sub(Descendant.Name, 1, 6) == "Group_" then
                     Descendant.BackgroundColor3 = Theme.GroupBackground
                 elseif Descendant.Name == "GroupHeader" then
-                    Descendant.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                    Descendant.BackgroundColor3 = Theme.Header
+                elseif Descendant.Name == "BottomFix" and Descendant.Parent and Descendant.Parent.Name == "GroupHeader" then
+                    Descendant.BackgroundColor3 = Theme.Header
                 elseif Descendant.Name == "HeaderLine" and Descendant.Parent and Descendant.Parent.Name == "GroupHeader" then
                     Descendant.BackgroundColor3 = Theme.GroupStroke
                 elseif Descendant.Name == "InputBox" then
                     Descendant.BackgroundColor3 = Theme.InputBackground
-                elseif Descendant.Name == "ComboboxButton" or Descendant.Name == "ComboboxDropdown" or Descendant.Name == "ButtonContainer" then
+                elseif Descendant.Name == "ComboboxButton" or Descendant.Name == "ComboboxDropdown" or Descendant.Name == "ButtonContainer" or Descendant.Name == "KeybindFrame" then
                     Descendant.BackgroundColor3 = Theme.InputBackground
                 elseif Descendant.Name == "SliderBackground" then
                     Descendant.BackgroundColor3 = Theme.SliderBackground
                 end
             elseif Descendant:IsA("TextLabel") then
-                if Descendant.Name == "InputLabel" or Descendant.Name == "ComboboxLabel" or Descendant.Name == "ToggleLabel" or Descendant.Name == "ButtonText" or Descendant.Name == "SliderLabel" or Descendant.Name == "LabelText" then
+                if Descendant.Name == "InputLabel" or Descendant.Name == "ComboboxLabel" or Descendant.Name == "ToggleLabel" or Descendant.Name == "ButtonText" or Descendant.Name == "SliderLabel" or Descendant.Name == "LabelText" or Descendant.Name == "ComboboxText" or Descendant.Name == "KeybindText" then
                     Descendant.TextColor3 = Theme.SubText
                 elseif Descendant.Name == "SliderValue" then
                     Descendant.TextColor3 = Theme.Text
-                elseif Descendant.Name == "InputTextBox" then
+                elseif Descendant.Name == "GroupLabel" then
                     Descendant.TextColor3 = Theme.Text
+                end
+            elseif Descendant:IsA("TextBox") then
+                if Descendant.Name == "InputTextBox" then
+                    Descendant.TextColor3 = Theme.Text
+                    Descendant.PlaceholderColor3 = Theme.SubText
                 end
             elseif Descendant:IsA("UIStroke") then
                 if Descendant.Parent and (Descendant.Parent.Name == "ColorPickerPopup" or string.sub(Descendant.Parent.Name, 1, 6) == "Group_") then
                     Descendant.Color = Theme.GroupStroke
+                end
+            elseif Descendant:IsA("UIGradient") then
+                if Descendant.Name == "GroupHeaderGradient" then
+                    Descendant.Color = ColorSequence.new({
+                        ColorSequenceKeypoint.new(0, Theme.Header),
+                        ColorSequenceKeypoint.new(1, Theme.GroupBackground)
+                    })
                 end
             elseif Descendant:IsA("ImageLabel") then
                 if Descendant.Name == "InputIcon" or Descendant.Name == "ComboboxIcon" or Descendant.Name == "GroupIcon" then
@@ -2742,7 +2754,8 @@ function WisperLib:CreateWindow(Config)
 
     local SettingsTab = Window:CreateTab({
         Name = "Settings",
-        Icon = IconAssets.Settings
+        Icon = IconAssets.Settings,
+        Order = 999999
     })
 
     local InterfaceGroup = SettingsTab:CreateGroup({
