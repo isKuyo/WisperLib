@@ -133,28 +133,54 @@ local function MakeDraggable(Frame, DragFrame)
     end)
 end
 
-local Theme = {
-    Background = Color3.fromRGB(13, 15, 18),
-    Header = Color3.fromRGB(20, 23, 28),
-    HeaderLine = Color3.fromRGB(26, 30, 36),
-    ContentBackground = Color3.fromRGB(13, 15, 18),
-    GroupBackground = Color3.fromRGB(22, 25, 30),
-    GroupStroke = Color3.fromRGB(26, 30, 36),
-    ButtonInactive = Color3.fromRGB(13, 15, 18),
-    GradientColor1 = Color3.fromRGB(179, 206, 248),
-    GradientColor2 = Color3.fromRGB(125, 143, 172),
-    AvatarStroke = Color3.fromRGB(26, 30, 36),
-    Accent = Color3.fromRGB(181, 208, 251),
-    Text = Color3.fromRGB(255, 255, 255),
-    SubText = Color3.fromRGB(150, 150, 150),
-    Divider = Color3.fromRGB(26, 30, 36),
-    CheckboxEnabled = Color3.fromRGB(181, 208, 251),
-    CheckboxDisabled = Color3.fromRGB(60, 61, 66),
-    SliderBackground = Color3.fromRGB(35, 40, 50),
-    SliderFill = Color3.fromRGB(100, 150, 200),
-    InputBackground = Color3.fromRGB(22, 25, 30),
-    Footer = Color3.fromRGB(20, 23, 28)
+local ThemePresets = {
+    Default = {
+        Background = Color3.fromRGB(13, 15, 18),
+        Header = Color3.fromRGB(20, 23, 28),
+        HeaderLine = Color3.fromRGB(26, 30, 36),
+        ContentBackground = Color3.fromRGB(13, 15, 18),
+        GroupBackground = Color3.fromRGB(22, 25, 30),
+        GroupStroke = Color3.fromRGB(26, 30, 36),
+        ButtonInactive = Color3.fromRGB(13, 15, 18),
+        GradientColor1 = Color3.fromRGB(179, 206, 248),
+        GradientColor2 = Color3.fromRGB(125, 143, 172),
+        AvatarStroke = Color3.fromRGB(26, 30, 36),
+        Accent = Color3.fromRGB(181, 208, 251),
+        Text = Color3.fromRGB(255, 255, 255),
+        SubText = Color3.fromRGB(150, 150, 150),
+        Divider = Color3.fromRGB(26, 30, 36),
+        CheckboxEnabled = Color3.fromRGB(181, 208, 251),
+        CheckboxDisabled = Color3.fromRGB(60, 61, 66),
+        SliderBackground = Color3.fromRGB(35, 40, 50),
+        SliderFill = Color3.fromRGB(100, 150, 200),
+        InputBackground = Color3.fromRGB(22, 25, 30),
+        Footer = Color3.fromRGB(20, 23, 28)
+    },
+    White = {
+        Background = Color3.fromRGB(244, 246, 250),
+        Header = Color3.fromRGB(235, 239, 246),
+        HeaderLine = Color3.fromRGB(205, 212, 226),
+        ContentBackground = Color3.fromRGB(244, 246, 250),
+        GroupBackground = Color3.fromRGB(255, 255, 255),
+        GroupStroke = Color3.fromRGB(214, 221, 234),
+        ButtonInactive = Color3.fromRGB(226, 232, 242),
+        GradientColor1 = Color3.fromRGB(120, 177, 255),
+        GradientColor2 = Color3.fromRGB(85, 132, 229),
+        AvatarStroke = Color3.fromRGB(190, 199, 216),
+        Accent = Color3.fromRGB(77, 126, 227),
+        Text = Color3.fromRGB(27, 33, 44),
+        SubText = Color3.fromRGB(96, 106, 124),
+        Divider = Color3.fromRGB(205, 212, 226),
+        CheckboxEnabled = Color3.fromRGB(77, 126, 227),
+        CheckboxDisabled = Color3.fromRGB(168, 176, 189),
+        SliderBackground = Color3.fromRGB(224, 231, 242),
+        SliderFill = Color3.fromRGB(92, 140, 235),
+        InputBackground = Color3.fromRGB(236, 241, 249),
+        Footer = Color3.fromRGB(235, 239, 246)
+    }
 }
+
+local Theme = ThemePresets.Default
 
 local ScreenGuiName = "WisperLib_" .. tostring(math.random(100000, 999999))
 
@@ -266,17 +292,41 @@ function WisperLib:CreateWindow(Config)
         Parent = AvatarImage
     })
 
-    local TitleLabel = Create("TextLabel", {
-        Name = "TitleLabel",
+    local TitleContainer = Create("Frame", {
+        Name = "TitleContainer",
         Parent = Header,
         BackgroundTransparency = 1,
         Position = UDim2.new(0, 54, 0, 8),
         Size = UDim2.new(0, 200, 0, 18),
+        ClipsDescendants = true
+    })
+
+    local TitleMaskedLabel = Create("TextLabel", {
+        Name = "TitleMaskedLabel",
+        Parent = TitleContainer,
+        BackgroundTransparency = 1,
+        Size = UDim2.new(1, 0, 1, 0),
         Font = Enum.Font.GothamBold,
         Text = MaskedDisplayName,
         TextColor3 = Theme.Text,
         TextSize = 13,
-        TextXAlignment = Enum.TextXAlignment.Left
+        TextXAlignment = Enum.TextXAlignment.Left,
+        TextTransparency = 0,
+        Position = UDim2.new(0, 0, 0, 0)
+    })
+
+    local TitleRealLabel = Create("TextLabel", {
+        Name = "TitleRealLabel",
+        Parent = TitleContainer,
+        BackgroundTransparency = 1,
+        Size = UDim2.new(1, 0, 1, 0),
+        Font = Enum.Font.GothamBold,
+        Text = DisplayName,
+        TextColor3 = Theme.Text,
+        TextSize = 13,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        TextTransparency = 1,
+        Position = UDim2.new(0, 6, 0, 0)
     })
 
     local IsShowingRealName = false
@@ -286,17 +336,13 @@ function WisperLib:CreateWindow(Config)
         end
 
         IsShowingRealName = ShowRealName
-        Tween(TitleLabel, {TextTransparency = 1, Position = UDim2.new(0, 58, 0, 8)}, 0.08)
-
-        task.delay(0.08, function()
-            if IsShowingRealName ~= ShowRealName then
-                return
-            end
-
-            TitleLabel.Text = ShowRealName and DisplayName or MaskedDisplayName
-            TitleLabel.Position = UDim2.new(0, 50, 0, 8)
-            Tween(TitleLabel, {TextTransparency = 0, Position = UDim2.new(0, 54, 0, 8)}, 0.12)
-        end)
+        if ShowRealName then
+            Tween(TitleMaskedLabel, {TextTransparency = 1, Position = UDim2.new(0, -6, 0, 0)}, 0.12)
+            Tween(TitleRealLabel, {TextTransparency = 0, Position = UDim2.new(0, 0, 0, 0)}, 0.12)
+        else
+            Tween(TitleMaskedLabel, {TextTransparency = 0, Position = UDim2.new(0, 0, 0, 0)}, 0.12)
+            Tween(TitleRealLabel, {TextTransparency = 1, Position = UDim2.new(0, 6, 0, 0)}, 0.12)
+        end
     end
 
     AvatarContainer.MouseEnter:Connect(function()
@@ -307,11 +353,11 @@ function WisperLib:CreateWindow(Config)
         SetTitleNameVisibility(false)
     end)
 
-    TitleLabel.MouseEnter:Connect(function()
+    TitleContainer.MouseEnter:Connect(function()
         SetTitleNameVisibility(true)
     end)
 
-    TitleLabel.MouseLeave:Connect(function()
+    TitleContainer.MouseLeave:Connect(function()
         SetTitleNameVisibility(false)
     end)
 
@@ -707,8 +753,8 @@ function WisperLib:CreateWindow(Config)
         Name = "FooterButtons",
         Parent = Footer,
         BackgroundTransparency = 1,
-        Position = UDim2.new(1, -130, 0.5, -12),
-        Size = UDim2.new(0, 115, 0, 24)
+        Position = UDim2.new(1, -40, 0.5, -12),
+        Size = UDim2.new(0, 24, 0, 24)
     })
 
     local FooterButtonsLayout = Create("UIListLayout", {
@@ -741,13 +787,12 @@ function WisperLib:CreateWindow(Config)
         return Button
     end
 
-    local SearchButton = CreateFooterButton("rbxassetid://7743871962", 1)
-    local ExpandButton = CreateFooterButton("rbxassetid://7743870210", 2)
-    local DiscordButton = CreateFooterButton("rbxassetid://7743878857", 3)
+    local DiscordButton = CreateFooterButton("rbxassetid://18505728250", 1)
 
     MakeDraggable(MainFrame, Header)
 
     local Window = {}
+    local NotificationsEnabled = true
 
     UserInputService.InputBegan:Connect(function(Input, GameProcessed)
         if not GameProcessed and Input.KeyCode == Config.KeyBind then
@@ -1656,8 +1701,11 @@ function WisperLib:CreateWindow(Config)
                 })
 
                 local Dragging = false
-                local SliderCallbackDelay = 0.05
+                local SliderCallbackDelay = 0.08
                 local SliderCallbackToken = 0
+                local TargetPercent = (Value - SliderConfig.Min) / (SliderConfig.Max - SliderConfig.Min)
+                local DisplayPercent = TargetPercent
+                local LastDispatchedValue = Value
 
                 local function DispatchSliderCallback(NewValue)
                     SliderCallbackToken = SliderCallbackToken + 1
@@ -1670,19 +1718,14 @@ function WisperLib:CreateWindow(Config)
                     end)
                 end
 
-                local function UpdateSlider(Input)
-                    local Percent = math.clamp((Input.Position.X - SliderBackground.AbsolutePosition.X) / SliderBackground.AbsoluteSize.X, 0, 1)
-                    Value = math.floor(SliderConfig.Min + (SliderConfig.Max - SliderConfig.Min) * Percent)
-                    SliderValue.Text = tostring(Value) .. SliderConfig.Suffix
-                    Tween(SliderFill, {Size = UDim2.new(Percent, 0, 1, 0)}, 0.05)
-                    Tween(SliderKnob, {Position = UDim2.new(Percent, 0, 0.5, 0)}, 0.05)
-                    DispatchSliderCallback(Value)
+                local function SetSliderTargetFromInput(Input)
+                    TargetPercent = math.clamp((Input.Position.X - SliderBackground.AbsolutePosition.X) / SliderBackground.AbsoluteSize.X, 0, 1)
                 end
 
                 SliderClickArea.InputBegan:Connect(function(Input)
                     if Input.UserInputType == Enum.UserInputType.MouseButton1 then
                         Dragging = true
-                        UpdateSlider(Input)
+                        SetSliderTargetFromInput(Input)
                     end
                 end)
 
@@ -1694,7 +1737,26 @@ function WisperLib:CreateWindow(Config)
 
                 UserInputService.InputChanged:Connect(function(Input)
                     if Dragging and Input.UserInputType == Enum.UserInputType.MouseMovement then
-                        UpdateSlider(Input)
+                        SetSliderTargetFromInput(Input)
+                    end
+                end)
+
+                RunService.RenderStepped:Connect(function()
+                    local SmoothFactor = Dragging and 0.26 or 0.18
+                    DisplayPercent = DisplayPercent + (TargetPercent - DisplayPercent) * SmoothFactor
+
+                    if math.abs(TargetPercent - DisplayPercent) < 0.001 then
+                        DisplayPercent = TargetPercent
+                    end
+
+                    Value = math.floor(SliderConfig.Min + (SliderConfig.Max - SliderConfig.Min) * DisplayPercent)
+                    SliderValue.Text = tostring(Value) .. SliderConfig.Suffix
+                    SliderFill.Size = UDim2.new(DisplayPercent, 0, 1, 0)
+                    SliderKnob.Position = UDim2.new(DisplayPercent, 0, 0.5, 0)
+
+                    if Value ~= LastDispatchedValue then
+                        LastDispatchedValue = Value
+                        DispatchSliderCallback(Value)
                     end
                 end)
 
@@ -1705,9 +1767,12 @@ function WisperLib:CreateWindow(Config)
                 function SliderAPI:Set(NewValue)
                     Value = math.clamp(NewValue, SliderConfig.Min, SliderConfig.Max)
                     local Percent = (Value - SliderConfig.Min) / (SliderConfig.Max - SliderConfig.Min)
+                    TargetPercent = Percent
+                    DisplayPercent = Percent
+                    LastDispatchedValue = Value
                     SliderValue.Text = tostring(Value) .. SliderConfig.Suffix
-                    Tween(SliderFill, {Size = UDim2.new(Percent, 0, 1, 0)}, 0.15)
-                    Tween(SliderKnob, {Position = UDim2.new(Percent, 0, 0.5, 0)}, 0.15)
+                    SliderFill.Size = UDim2.new(Percent, 0, 1, 0)
+                    SliderKnob.Position = UDim2.new(Percent, 0, 0.5, 0)
                     DispatchSliderCallback(Value)
                 end
 
@@ -1940,6 +2005,7 @@ function WisperLib:CreateWindow(Config)
                 ComboboxConfig.Name = ComboboxConfig.Name or "Combobox"
                 ComboboxConfig.Options = ComboboxConfig.Options or {}
                 ComboboxConfig.Default = ComboboxConfig.Default or {}
+                ComboboxConfig.SingleSelect = ComboboxConfig.SingleSelect or false
                 ComboboxConfig.Callback = ComboboxConfig.Callback or function() end
 
                 ShowContentIfNeeded()
@@ -1947,6 +2013,9 @@ function WisperLib:CreateWindow(Config)
                 local Selected = {}
                 for _, v in ipairs(ComboboxConfig.Default) do
                     Selected[v] = true
+                    if ComboboxConfig.SingleSelect then
+                        break
+                    end
                 end
 
                 local IsOpen = false
@@ -2002,6 +2071,9 @@ function WisperLib:CreateWindow(Config)
                     end
                     if #Items == 0 then
                         return "None selected..."
+                    end
+                    if ComboboxConfig.SingleSelect then
+                        return Items[1]
                     end
                     return table.concat(Items, ", ")
                 end
@@ -2143,14 +2215,42 @@ function WisperLib:CreateWindow(Config)
                     end)
 
                     OptionButton.MouseButton1Click:Connect(function()
-                        Selected[Option] = not Selected[Option]
-                        if Selected[Option] then
-                            Tween(OptionFill, {Size = UDim2.new(1, 0, 1, 0)}, 0.15)
-                            OptionLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+                        if ComboboxConfig.SingleSelect then
+                            for _, Opt in ipairs(ComboboxConfig.Options) do
+                                local IsCurrent = Opt == Option
+                                Selected[Opt] = IsCurrent
+
+                                local Data = OptionButtons[Opt]
+                                if Data then
+                                    if IsCurrent then
+                                        Tween(Data.Fill, {Size = UDim2.new(1, 0, 1, 0)}, 0.15)
+                                        Data.Label.TextColor3 = Color3.fromRGB(0, 0, 0)
+                                    else
+                                        Tween(Data.Fill, {Size = UDim2.new(0, 0, 1, 0)}, 0.15)
+                                        Data.Label.TextColor3 = Theme.SubText
+                                    end
+                                end
+                            end
+
+                            IsOpen = false
+                            Tween(ComboboxDropdown, {Size = UDim2.new(1, 0, 0, 0)}, 0.15)
+                            task.delay(0.15, function()
+                                if not IsOpen then
+                                    ComboboxDropdown.Visible = false
+                                end
+                            end)
+                            Tween(ComboboxIcon, {Rotation = 0}, 0.15)
                         else
-                            Tween(OptionFill, {Size = UDim2.new(0, 0, 1, 0)}, 0.15)
-                            OptionLabel.TextColor3 = Theme.SubText
+                            Selected[Option] = not Selected[Option]
+                            if Selected[Option] then
+                                Tween(OptionFill, {Size = UDim2.new(1, 0, 1, 0)}, 0.15)
+                                OptionLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+                            else
+                                Tween(OptionFill, {Size = UDim2.new(0, 0, 1, 0)}, 0.15)
+                                OptionLabel.TextColor3 = Theme.SubText
+                            end
                         end
+
                         ComboboxText.Text = GetSelectedText()
 
                         local SelectedItems = {}
@@ -2159,7 +2259,12 @@ function WisperLib:CreateWindow(Config)
                                 table.insert(SelectedItems, Opt)
                             end
                         end
-                        ComboboxConfig.Callback(SelectedItems)
+
+                        if ComboboxConfig.SingleSelect then
+                            ComboboxConfig.Callback(SelectedItems[1])
+                        else
+                            ComboboxConfig.Callback(SelectedItems)
+                        end
                     end)
 
                     OptionButtons[Option] = {Button = OptionButton, Fill = OptionFill, Label = OptionLabel}
@@ -2209,15 +2314,39 @@ function WisperLib:CreateWindow(Config)
 
                 function ComboboxAPI:Set(Items)
                     Selected = {}
-                    for _, Item in ipairs(Items) do
-                        Selected[Item] = true
+                    if ComboboxConfig.SingleSelect then
+                        local SelectedItem = typeof(Items) == "table" and Items[1] or Items
+                        if SelectedItem then
+                            Selected[SelectedItem] = true
+                        end
+                    else
+                        for _, Item in ipairs(Items) do
+                            Selected[Item] = true
+                        end
                     end
+
                     ComboboxText.Text = GetSelectedText()
                     for Option, Data in pairs(OptionButtons) do
-                        Data.Fill.Visible = Selected[Option] or false
-                        Data.Label.TextColor3 = Selected[Option] and Color3.fromRGB(0, 0, 0) or Theme.Text
+                        if Selected[Option] then
+                            Data.Fill.Size = UDim2.new(1, 0, 1, 0)
+                        else
+                            Data.Fill.Size = UDim2.new(0, 0, 1, 0)
+                        end
+                        Data.Label.TextColor3 = Selected[Option] and Color3.fromRGB(0, 0, 0) or Theme.SubText
                     end
-                    ComboboxConfig.Callback(Items)
+
+                    if ComboboxConfig.SingleSelect then
+                        local SelectedValue = nil
+                        for _, Option in ipairs(ComboboxConfig.Options) do
+                            if Selected[Option] then
+                                SelectedValue = Option
+                                break
+                            end
+                        end
+                        ComboboxConfig.Callback(SelectedValue)
+                    else
+                        ComboboxConfig.Callback(Items)
+                    end
                 end
 
                 function ComboboxAPI:Get()
@@ -2329,6 +2458,104 @@ function WisperLib:CreateWindow(Config)
         ScreenGui.Enabled = not ScreenGui.Enabled
     end
 
+    local function CopyTextToClipboard(Text)
+        local Success = pcall(function()
+            if setclipboard then
+                setclipboard(Text)
+                return
+            end
+
+            if toclipboard then
+                toclipboard(Text)
+                return
+            end
+
+            error("Clipboard function is unavailable")
+        end)
+
+        return Success
+    end
+
+    local function ApplyThemePreset(PresetName)
+        local Preset = ThemePresets[PresetName]
+        if not Preset then
+            return false
+        end
+
+        Theme = Preset
+
+        MainFrame.BackgroundColor3 = Theme.Background
+        Header.BackgroundColor3 = Theme.Header
+        HeaderCoverBottom.BackgroundColor3 = Theme.Header
+        HeaderLine.BackgroundColor3 = Theme.HeaderLine
+        AvatarStroke.Color = Theme.AvatarStroke
+        TitleMaskedLabel.TextColor3 = Theme.Text
+        TitleRealLabel.TextColor3 = Theme.Text
+        SubtitleLabel.TextColor3 = Theme.SubText
+        NavContainer.BackgroundColor3 = Theme.ButtonInactive
+        SearchContainer.BackgroundColor3 = Theme.ButtonInactive
+        SearchIcon.ImageColor3 = Theme.SubText
+        ContentContainer.BackgroundColor3 = Theme.ContentBackground
+        Footer.BackgroundColor3 = Theme.Footer
+        FooterCoverTop.BackgroundColor3 = Theme.Footer
+        FooterIcon.ImageColor3 = Theme.Accent
+        FooterTitle.TextColor3 = Theme.Text
+        FooterSubtitle.TextColor3 = Theme.SubText
+        DiscordButton.ImageColor3 = Theme.SubText
+
+        for _, Descendant in ipairs(ScreenGui:GetDescendants()) do
+            if Descendant:IsA("UIStroke") and Descendant.Parent and Descendant.Parent.Name == "Group_" .. string.gsub(Descendant.Parent.Name, "^Group_", "") then
+                Descendant.Color = Theme.GroupStroke
+            end
+
+            if Descendant:IsA("Frame") then
+                if string.sub(Descendant.Name, 1, 6) == "Group_" then
+                    Descendant.BackgroundColor3 = Theme.GroupBackground
+                elseif Descendant.Name == "GroupHeader" then
+                    Descendant.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                elseif Descendant.Name == "HeaderLine" and Descendant.Parent and Descendant.Parent.Name == "GroupHeader" then
+                    Descendant.BackgroundColor3 = Theme.GroupStroke
+                elseif Descendant.Name == "InputBox" then
+                    Descendant.BackgroundColor3 = Theme.InputBackground
+                elseif Descendant.Name == "ComboboxButton" or Descendant.Name == "ComboboxDropdown" or Descendant.Name == "ButtonContainer" then
+                    Descendant.BackgroundColor3 = Theme.InputBackground
+                elseif Descendant.Name == "SliderBackground" then
+                    Descendant.BackgroundColor3 = Theme.SliderBackground
+                end
+            elseif Descendant:IsA("TextLabel") then
+                if Descendant.Name == "InputLabel" or Descendant.Name == "ComboboxLabel" or Descendant.Name == "ToggleLabel" or Descendant.Name == "ButtonText" or Descendant.Name == "SliderLabel" or Descendant.Name == "LabelText" then
+                    Descendant.TextColor3 = Theme.SubText
+                elseif Descendant.Name == "SliderValue" then
+                    Descendant.TextColor3 = Theme.Text
+                elseif Descendant.Name == "InputTextBox" then
+                    Descendant.TextColor3 = Theme.Text
+                end
+            elseif Descendant:IsA("UIStroke") then
+                if Descendant.Parent and (Descendant.Parent.Name == "ColorPickerPopup" or string.sub(Descendant.Parent.Name, 1, 6) == "Group_") then
+                    Descendant.Color = Theme.GroupStroke
+                end
+            elseif Descendant:IsA("ImageLabel") then
+                if Descendant.Name == "InputIcon" or Descendant.Name == "ComboboxIcon" or Descendant.Name == "GroupIcon" then
+                    Descendant.ImageColor3 = Theme.SubText
+                end
+            end
+        end
+
+        return true
+    end
+
+    function Window:SetNotificationsEnabled(Value)
+        NotificationsEnabled = Value and true or false
+    end
+
+    function Window:GetNotificationsEnabled()
+        return NotificationsEnabled
+    end
+
+    function Window:SetTheme(ThemeName)
+        return ApplyThemePreset(ThemeName)
+    end
+
     local NotificationContainer = Create("Frame", {
         Name = "NotificationContainer",
         Parent = ScreenGui,
@@ -2356,6 +2583,10 @@ function WisperLib:CreateWindow(Config)
         NotifyConfig.Duration = NotifyConfig.Duration or 4
         NotifyConfig.Callback = NotifyConfig.Callback or function() end
 
+        if not NotificationsEnabled then
+            return nil
+        end
+
         NotificationCount = NotificationCount + 1
 
         local TitleWidth = game:GetService("TextService"):GetTextSize(NotifyConfig.Title, 13, Enum.Font.GothamBold, Vector2.new(math.huge, 16)).X
@@ -2375,7 +2606,7 @@ function WisperLib:CreateWindow(Config)
         local NotificationFrame = Create("Frame", {
             Name = "Notification",
             Parent = NotificationHolder,
-            BackgroundColor3 = Color3.fromRGB(28, 32, 38),
+            BackgroundColor3 = Theme.InputBackground,
             BorderSizePixel = 0,
             Position = UDim2.new(1, 0, 0, 0),
             Size = UDim2.new(1, 0, 1, 0)
@@ -2489,6 +2720,55 @@ function WisperLib:CreateWindow(Config)
             Close = CloseNotification
         }
     end
+
+    DiscordButton.MouseButton1Click:Connect(function()
+        local InviteLink = "https://discord.gg/BWcBPbWpkP"
+        local Copied = CopyTextToClipboard(InviteLink)
+
+        if Copied then
+            Window:Notify({
+                Title = "Discord",
+                Description = "Link copiado para o clipboard!",
+                Duration = 3
+            })
+        else
+            Window:Notify({
+                Title = "Discord",
+                Description = "Nao foi possivel copiar automaticamente.",
+                Duration = 3
+            })
+        end
+    end)
+
+    local SettingsTab = Window:CreateTab({
+        Name = "Settings",
+        Icon = IconAssets.Settings
+    })
+
+    local InterfaceGroup = SettingsTab:CreateGroup({
+        Name = "Interface",
+        Column = "Left"
+    })
+
+    InterfaceGroup:CreateCombobox({
+        Name = "Theme",
+        Options = {"Default", "White"},
+        Default = {"Default"},
+        SingleSelect = true,
+        Callback = function(ThemeName)
+            if ThemeName then
+                Window:SetTheme(ThemeName)
+            end
+        end
+    })
+
+    InterfaceGroup:CreateToggle({
+        Name = "Notifications",
+        Default = true,
+        Callback = function(Value)
+            Window:SetNotificationsEnabled(Value)
+        end
+    })
 
     return Window
 end
