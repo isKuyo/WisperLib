@@ -17,32 +17,59 @@ if _G.WisperLibInstance then
     _G.WisperLibInstance = nil
 end
 
-local IconKeywords = {
-    Home = {"home", "main", "general", "principal"},
-    Visual = {"visual", "esp", "render", "display"},
-    Settings = {"settings", "config", "configuration", "opcoes", "options"}
-}
+--// Icon System //--
+local Icons = nil;
+local IconsUrl = "https://raw.githubusercontent.com/isKuyo/WisperLib/main/Assets/Icons.lua";
 
-local IconAssets = {
-    Home = "rbxassetid://80485236798991",
-    Visual = "rbxassetid://134539162713658",
-    Settings = "rbxassetid://77861834748434",
-    Default = "rbxassetid://7733960981"
-}
+local function LoadIcons()
+    if Icons then return Icons end;
+    local Ok, Result = pcall(function()
+        return loadstring(game:HttpGet(IconsUrl, true))();
+    end);
+    if Ok and type(Result) == "table" and type(Result.assets) == "table" then
+        Icons = Result.assets;
+    else
+        Icons = {};
+    end;
+    return Icons;
+end;
+
+local function GetIcon(ShortName)
+    if not ShortName or ShortName == "" then
+        return "rbxassetid://7733960981";
+    end;
+    if tostring(ShortName):match("^rbxassetid://") then
+        return ShortName;
+    end;
+    local Assets = LoadIcons();
+    local LucideName = "lucide-" .. ShortName;
+    if Assets[LucideName] then return Assets[LucideName] end;
+    if Assets[ShortName] then return Assets[ShortName] end;
+    return "rbxassetid://7733960981";
+end;
+
+local IconKeywords = {
+    ["settings"] = {"settings", "config", "configuration", "opcoes", "options"},
+    ["home"] = {"home", "main", "general", "principal"},
+    ["eye"] = {"visual", "esp", "render", "display"},
+    ["crosshair"] = {"aim", "aimbot", "combat", "pvp"},
+    ["layers"] = {"misc", "other", "extra"},
+    ["shield"] = {"player", "anti", "safe"},
+    ["zap"] = {"speed", "movement", "fly"},
+    ["package"] = {"item", "inventory", "loot"},
+};
 
 local function GetAutoIcon(TabName)
-    local LowerName = string.lower(TabName)
-    
-    for Category, Keywords in pairs(IconKeywords) do
+    local LowerName = string.lower(TabName);
+    for ShortName, Keywords in pairs(IconKeywords) do
         for _, Keyword in ipairs(Keywords) do
             if string.find(LowerName, Keyword) then
-                return IconAssets[Category]
-            end
-        end
-    end
-    
-    return IconAssets.Default
-end
+                return GetIcon(ShortName);
+            end;
+        end;
+    end;
+    return GetIcon("layout-grid");
+end;
 
 local function GetExecutor()
     if Development then
@@ -981,7 +1008,7 @@ function WisperLib:CreateWindow(Config)
         TabConfig.Name = TabConfig.Name or "Tab"
         TabConfig.Order = TabConfig.Order or (#Tabs + 1)
         
-        local TabIcon = TabConfig.Icon or GetAutoIcon(TabConfig.Name)
+        local TabIcon = TabConfig.Icon and GetIcon(TabConfig.Icon) or GetAutoIcon(TabConfig.Name)
 
         local TabButtonData = CreateTabButton(TabIcon, TabConfig.Order, TabConfig.Name)
 
@@ -1075,7 +1102,7 @@ function WisperLib:CreateWindow(Config)
         function Tab:CreateGroup(GroupConfig)
             GroupConfig = GroupConfig or {}
             GroupConfig.Name = GroupConfig.Name or "Group"
-            GroupConfig.Icon = GroupConfig.Icon or "rbxassetid://7733960981"
+            GroupConfig.Icon = GroupConfig.Icon and GetIcon(GroupConfig.Icon) or GetIcon("layers")
             GroupConfig.Column = GroupConfig.Column or "Left"
 
             GroupCount = GroupCount + 1
@@ -2132,10 +2159,10 @@ function WisperLib:CreateWindow(Config)
                 local InputBox = Create("Frame", {
                     Name = "InputBox",
                     Parent = InputFrame,
-                    BackgroundColor3 = Theme.InputBackground,
+                    BackgroundColor3 = Theme.ControlBackground,
                     BorderSizePixel = 0,
                     Position = UDim2.new(0, 0, 0, 22),
-                    Size = UDim2.new(1, 0, 0, 28)
+                    Size = UDim2.new(1, 0, 0, 30)
                 })
 
                 local InputBoxCorner = Create("UICorner", {
@@ -2568,7 +2595,7 @@ function WisperLib:CreateWindow(Config)
                     OptionButtons = {};
                     Selected = {};
                     ComboboxConfig.Options = NewOptions;
-                    ComboboxText.Text = "...";
+                    ComboboxText.Text = GetSelectedText();
                     for i, Option in ipairs(NewOptions) do
                         local OptionButton = Create("TextButton", {
                             Name = "Option_" .. Option, Parent = ComboboxDropdown,
@@ -2925,7 +2952,7 @@ function WisperLib:CreateWindow(Config)
                 elseif Descendant.Name == "HeaderLine" and Descendant.Parent and Descendant.Parent.Name == "GroupHeader" then
                     Descendant.BackgroundColor3 = Theme.GroupStroke
                 elseif Descendant.Name == "InputBox" then
-                    Descendant.BackgroundColor3 = Theme.InputBackground
+                    Descendant.BackgroundColor3 = Theme.ControlBackground
                 elseif Descendant.Name == "ComboboxButton" or Descendant.Name == "ComboboxDropdown" or Descendant.Name == "ButtonContainer" or Descendant.Name == "KeybindFrame" then
                     Descendant.BackgroundColor3 = Theme.ControlBackground
                 elseif Descendant.Name == "SliderBackground" then
@@ -3177,7 +3204,7 @@ function WisperLib:CreateWindow(Config)
 
     local SettingsTab = Window:CreateTab({
         Name = "Settings",
-        Icon = IconAssets.Settings,
+        Icon = "settings",
         Order = 999999,
         Internal = true
     });
@@ -3252,6 +3279,7 @@ function WisperLib:CreateWindow(Config)
             end;
             local Ok = SaveConfig(SafeName);
             if Ok then
+                ConfigDropdown:Refresh(GetConfigNames());
                 Window:Notify({Title = "Config", Description = "Config \"" .. SafeName .. "\" created.", Duration = 3});
             else
                 Window:Notify({Title = "Config", Description = "Failed to save config (no filesystem access?).", Duration = 4});
