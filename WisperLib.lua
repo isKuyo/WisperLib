@@ -2220,7 +2220,8 @@ function WisperLib:CreateWindow(Config)
                     Name = "Label",
                     Parent = GroupContent,
                     BackgroundTransparency = 1,
-                    Size = UDim2.new(1, 0, 0, 20)
+                    Size = UDim2.new(1, 0, 0, 0),
+                    AutomaticSize = Enum.AutomaticSize.Y,
                 })
 
                 table.insert(RegisteredElements, {
@@ -2234,12 +2235,14 @@ function WisperLib:CreateWindow(Config)
                     Name = "LabelText",
                     Parent = LabelFrame,
                     BackgroundTransparency = 1,
-                    Size = UDim2.new(1, 0, 1, 0),
+                    Size = UDim2.new(1, 0, 0, 0),
+                    AutomaticSize = Enum.AutomaticSize.Y,
                     Font = Enum.Font.Gotham,
                     Text = LabelConfig.Text,
                     TextColor3 = Theme.SubText,
                     TextSize = 14,
-                    TextXAlignment = Enum.TextXAlignment.Left
+                    TextXAlignment = Enum.TextXAlignment.Left,
+                    TextWrapped = true,
                 })
 
                 LabelFrame.MouseEnter:Connect(function()
