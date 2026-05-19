@@ -2457,5 +2457,6 @@ Killer.AbysswalkerCorrupt = AbysswalkerCorrupt;
 Killer.UseFakeSaw = UseFakeSaw;
 Killer.AntiBlind = AntiBlind;
 Killer.SpearAimBot = SpearAimBot;
+Killer.ActivateMaskPower = activateMaskPower;
 
 return Killer
