@@ -147,13 +147,17 @@ local ThemePresets = {
         ButtonInactive = Color3.fromRGB(13, 15, 18),
         ControlBackground = Color3.fromRGB(28, 32, 38),
         ControlHover = Color3.fromRGB(35, 40, 48),
-        GradientColor1 = Color3.fromRGB(198, 151, 255),
-        GradientColor2 = Color3.fromRGB(142, 92, 222),
+        GradientColor1 = Color3.fromRGB(156, 125, 237),
+        GradientColor2 = Color3.fromRGB(124, 91, 228),
+        ToggleInactiveGradientTop = Color3.fromRGB(34, 39, 45),
+        ToggleInactiveGradientBottom = Color3.fromRGB(29, 33, 38),
         AvatarStroke = Color3.fromRGB(26, 30, 36),
-        Accent = Color3.fromRGB(171, 121, 255),
+        Accent = Color3.fromRGB(124, 91, 228),
         Text = Color3.fromRGB(255, 255, 255),
         SubText = Color3.fromRGB(150, 150, 150),
         Divider = Color3.fromRGB(26, 30, 36),
+        SeparatorLine = Color3.fromRGB(60, 65, 75),
+        SeparatorText = Color3.fromRGB(180, 185, 195),
         CheckboxEnabled = Color3.fromRGB(181, 208, 251),
         CheckboxDisabled = Color3.fromRGB(60, 61, 66),
         SliderBackground = Color3.fromRGB(35, 40, 50),
@@ -174,13 +178,17 @@ local ThemePresets = {
         ButtonInactive = Color3.fromRGB(226, 232, 242),
         ControlBackground = Color3.fromRGB(236, 241, 249),
         ControlHover = Color3.fromRGB(226, 232, 242),
-        GradientColor1 = Color3.fromRGB(201, 166, 255),
-        GradientColor2 = Color3.fromRGB(156, 108, 238),
+        GradientColor1 = Color3.fromRGB(169, 137, 244),
+        GradientColor2 = Color3.fromRGB(124, 91, 228),
+        ToggleInactiveGradientTop = Color3.fromRGB(236, 241, 249),
+        ToggleInactiveGradientBottom = Color3.fromRGB(224, 231, 242),
         AvatarStroke = Color3.fromRGB(190, 199, 216),
-        Accent = Color3.fromRGB(136, 90, 232),
+        Accent = Color3.fromRGB(124, 91, 228),
         Text = Color3.fromRGB(27, 33, 44),
         SubText = Color3.fromRGB(96, 106, 124),
         Divider = Color3.fromRGB(205, 212, 226),
+        SeparatorLine = Color3.fromRGB(205, 212, 226),
+        SeparatorText = Color3.fromRGB(120, 128, 146),
         CheckboxEnabled = Color3.fromRGB(77, 126, 227),
         CheckboxDisabled = Color3.fromRGB(168, 176, 189),
         SliderBackground = Color3.fromRGB(224, 231, 242),
@@ -1070,8 +1078,8 @@ function WisperLib:CreateWindow(Config)
                     Name = "InactiveGradient",
                     Parent = ToggleButton,
                     Color = ColorSequence.new({
-                        ColorSequenceKeypoint.new(0, Color3.fromRGB(34, 39, 45)),
-                        ColorSequenceKeypoint.new(1, Color3.fromRGB(29, 33, 38))
+                        ColorSequenceKeypoint.new(0, Theme.ToggleInactiveGradientTop),
+                        ColorSequenceKeypoint.new(1, Theme.ToggleInactiveGradientBottom)
                     }),
                     Rotation = 0
                 })
@@ -1860,7 +1868,7 @@ function WisperLib:CreateWindow(Config)
                 local LeftLine = Create("Frame", {
                     Name = "LeftLine",
                     Parent = SeparatorFrame,
-                    BackgroundColor3 = Color3.fromRGB(60, 65, 75),
+                    BackgroundColor3 = Theme.SeparatorLine,
                     BorderSizePixel = 0,
                     Position = UDim2.new(0, 0, 0.5, -1),
                     Size = UDim2.new(0, 0, 0, 2)
@@ -1875,7 +1883,7 @@ function WisperLib:CreateWindow(Config)
                     Size = UDim2.new(0, 60, 1, 0),
                     Font = Enum.Font.Gotham,
                     Text = SeparatorConfig.Text,
-                    TextColor3 = Color3.fromRGB(180, 185, 195),
+                    TextColor3 = Theme.SeparatorText,
                     TextSize = 13,
                     AutomaticSize = Enum.AutomaticSize.X
                 })
@@ -1883,7 +1891,7 @@ function WisperLib:CreateWindow(Config)
                 local RightLine = Create("Frame", {
                     Name = "RightLine",
                     Parent = SeparatorFrame,
-                    BackgroundColor3 = Color3.fromRGB(60, 65, 75),
+                    BackgroundColor3 = Theme.SeparatorLine,
                     BorderSizePixel = 0,
                     AnchorPoint = Vector2.new(1, 0),
                     Position = UDim2.new(1, 0, 0.5, -1),
@@ -2531,6 +2539,8 @@ function WisperLib:CreateWindow(Config)
                     Descendant.BackgroundColor3 = Theme.ControlBackground
                 elseif Descendant.Name == "SliderBackground" then
                     Descendant.BackgroundColor3 = Theme.SliderBackground
+                elseif Descendant.Name == "LeftLine" or Descendant.Name == "RightLine" then
+                    Descendant.BackgroundColor3 = Theme.SeparatorLine
                 end
             elseif Descendant:IsA("TextLabel") then
                 if Descendant.Name == "InputLabel" or Descendant.Name == "ComboboxLabel" or Descendant.Name == "ToggleLabel" or Descendant.Name == "ButtonText" or Descendant.Name == "SliderLabel" or Descendant.Name == "LabelText" or Descendant.Name == "ComboboxText" or Descendant.Name == "KeybindText" then
@@ -2539,6 +2549,8 @@ function WisperLib:CreateWindow(Config)
                     Descendant.TextColor3 = Theme.Text
                 elseif Descendant.Name == "GroupLabel" then
                     Descendant.TextColor3 = Theme.Text
+                elseif Descendant.Name == "SeparatorText" then
+                    Descendant.TextColor3 = Theme.SeparatorText
                 end
             elseif Descendant:IsA("TextBox") then
                 if Descendant.Name == "InputTextBox" then
@@ -2554,6 +2566,11 @@ function WisperLib:CreateWindow(Config)
                     Descendant.Color = ColorSequence.new({
                         ColorSequenceKeypoint.new(0, Theme.GroupHeaderGradientTop),
                         ColorSequenceKeypoint.new(1, Theme.GroupHeaderGradientBottom)
+                    })
+                elseif Descendant.Name == "InactiveGradient" then
+                    Descendant.Color = ColorSequence.new({
+                        ColorSequenceKeypoint.new(0, Theme.ToggleInactiveGradientTop),
+                        ColorSequenceKeypoint.new(1, Theme.ToggleInactiveGradientBottom)
                     })
                 elseif Descendant.Parent and (Descendant.Parent.Name == "Fill" or Descendant.Parent.Name == "SliderFill" or Descendant.Parent.Name == "CheckContainer") then
                     Descendant.Color = ColorSequence.new({
