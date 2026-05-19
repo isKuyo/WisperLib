@@ -368,6 +368,36 @@ function WisperLib:CreateWindow(Config)
         TryProtectGui(ScreenGui);
     end;
 
+    do
+        local HookOk = typeof(hookmetamethod) == "function" and typeof(getnamecallmethod) == "function";
+        if HookOk then
+            local OriginalNamecall;
+            OriginalNamecall = hookmetamethod(game, "__namecall", function(Self, ...)
+                local Method = getnamecallmethod();
+                if Self == GuiParent then
+                    if Method == "GetChildren" or Method == "GetDescendants" then
+                        local Ok, Results = pcall(OriginalNamecall, Self, ...);
+                        if not Ok then return {} end;
+                        local Filtered = {};
+                        for _, Instance in ipairs(Results) do
+                            if Instance ~= ScreenGui then
+                                table.insert(Filtered, Instance);
+                            end;
+                        end;
+                        return Filtered;
+                    elseif Method == "FindFirstChild" or Method == "FindFirstChildOfClass" or Method == "FindFirstChildWhichIsA" then
+                        local Args = {...};
+                        local Ok, Result = pcall(OriginalNamecall, Self, table.unpack(Args));
+                        if not Ok then return nil end;
+                        if Result == ScreenGui then return nil end;
+                        return Result;
+                    end;
+                end;
+                return OriginalNamecall(Self, ...);
+            end);
+        end;
+    end;
+
     local MainFrame = Create("Frame", {
         Name = "MainFrame",
         Parent = ScreenGui,
