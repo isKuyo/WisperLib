@@ -358,42 +358,120 @@ function WisperLib:CreateWindow(Config)
     _G.WisperLibInstance = ScreenGui;
 
     do
-        local function TryProtectGui(Gui)
-            if syn and type(syn) == "table" and syn.protect_gui then
-                pcall(syn.protect_gui, Gui);
-            elseif typeof(protect_gui) == "function" then
-                pcall(protect_gui, Gui);
-            end;
+        --// Camada 1: syn.protect_gui / protect_gui (C-level, mais forte) //--
+        if syn and type(syn) == "table" and syn.protect_gui then
+            pcall(syn.protect_gui, ScreenGui);
+        elseif typeof(protect_gui) == "function" then
+            pcall(protect_gui, ScreenGui);
         end;
-        TryProtectGui(ScreenGui);
-    end;
 
-    do
-        local HookOk = typeof(hookmetamethod) == "function" and typeof(getnamecallmethod) == "function";
-        if HookOk then
-            local OriginalNamecall;
-            OriginalNamecall = hookmetamethod(game, "__namecall", function(Self, ...)
-                local Method = getnamecallmethod();
-                if Self == GuiParent then
+        local NewCC = typeof(newcclosure) == "function" and newcclosure or function(F) return F end;
+
+        -- Helpers compartilhados
+        local function IsGuiRelated(Inst)
+            if Inst == ScreenGui then return true end;
+            local Ok, Result = pcall(function() return Inst:IsDescendantOf(ScreenGui) end);
+            return Ok and Result;
+        end;
+
+        local function FilterList(List)
+            local Out = {};
+            for _, Inst in ipairs(List) do
+                if not IsGuiRelated(Inst) then
+                    Out[#Out + 1] = Inst;
+                end;
+            end;
+            return Out;
+        end;
+
+        local function IsAncestorOfGui(Self)
+            if Self == GuiParent then return true end;
+            local Ok, Result = pcall(function() return GuiParent:IsDescendantOf(Self) end);
+            return Ok and Result;
+        end;
+
+        --// Camada 2: hookfunction — bloqueia referências diretas (ex: Dex++ salva game.GetDescendants) //--
+        if typeof(hookfunction) == "function" then
+            pcall(function()
+                local Orig; Orig = hookfunction(game.GetDescendants, NewCC(function(Self, ...)
+                    local Ok, Results = pcall(Orig, Self, ...);
+                    if not Ok then return {} end;
+                    if not IsAncestorOfGui(Self) then return Results end;
+                    return FilterList(Results);
+                end));
+            end);
+
+            pcall(function()
+                local Orig; Orig = hookfunction(game.GetChildren, NewCC(function(Self, ...)
+                    local Ok, Results = pcall(Orig, Self, ...);
+                    if not Ok then return {} end;
+                    if Self ~= GuiParent then return Results end;
+                    return FilterList(Results);
+                end));
+            end);
+
+            pcall(function()
+                local Orig; Orig = hookfunction(game.FindFirstChild, NewCC(function(Self, ...)
+                    local Ok, Result = pcall(Orig, Self, ...);
+                    if not Ok then return nil end;
+                    if Result == ScreenGui then return nil end;
+                    return Result;
+                end));
+            end);
+        end;
+
+        --// Camada 3: hookmetamethod __index — intercepta quando scripts buscam o método como referência //--
+        if typeof(hookmetamethod) == "function" then
+            pcall(function()
+                local OrigIndex; OrigIndex = hookmetamethod(game, "__index", NewCC(function(Self, Key)
+                    local Val = OrigIndex(Self, Key);
+                    if typeof(Val) ~= "function" then return Val end;
+                    if Key == "GetDescendants" then
+                        return NewCC(function(S, ...)
+                            local Ok, Results = pcall(Val, S, ...);
+                            if not Ok then return {} end;
+                            if not IsAncestorOfGui(S) then return Results end;
+                            return FilterList(Results);
+                        end);
+                    elseif Key == "GetChildren" then
+                        return NewCC(function(S, ...)
+                            local Ok, Results = pcall(Val, S, ...);
+                            if not Ok then return {} end;
+                            if S ~= GuiParent then return Results end;
+                            return FilterList(Results);
+                        end);
+                    elseif Key == "FindFirstChild" or Key == "FindFirstChildOfClass" or Key == "FindFirstChildWhichIsA" then
+                        return NewCC(function(S, ...)
+                            local Ok, Result = pcall(Val, S, ...);
+                            if not Ok then return nil end;
+                            if Result == ScreenGui then return nil end;
+                            return Result;
+                        end);
+                    end;
+                    return Val;
+                end));
+            end);
+        end;
+
+        --// Camada 4: hookmetamethod __namecall — bloqueia chamadas via :Método() normal //--
+        if typeof(hookmetamethod) == "function" and typeof(getnamecallmethod) == "function" then
+            pcall(function()
+                local OrigNamecall; OrigNamecall = hookmetamethod(game, "__namecall", NewCC(function(Self, ...)
+                    local Method = getnamecallmethod();
                     if Method == "GetChildren" or Method == "GetDescendants" then
-                        local Ok, Results = pcall(OriginalNamecall, Self, ...);
+                        local Ok, Results = pcall(OrigNamecall, Self, ...);
                         if not Ok then return {} end;
-                        local Filtered = {};
-                        for _, Instance in ipairs(Results) do
-                            if Instance ~= ScreenGui then
-                                table.insert(Filtered, Instance);
-                            end;
-                        end;
-                        return Filtered;
+                        if Method == "GetChildren" and Self ~= GuiParent then return Results end;
+                        if Method == "GetDescendants" and not IsAncestorOfGui(Self) then return Results end;
+                        return FilterList(Results);
                     elseif Method == "FindFirstChild" or Method == "FindFirstChildOfClass" or Method == "FindFirstChildWhichIsA" then
-                        local Args = {...};
-                        local Ok, Result = pcall(OriginalNamecall, Self, table.unpack(Args));
+                        local Ok, Result = pcall(OrigNamecall, Self, ...);
                         if not Ok then return nil end;
                         if Result == ScreenGui then return nil end;
                         return Result;
                     end;
-                end;
-                return OriginalNamecall(Self, ...);
+                    return OrigNamecall(Self, ...);
+                end));
             end);
         end;
     end;
