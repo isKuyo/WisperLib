@@ -703,8 +703,9 @@ function WisperLib:CreateWindow(Config)
     local CurrentTab = nil
     local PageContainer
     local RegisteredElements = {}
-    local ConfigStateRegistry = {}
-    local ActiveAutoloadConfig = nil
+    local ConfigStateRegistry = {};
+    local ActiveAutoloadConfig = nil;
+    local KeybindRegistry = {}; -- {Name, GetKey, GetActive (nil = não é toggle)}
 
     local function GetConfigNames()
         local Files = FsListFiles(WisperConfigsFolderName);
@@ -1953,7 +1954,12 @@ function WisperLib:CreateWindow(Config)
                     Set = function(V) Toggled = V; UpdateToggle() end,
                 };
 
-                return ToggleAPI
+                if HasColorPicker then
+                    KeybindRegistry[ToggleConfig.Name] = {
+                        GetKey = function() return CurrentKeybind end,
+                        GetActive = function() return Toggled end,
+                    };
+                end;
             end
 
             function Group:CreateSlider(SliderConfig)
@@ -3025,6 +3031,11 @@ function WisperLib:CreateWindow(Config)
                     return CurrentKey;
                 end;
 
+                KeybindRegistry[KeybindConfig.Name] = {
+                    GetKey = function() return CurrentKey end,
+                    GetActive = nil,
+                };
+
                 return KeybindAPI;
             end
 
@@ -3389,6 +3400,217 @@ function WisperLib:CreateWindow(Config)
         Default = true,
         Callback = function(Value)
             Window:SetNotificationsEnabled(Value);
+        end
+    });
+
+    --// Floating Keybind Panel //--
+    local KeybindPanel = Create("Frame", {
+        Name = "KeybindPanel",
+        Parent = ScreenGui,
+        BackgroundColor3 = Theme.GroupBackground,
+        BorderSizePixel = 0,
+        Position = UDim2.new(0, 20, 0, 20),
+        Size = UDim2.new(0, 200, 0, 0),
+        AutomaticSize = Enum.AutomaticSize.Y,
+        Visible = false,
+        ZIndex = 200,
+        ClipsDescendants = false,
+    });
+
+    Create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = KeybindPanel});
+    Create("UIStroke", {Parent = KeybindPanel, Color = Theme.GroupStroke, Thickness = 1});
+
+    local KeybindPanelHeader = Create("Frame", {
+        Name = "Header",
+        Parent = KeybindPanel,
+        BackgroundColor3 = Theme.GroupHeaderBase,
+        Size = UDim2.new(1, 0, 0, 36),
+        ClipsDescendants = true,
+        ZIndex = 201,
+    });
+    Create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = KeybindPanelHeader});
+    Create("Frame", {
+        Parent = KeybindPanelHeader,
+        BackgroundColor3 = Theme.GroupHeaderGradientBottom,
+        BorderSizePixel = 0,
+        Position = UDim2.new(0, 0, 1, -8),
+        Size = UDim2.new(1, 0, 0, 8),
+    });
+    Create("UIGradient", {
+        Parent = KeybindPanelHeader,
+        Color = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, Theme.GroupHeaderGradientTop),
+            ColorSequenceKeypoint.new(1, Theme.GroupHeaderGradientBottom),
+        }),
+        Rotation = 90,
+    });
+    Create("Frame", {
+        Parent = KeybindPanelHeader,
+        BackgroundColor3 = Theme.GroupStroke,
+        BorderSizePixel = 0,
+        Position = UDim2.new(0, 0, 1, -1),
+        Size = UDim2.new(1, 0, 0, 1),
+    });
+
+    local KeybindPanelIcon = Create("ImageLabel", {
+        Name = "PanelIcon",
+        Parent = KeybindPanelHeader,
+        BackgroundTransparency = 1,
+        Position = UDim2.new(0, 10, 0.5, -8),
+        Size = UDim2.new(0, 16, 0, 16),
+        Image = GetIcon("keyboard"),
+        ImageColor3 = Theme.SubText,
+        ZIndex = 202,
+    });
+
+    Create("TextLabel", {
+        Parent = KeybindPanelHeader,
+        BackgroundTransparency = 1,
+        Position = UDim2.new(0, 34, 0, 0),
+        Size = UDim2.new(1, -44, 1, 0),
+        Font = Enum.Font.GothamBold,
+        Text = "Keybinds",
+        TextColor3 = Theme.Text,
+        TextSize = 13,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        ZIndex = 202,
+    });
+
+    local KeybindPanelContent = Create("Frame", {
+        Name = "Content",
+        Parent = KeybindPanel,
+        BackgroundTransparency = 1,
+        Position = UDim2.new(0, 0, 0, 36),
+        Size = UDim2.new(1, 0, 0, 0),
+        AutomaticSize = Enum.AutomaticSize.Y,
+        ZIndex = 201,
+    });
+
+    Create("UIListLayout", {Parent = KeybindPanelContent, SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 2)});
+    Create("UIPadding", {
+        Parent = KeybindPanelContent,
+        PaddingLeft = UDim.new(0, 10),
+        PaddingRight = UDim.new(0, 10),
+        PaddingTop = UDim.new(0, 6),
+        PaddingBottom = UDim.new(0, 8),
+    });
+
+    local KeybindPanelRows = {};
+
+    local function RefreshKeybindPanel()
+        for _, Row in pairs(KeybindPanelRows) do
+            Row:Destroy();
+        end;
+        table.clear(KeybindPanelRows);
+
+        local HasAny = false;
+        for Name, Entry in pairs(KeybindRegistry) do
+            HasAny = true;
+            local Key = Entry.GetKey();
+            local IsActive = Entry.GetActive and Entry.GetActive() or false;
+            local KeyText = Key and Key.Name or "None";
+
+            local Row = Create("Frame", {
+                Name = "Row_" .. Name,
+                Parent = KeybindPanelContent,
+                BackgroundTransparency = 1,
+                Size = UDim2.new(1, 0, 0, 22),
+                ZIndex = 202,
+            });
+
+            Create("TextLabel", {
+                Parent = Row,
+                BackgroundTransparency = 1,
+                Position = UDim2.new(0, 0, 0, 0),
+                Size = UDim2.new(1, -56, 1, 0),
+                Font = Enum.Font.GothamMedium,
+                Text = Name,
+                TextColor3 = Entry.GetActive ~= nil and (IsActive and Theme.Accent or Theme.SubText) or Theme.SubText,
+                TextSize = 12,
+                TextXAlignment = Enum.TextXAlignment.Left,
+                TextTruncate = Enum.TextTruncate.AtEnd,
+                ZIndex = 202,
+            });
+
+            local KeyBox = Create("Frame", {
+                Name = "KeyBox",
+                Parent = Row,
+                BackgroundColor3 = Theme.ControlBackground,
+                BorderSizePixel = 0,
+                AnchorPoint = Vector2.new(1, 0.5),
+                Position = UDim2.new(1, 0, 0.5, 0),
+                Size = UDim2.new(0, 52, 0, 18),
+                ZIndex = 202,
+            });
+            Create("UICorner", {CornerRadius = UDim.new(0, 4), Parent = KeyBox});
+
+            Create("TextLabel", {
+                Parent = KeyBox,
+                BackgroundTransparency = 1,
+                Size = UDim2.new(1, 0, 1, 0),
+                Font = Enum.Font.Gotham,
+                Text = KeyText,
+                TextColor3 = Entry.GetActive ~= nil and (IsActive and Theme.Accent or Theme.SubText) or Theme.SubText,
+                TextSize = 10,
+                ZIndex = 203,
+            });
+
+            table.insert(KeybindPanelRows, Row);
+        end;
+
+        if not HasAny then
+            local Empty = Create("TextLabel", {
+                Name = "EmptyLabel",
+                Parent = KeybindPanelContent,
+                BackgroundTransparency = 1,
+                Size = UDim2.new(1, 0, 0, 20),
+                Font = Enum.Font.Gotham,
+                Text = "No keybinds registered.",
+                TextColor3 = Theme.SubText,
+                TextSize = 11,
+                ZIndex = 202,
+            });
+            table.insert(KeybindPanelRows, Empty);
+        end;
+    end;
+
+    -- Drag logic for the floating panel
+    MakeDraggable(KeybindPanel, KeybindPanelHeader);
+
+    -- Periodically refresh the panel while visible so active states update
+    RunService.RenderStepped:Connect(function()
+        if KeybindPanel.Visible then
+            for _, Row in ipairs(KeybindPanelRows) do
+                if Row.Parent == KeybindPanelContent then
+                    local NameLabel = Row:FindFirstChildOfClass("TextLabel");
+                    local KeyBoxLabel = Row:FindFirstChild("KeyBox") and Row.KeyBox:FindFirstChildOfClass("TextLabel");
+                    local Name = Row.Name:gsub("^Row_", "");
+                    local Entry = KeybindRegistry[Name];
+                    if Entry then
+                        local IsActive = Entry.GetActive and Entry.GetActive() or false;
+                        local Key = Entry.GetKey();
+                        local Color = Entry.GetActive ~= nil and (IsActive and Theme.Accent or Theme.SubText) or Theme.SubText;
+                        if NameLabel then NameLabel.TextColor3 = Color end;
+                        if KeyBoxLabel then
+                            KeyBoxLabel.TextColor3 = Color;
+                            KeyBoxLabel.Text = Key and Key.Name or "None";
+                        end;
+                    end;
+                end;
+            end;
+        end;
+    end);
+
+    InterfaceGroup:CreateToggle({
+        Name = "Show Keybinds",
+        Default = false,
+        Callback = function(Value)
+            if Value then
+                RefreshKeybindPanel();
+                KeybindPanel.Visible = true;
+            else
+                KeybindPanel.Visible = false;
+            end;
         end
     });
 
