@@ -1,6 +1,6 @@
 local WisperLib = {}
 
-local Development = true
+local Development = false
 local DevelopmentUserId = 944604813
 
 local TweenService = game:GetService("TweenService")
@@ -249,7 +249,8 @@ function WisperLib:CreateWindow(Config)
     })
 
     local DisplayUserId = Development and DevelopmentUserId or Player.UserId
-    local DisplayName = Development and "Development" or Player.Name
+    local DisplayName = Player.Name
+    local MaskedDisplayName = "******"
 
     local AvatarImage = Create("ImageLabel", {
         Name = "AvatarImage",
@@ -272,11 +273,47 @@ function WisperLib:CreateWindow(Config)
         Position = UDim2.new(0, 54, 0, 8),
         Size = UDim2.new(0, 200, 0, 18),
         Font = Enum.Font.GothamBold,
-        Text = DisplayName,
+        Text = MaskedDisplayName,
         TextColor3 = Theme.Text,
         TextSize = 13,
         TextXAlignment = Enum.TextXAlignment.Left
     })
+
+    local IsShowingRealName = false
+    local function SetTitleNameVisibility(ShowRealName)
+        if IsShowingRealName == ShowRealName then
+            return
+        end
+
+        IsShowingRealName = ShowRealName
+        Tween(TitleLabel, {TextTransparency = 1, Position = UDim2.new(0, 58, 0, 8)}, 0.08)
+
+        task.delay(0.08, function()
+            if IsShowingRealName ~= ShowRealName then
+                return
+            end
+
+            TitleLabel.Text = ShowRealName and DisplayName or MaskedDisplayName
+            TitleLabel.Position = UDim2.new(0, 50, 0, 8)
+            Tween(TitleLabel, {TextTransparency = 0, Position = UDim2.new(0, 54, 0, 8)}, 0.12)
+        end)
+    end
+
+    AvatarContainer.MouseEnter:Connect(function()
+        SetTitleNameVisibility(true)
+    end)
+
+    AvatarContainer.MouseLeave:Connect(function()
+        SetTitleNameVisibility(false)
+    end)
+
+    TitleLabel.MouseEnter:Connect(function()
+        SetTitleNameVisibility(true)
+    end)
+
+    TitleLabel.MouseLeave:Connect(function()
+        SetTitleNameVisibility(false)
+    end)
 
     local SubtitleLabel = Create("TextLabel", {
         Name = "SubtitleLabel",
@@ -628,7 +665,7 @@ function WisperLib:CreateWindow(Config)
         BackgroundTransparency = 1,
         Position = UDim2.new(0, 15, 0.5, -12),
         Size = UDim2.new(0, 24, 0, 24),
-        Image = "rbxassetid://7733960981",
+        Image = "rbxassetid://77341506028972",
         ImageColor3 = Theme.Accent
     })
 
@@ -641,14 +678,6 @@ function WisperLib:CreateWindow(Config)
         AutomaticSize = Enum.AutomaticSize.X
     })
 
-    local FooterTitleLayout = Create("UIListLayout", {
-        Parent = FooterTitleContainer,
-        FillDirection = Enum.FillDirection.Horizontal,
-        VerticalAlignment = Enum.VerticalAlignment.Center,
-        SortOrder = Enum.SortOrder.LayoutOrder,
-        Padding = UDim.new(0, 6)
-    })
-
     local FooterTitle = Create("TextLabel", {
         Name = "FooterTitle",
         Parent = FooterTitleContainer,
@@ -658,18 +687,7 @@ function WisperLib:CreateWindow(Config)
         Font = Enum.Font.GothamBold,
         Text = "Wisper Hub",
         TextColor3 = Theme.Text,
-        TextSize = 13,
-        LayoutOrder = 1
-    })
-
-    local VerifiedIcon = Create("ImageLabel", {
-        Name = "VerifiedIcon",
-        Parent = FooterTitleContainer,
-        BackgroundTransparency = 1,
-        Size = UDim2.new(0, 14, 0, 14),
-        Image = "rbxassetid://7743878857",
-        ImageColor3 = Theme.Accent,
-        LayoutOrder = 2
+        TextSize = 13
     })
 
     local FooterSubtitle = Create("TextLabel", {
@@ -1089,7 +1107,9 @@ function WisperLib:CreateWindow(Config)
                     BorderSizePixel = 0,
                     Size = UDim2.new(0, 174, 0, 150),
                     Visible = false,
-                    ZIndex = 100
+                    ZIndex = 100,
+                    ClipsDescendants = true,
+                    AnchorPoint = Vector2.new(0.5, 0.5)
                 })
 
                 local ColorPickerCorner = Create("UICorner", {
@@ -1250,7 +1270,7 @@ function WisperLib:CreateWindow(Config)
                 local function UpdatePickerPosition()
                     local MainFramePos = MainFrame.AbsolutePosition
                     local MainFrameSize = MainFrame.AbsoluteSize
-                    ColorPickerPopup.Position = UDim2.new(0, MainFramePos.X + MainFrameSize.X + 10, 0, MainFramePos.Y + 50)
+                    ColorPickerPopup.Position = UDim2.new(0, MainFramePos.X + MainFrameSize.X + 97, 0, MainFramePos.Y + 125)
                 end
 
                 local DraggingSatVal = false
@@ -1290,6 +1310,7 @@ function WisperLib:CreateWindow(Config)
                 local SatValTargetX = 1
                 local SatValTargetY = 0
                 local HueTargetY = 0
+                local ColorPickerAnimToken = 0
 
                 local GuiInset = game:GetService("GuiService"):GetGuiInset()
 
@@ -1338,15 +1359,21 @@ function WisperLib:CreateWindow(Config)
 
                 ColorFrameButton.MouseButton1Click:Connect(function()
                     ColorPickerOpen = not ColorPickerOpen
+                    ColorPickerAnimToken = ColorPickerAnimToken + 1
+                    local CurrentToken = ColorPickerAnimToken
+
                     if ColorPickerOpen then
                         UpdatePickerPosition()
-                        ColorPickerPopup.Visible = true
+                        ColorPickerPopup.Size = UDim2.new(0, 0, 0, 0)
                         ColorPickerPopup.BackgroundTransparency = 1
+                        ColorPickerPopup.Visible = true
+                        Tween(ColorPickerPopup, {Size = UDim2.new(0, 174, 0, 150)}, 0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
                         Tween(ColorPickerPopup, {BackgroundTransparency = 0}, 0.2)
                     else
+                        Tween(ColorPickerPopup, {Size = UDim2.new(0, 0, 0, 0)}, 0.14, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
                         Tween(ColorPickerPopup, {BackgroundTransparency = 1}, 0.2)
                         task.delay(0.2, function()
-                            if not ColorPickerOpen then
+                            if not ColorPickerOpen and CurrentToken == ColorPickerAnimToken then
                                 ColorPickerPopup.Visible = false
                             end
                         end)
@@ -1629,6 +1656,19 @@ function WisperLib:CreateWindow(Config)
                 })
 
                 local Dragging = false
+                local SliderCallbackDelay = 0.05
+                local SliderCallbackToken = 0
+
+                local function DispatchSliderCallback(NewValue)
+                    SliderCallbackToken = SliderCallbackToken + 1
+                    local CurrentToken = SliderCallbackToken
+
+                    task.delay(SliderCallbackDelay, function()
+                        if CurrentToken == SliderCallbackToken then
+                            SliderConfig.Callback(NewValue)
+                        end
+                    end)
+                end
 
                 local function UpdateSlider(Input)
                     local Percent = math.clamp((Input.Position.X - SliderBackground.AbsolutePosition.X) / SliderBackground.AbsoluteSize.X, 0, 1)
@@ -1636,7 +1676,7 @@ function WisperLib:CreateWindow(Config)
                     SliderValue.Text = tostring(Value) .. SliderConfig.Suffix
                     Tween(SliderFill, {Size = UDim2.new(Percent, 0, 1, 0)}, 0.05)
                     Tween(SliderKnob, {Position = UDim2.new(Percent, 0, 0.5, 0)}, 0.05)
-                    SliderConfig.Callback(Value)
+                    DispatchSliderCallback(Value)
                 end
 
                 SliderClickArea.InputBegan:Connect(function(Input)
@@ -1658,7 +1698,7 @@ function WisperLib:CreateWindow(Config)
                     end
                 end)
 
-                SliderConfig.Callback(Value)
+                DispatchSliderCallback(Value)
 
                 local SliderAPI = {}
 
@@ -1668,7 +1708,7 @@ function WisperLib:CreateWindow(Config)
                     SliderValue.Text = tostring(Value) .. SliderConfig.Suffix
                     Tween(SliderFill, {Size = UDim2.new(Percent, 0, 1, 0)}, 0.15)
                     Tween(SliderKnob, {Position = UDim2.new(Percent, 0, 0.5, 0)}, 0.15)
-                    SliderConfig.Callback(Value)
+                    DispatchSliderCallback(Value)
                 end
 
                 function SliderAPI:Get()
