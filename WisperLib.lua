@@ -1151,36 +1151,10 @@ function WisperLib:CreateWindow(Config)
     local Window = {}
     local NotificationsEnabled = true
 
-    local ContextActionService = game:GetService("ContextActionService");
-    local ShiftLockBlocked = false;
-
-    local function ManageShiftLock()
-        if ScreenGui.Enabled and not ShiftLockBlocked then
-            ShiftLockBlocked = true;
-            ContextActionService:BindAction("WisperBlockShiftLock", function(Name, InputState, Input)
-                if Input.KeyCode == Enum.KeyCode.LeftShift or Input.KeyCode == Enum.KeyCode.RightShift then
-                    return Enum.ContextActionResult.Sink;
-                end;
-                return Enum.ContextActionResult.Pass;
-            end, false, Enum.KeyCode.LeftShift, Enum.KeyCode.RightShift);
-        elseif not ScreenGui.Enabled and ShiftLockBlocked then
-            ShiftLockBlocked = false;
-            pcall(function() ContextActionService:UnbindAction("WisperBlockShiftLock") end);
-        end;
-    end;
-
-    local ShiftLockCorrectionLoop = RunService.RenderStepped:Connect(function()
-        if ScreenGui.Enabled and workspace.CurrentCamera then
-            local CameraSubject = workspace.CurrentCamera.CameraSubject;
-            if CameraSubject and CameraSubject:IsA("Humanoid") then
-                local RootPart = Player.Character and Player.Character:FindFirstChild("HumanoidRootPart");
-                if RootPart then
-                    local DistanceToHuman = (workspace.CurrentCamera.CFrame.Position - RootPart.Position).Magnitude;
-                    if DistanceToHuman < 2 then
-                        workspace.CurrentCamera.CFrame = RootPart.CFrame * CFrame.new(0, 0, 5);
-                    end;
-                end;
-            end;
+    RunService.RenderStepped:Connect(function()
+        if ScreenGui.Enabled then
+            UserInputService.MouseBehavior = Enum.MouseBehavior.Default;
+            UserInputService.MouseIconEnabled = true;
         end;
     end);
 
@@ -1189,7 +1163,6 @@ function WisperLib:CreateWindow(Config)
             ScreenGui.Enabled = not ScreenGui.Enabled
             NavContainer.Visible = ScreenGui.Enabled
             SearchContainer.Visible = ScreenGui.Enabled
-            ManageShiftLock();
         end
     end)
 
