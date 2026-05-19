@@ -1509,7 +1509,7 @@ function WisperLib:CreateWindow(Config)
                 })
 
                 local HasColorPicker = ToggleConfig.Color ~= nil or ToggleConfig.ColorCallback ~= nil;
-                local LabelRightOffset = HasColorPicker and 100 or 30;
+                local LabelRightOffset = HasColorPicker and 120 or 55;
 
                 local ToggleLabel = Create("TextLabel", {
                     Name = "ToggleLabel",
@@ -1841,7 +1841,7 @@ function WisperLib:CreateWindow(Config)
                     AnchorPoint = Vector2.new(1, 0.5),
                     Position = UDim2.new(1, 0, 0.5, 0),
                     Size = UDim2.new(0, 45, 0, 20),
-                    Visible = HasColorPicker
+                    Visible = false
                 })
 
                 local KeybindCorner = Create("UICorner", {
@@ -1926,7 +1926,7 @@ function WisperLib:CreateWindow(Config)
                     Parent = ToggleFrame,
                     BackgroundTransparency = 1,
                     Position = UDim2.new(0, 0, 0, 0),
-                    Size = UDim2.new(1, HasColorPicker and -75 or 0, 1, 0),
+                    Size = UDim2.new(1, HasColorPicker and -120 or -55, 1, 0),
                     Text = "",
                     AutoButtonColor = false
                 })
@@ -1935,12 +1935,18 @@ function WisperLib:CreateWindow(Config)
                     if not Toggled then
                         Tween(ToggleLabel, {TextColor3 = Theme.Text}, 0.15)
                     end
+                    if not WaitingForKey then
+                        KeybindFrame.Visible = true;
+                    end;
                 end)
 
                 ToggleClickArea.MouseLeave:Connect(function()
                     if not Toggled then
                         Tween(ToggleLabel, {TextColor3 = Theme.SubText}, 0.15)
                     end
+                    if not WaitingForKey and CurrentKeybind == nil then
+                        KeybindFrame.Visible = false;
+                    end;
                 end)
 
                 ToggleClickArea.MouseButton1Click:Connect(function()
@@ -1994,12 +2000,10 @@ function WisperLib:CreateWindow(Config)
                     Set = function(V) Toggled = V; UpdateToggle() end,
                 };
 
-                if HasColorPicker then
-                    KeybindRegistry[ToggleConfig.Name] = {
-                        GetKey = function() return CurrentKeybind end,
-                        GetActive = function() return Toggled end,
-                    };
-                end;
+                KeybindRegistry[ToggleConfig.Name] = {
+                    GetKey = function() return CurrentKeybind end,
+                    GetActive = function() return Toggled end,
+                };
             end
 
             function Group:CreateSlider(SliderConfig)
