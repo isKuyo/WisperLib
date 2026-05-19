@@ -3031,10 +3031,12 @@ function WisperLib:CreateWindow(Config)
                     return CurrentKey;
                 end;
 
-                KeybindRegistry[KeybindConfig.Name] = {
-                    GetKey = function() return CurrentKey end,
-                    GetActive = nil,
-                };
+                if KeybindConfig.Name ~= "Open / Close Menu" then
+                    KeybindRegistry[KeybindConfig.Name] = {
+                        GetKey = function() return CurrentKey end,
+                        GetActive = nil,
+                    };
+                end;
 
                 return KeybindAPI;
             end
@@ -3409,7 +3411,8 @@ function WisperLib:CreateWindow(Config)
         Parent = ScreenGui,
         BackgroundColor3 = Theme.GroupBackground,
         BorderSizePixel = 0,
-        Position = UDim2.new(0, 20, 0, 20),
+        AnchorPoint = Vector2.new(1, 0.5),
+        Position = UDim2.new(1, -20, 0.5, 0),
         Size = UDim2.new(0, 200, 0, 0),
         AutomaticSize = Enum.AutomaticSize.Y,
         Visible = false,
@@ -3505,10 +3508,12 @@ function WisperLib:CreateWindow(Config)
 
         local HasAny = false;
         for Name, Entry in pairs(KeybindRegistry) do
-            HasAny = true;
+            if Name == "Open / Close Menu" then continue end;
             local Key = Entry.GetKey();
+            if Key == nil then continue end;
+            HasAny = true;
             local IsActive = Entry.GetActive and Entry.GetActive() or false;
-            local KeyText = Key and Key.Name or "None";
+            local KeyText = Key.Name;
 
             local Row = Create("Frame", {
                 Name = "Row_" .. Name,
