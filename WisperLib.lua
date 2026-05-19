@@ -1841,7 +1841,7 @@ function WisperLib:CreateWindow(Config)
                     AnchorPoint = Vector2.new(1, 0.5),
                     Position = UDim2.new(1, 0, 0.5, 0),
                     Size = UDim2.new(0, 45, 0, 20),
-                    Visible = false
+                    Visible = true
                 })
 
                 local KeybindCorner = Create("UICorner", {
@@ -1935,18 +1935,12 @@ function WisperLib:CreateWindow(Config)
                     if not Toggled then
                         Tween(ToggleLabel, {TextColor3 = Theme.Text}, 0.15)
                     end
-                    if not WaitingForKey then
-                        KeybindFrame.Visible = true;
-                    end;
                 end)
 
                 ToggleClickArea.MouseLeave:Connect(function()
                     if not Toggled then
                         Tween(ToggleLabel, {TextColor3 = Theme.SubText}, 0.15)
                     end
-                    if not WaitingForKey and CurrentKeybind == nil then
-                        KeybindFrame.Visible = false;
-                    end;
                 end)
 
                 ToggleClickArea.MouseButton1Click:Connect(function()
