@@ -3,11 +3,12 @@ local WisperLib = {}
 local Development = false
 local DevelopmentUserId = 944604813
 
-local TweenService = game:GetService("TweenService")
-local UserInputService = game:GetService("UserInputService")
-local RunService = game:GetService("RunService")
-local Players = game:GetService("Players")
-local CoreGui = game:GetService("CoreGui")
+local TweenService = game:GetService("TweenService");
+local UserInputService = game:GetService("UserInputService");
+local RunService = game:GetService("RunService");
+local Players = game:GetService("Players");
+local CoreGui = game:GetService("CoreGui");
+local HttpService = game:GetService("HttpService");
 
 local Player = Players.LocalPlayer
 
@@ -198,7 +199,85 @@ local ThemePresets = {
     }
 }
 
-local Theme = ThemePresets.Default
+local Theme = ThemePresets.Default;
+
+--// File System Helpers //--
+local WisperFolderName = "Wisper";
+local WisperConfigsFolderName = "Wisper/configs";
+local WisperAutoloadFileName = "Wisper/autoload.txt";
+
+local function GetFsFunc(FnName)
+    local Aliases = {
+        makefolder = {"makefolder", "createfolder"},
+        writefile = {"writefile"},
+        readfile = {"readfile"},
+        isfile = {"isfile"},
+        isfolder = {"isfolder"},
+        listfiles = {"listfiles"},
+        delfile = {"delfile", "removefile"},
+    };
+    local List = Aliases[FnName] or {FnName};
+    for _, Candidate in ipairs(List) do
+        if type(_G[Candidate]) == "function" then
+            return _G[Candidate];
+        end;
+        if type(getgenv) == "function" then
+            local Ok, Env = pcall(getgenv);
+            if Ok and type(Env) == "table" and type(Env[Candidate]) == "function" then
+                return Env[Candidate];
+            end;
+        end;
+    end;
+    return nil;
+end;
+
+local function FsEnsureFolders()
+    local MakeFolder = GetFsFunc("makefolder");
+    local IsFolder = GetFsFunc("isfolder");
+    if not MakeFolder then return end;
+    local function EnsureDir(Path)
+        if IsFolder then
+            local Ok, Exists = pcall(IsFolder, Path);
+            if Ok and Exists then return end;
+        end;
+        pcall(MakeFolder, Path);
+    end;
+    EnsureDir(WisperFolderName);
+    EnsureDir(WisperConfigsFolderName);
+end;
+
+local function FsWriteFile(Path, Content)
+    local Fn = GetFsFunc("writefile");
+    if not Fn then return false end;
+    local Ok = pcall(Fn, Path, Content);
+    return Ok;
+end;
+
+local function FsReadFile(Path)
+    local IsFile = GetFsFunc("isfile");
+    local ReadFn = GetFsFunc("readfile");
+    if not ReadFn then return nil end;
+    if IsFile then
+        local Ok, Exists = pcall(IsFile, Path);
+        if not Ok or not Exists then return nil end;
+    end;
+    local Ok, Data = pcall(ReadFn, Path);
+    return (Ok and type(Data) == "string" and #Data > 0) and Data or nil;
+end;
+
+local function FsDeleteFile(Path)
+    local Fn = GetFsFunc("delfile");
+    if not Fn then return end;
+    pcall(Fn, Path);
+end;
+
+local function FsListFiles(FolderPath)
+    local Fn = GetFsFunc("listfiles");
+    if not Fn then return {} end;
+    local Ok, Files = pcall(Fn, FolderPath);
+    if not Ok or type(Files) ~= "table" then return {} end;
+    return Files;
+end;
 
 local ScreenGuiName = "WisperLib_" .. tostring(math.random(100000, 999999))
 
@@ -444,6 +523,83 @@ function WisperLib:CreateWindow(Config)
     local CurrentTab = nil
     local PageContainer
     local RegisteredElements = {}
+    local ConfigStateRegistry = {}
+    local ActiveAutoloadConfig = nil
+
+    local function GetConfigNames()
+        local Files = FsListFiles(WisperConfigsFolderName);
+        local Names = {};
+        for _, FilePath in ipairs(Files) do
+            local Name = tostring(FilePath):match("([^/\\]+)%.json$");
+            if Name then
+                table.insert(Names, Name);
+            end;
+        end;
+        table.sort(Names);
+        return Names;
+    end;
+
+    local function SerializeConfig()
+        local Data = {};
+        for Name, Entry in pairs(ConfigStateRegistry) do
+            if Entry.Type == "Toggle" then
+                Data[Name] = {Type = "Toggle", Value = Entry.Get()};
+            elseif Entry.Type == "Slider" then
+                Data[Name] = {Type = "Slider", Value = Entry.Get()};
+            elseif Entry.Type == "Combobox" then
+                Data[Name] = {Type = "Combobox", Value = Entry.Get()};
+            elseif Entry.Type == "Input" then
+                Data[Name] = {Type = "Input", Value = Entry.Get()};
+            end;
+        end;
+        local Ok, Json = pcall(function() return HttpService:JSONEncode(Data) end);
+        return Ok and Json or "{}";
+    end;
+
+    local function ApplyConfigData(JsonStr)
+        local Ok, Data = pcall(function() return HttpService:JSONDecode(JsonStr) end);
+        if not Ok or type(Data) ~= "table" then return false end;
+        for Name, Entry in pairs(Data) do
+            local Reg = ConfigStateRegistry[Name];
+            if Reg and Entry.Value ~= nil then
+                pcall(function() Reg.Set(Entry.Value) end);
+            end;
+        end;
+        return true;
+    end;
+
+    local function SaveConfig(ConfigName)
+        FsEnsureFolders();
+        local Json = SerializeConfig();
+        return FsWriteFile(WisperConfigsFolderName .. "/" .. ConfigName .. ".json", Json);
+    end;
+
+    local function LoadConfig(ConfigName)
+        local Json = FsReadFile(WisperConfigsFolderName .. "/" .. ConfigName .. ".json");
+        if not Json then return false end;
+        return ApplyConfigData(Json);
+    end;
+
+    local function DeleteConfig(ConfigName)
+        FsDeleteFile(WisperConfigsFolderName .. "/" .. ConfigName .. ".json");
+    end;
+
+    local function GetAutoloadConfigName()
+        local Data = FsReadFile(WisperAutoloadFileName);
+        if not Data then return nil end;
+        return Data:match("^%s*(.-)%s*$");
+    end;
+
+    local function SetAutoloadConfig(ConfigName)
+        FsEnsureFolders();
+        FsWriteFile(WisperAutoloadFileName, ConfigName);
+        ActiveAutoloadConfig = ConfigName;
+    end;
+
+    local function ClearAutoloadConfig()
+        FsDeleteFile(WisperAutoloadFileName);
+        ActiveAutoloadConfig = nil;
+    end;
 
     local SearchContainer = Create("Frame", {
         Name = "SearchContainer",
@@ -884,7 +1040,7 @@ function WisperLib:CreateWindow(Config)
 
         local GroupCount = 0
 
-        table.insert(Tabs, {ButtonData = TabButtonData, Page = TabPage, Name = TabConfig.Name})
+        table.insert(Tabs, {ButtonData = TabButtonData, Page = TabPage, Name = TabConfig.Name, Internal = TabConfig.Internal})
         table.insert(TabButtons, TabButtonData)
 
         local function SelectTab()
@@ -900,9 +1056,17 @@ function WisperLib:CreateWindow(Config)
 
         TabButtonData.ClickArea.MouseButton1Click:Connect(SelectTab)
 
-        if #Tabs == 1 then
-            SelectTab()
-        end
+        if not TabConfig.Internal then
+            local UserTabCount = 0;
+            for _, T in pairs(Tabs) do
+                if not T.Internal then
+                    UserTabCount = UserTabCount + 1;
+                end;
+            end;
+            if UserTabCount == 1 then
+                SelectTab();
+            end;
+        end;
 
         local Tab = {}
 
@@ -1598,6 +1762,12 @@ function WisperLib:CreateWindow(Config)
                     return CurrentColor
                 end
 
+                ConfigStateRegistry[ToggleConfig.Name] = {
+                    Type = "Toggle",
+                    Get = function() return Toggled end,
+                    Set = function(V) Toggled = V; UpdateToggle() end,
+                };
+
                 return ToggleAPI
             end
 
@@ -1799,6 +1969,12 @@ function WisperLib:CreateWindow(Config)
                 function SliderAPI:Get()
                     return Value
                 end
+
+                ConfigStateRegistry[SliderConfig.Name] = {
+                    Type = "Slider",
+                    Get = function() return Value end,
+                    Set = function(V) SliderAPI:Set(V) end,
+                };
 
                 return SliderAPI
             end
@@ -2016,6 +2192,12 @@ function WisperLib:CreateWindow(Config)
                 function InputAPI:Get()
                     return InputTextBox.Text
                 end
+
+                ConfigStateRegistry[InputConfig.Name] = {
+                    Type = "Input",
+                    Get = function() return InputTextBox.Text end,
+                    Set = function(V) InputTextBox.Text = tostring(V or "") end,
+                };
 
                 return InputAPI
             end
@@ -2379,6 +2561,107 @@ function WisperLib:CreateWindow(Config)
                     return Items
                 end
 
+                function ComboboxAPI:Refresh(NewOptions)
+                    for _, Data in pairs(OptionButtons) do
+                        Data.Button:Destroy();
+                    end;
+                    OptionButtons = {};
+                    Selected = {};
+                    ComboboxConfig.Options = NewOptions;
+                    ComboboxText.Text = "...";
+                    for i, Option in ipairs(NewOptions) do
+                        local OptionButton = Create("TextButton", {
+                            Name = "Option_" .. Option, Parent = ComboboxDropdown,
+                            BackgroundTransparency = 1, Size = UDim2.new(1, 0, 0, 28),
+                            Font = Enum.Font.Gotham, Text = "", AutoButtonColor = false,
+                            LayoutOrder = i, ZIndex = 11
+                        });
+                        local OptionFillContainer = Create("Frame", {
+                            Name = "FillContainer", Parent = OptionButton,
+                            BackgroundTransparency = 1, Position = UDim2.new(0, 4, 0, 2),
+                            Size = UDim2.new(1, -8, 1, -4), ZIndex = 11, ClipsDescendants = true
+                        });
+                        Create("UICorner", {CornerRadius = UDim.new(0, 4), Parent = OptionFillContainer});
+                        local OptionFill = Create("Frame", {
+                            Name = "Fill", Parent = OptionFillContainer,
+                            BackgroundColor3 = Color3.fromRGB(255, 255, 255), BorderSizePixel = 0,
+                            AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.new(0.5, 0, 0.5, 0),
+                            Size = UDim2.new(0, 0, 1, 0), ZIndex = 11
+                        });
+                        Create("UICorner", {CornerRadius = UDim.new(0, 4), Parent = OptionFill});
+                        Create("UIGradient", {Parent = OptionFill,
+                            Color = ColorSequence.new({
+                                ColorSequenceKeypoint.new(0, Theme.GradientColor1),
+                                ColorSequenceKeypoint.new(1, Theme.GradientColor2)
+                            }), Rotation = 0});
+                        local OptionLabel = Create("TextLabel", {
+                            Name = "OptionLabel", Parent = OptionButton,
+                            BackgroundTransparency = 1, Position = UDim2.new(0, 12, 0, 0),
+                            Size = UDim2.new(1, -24, 1, 0), Font = Enum.Font.Gotham, Text = Option,
+                            TextColor3 = Theme.SubText, TextSize = 13,
+                            TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 12
+                        });
+                        OptionButton.MouseEnter:Connect(function()
+                            if not Selected[Option] then Tween(OptionLabel, {TextColor3 = Theme.Text}, 0.1) end;
+                        end);
+                        OptionButton.MouseLeave:Connect(function()
+                            if not Selected[Option] then Tween(OptionLabel, {TextColor3 = Theme.SubText}, 0.1) end;
+                        end);
+                        OptionButton.MouseButton1Click:Connect(function()
+                            if ComboboxConfig.SingleSelect then
+                                for _, Opt in ipairs(ComboboxConfig.Options) do
+                                    local IsCurrent = Opt == Option;
+                                    Selected[Opt] = IsCurrent;
+                                    local BData = OptionButtons[Opt];
+                                    if BData then
+                                        if IsCurrent then
+                                            Tween(BData.Fill, {Size = UDim2.new(1, 0, 1, 0)}, 0.15);
+                                            BData.Label.TextColor3 = Color3.fromRGB(0, 0, 0);
+                                        else
+                                            Tween(BData.Fill, {Size = UDim2.new(0, 0, 1, 0)}, 0.15);
+                                            BData.Label.TextColor3 = Theme.SubText;
+                                        end;
+                                    end;
+                                end;
+                                IsOpen = false;
+                                Tween(ComboboxDropdown, {Size = UDim2.new(1, 0, 0, 0)}, 0.15);
+                                task.delay(0.15, function() if not IsOpen then ComboboxDropdown.Visible = false end end);
+                                Tween(ComboboxIcon, {Rotation = 0}, 0.15);
+                            else
+                                Selected[Option] = not Selected[Option];
+                                if Selected[Option] then
+                                    Tween(OptionFill, {Size = UDim2.new(1, 0, 1, 0)}, 0.15);
+                                    OptionLabel.TextColor3 = Color3.fromRGB(0, 0, 0);
+                                else
+                                    Tween(OptionFill, {Size = UDim2.new(0, 0, 1, 0)}, 0.15);
+                                    OptionLabel.TextColor3 = Theme.SubText;
+                                end;
+                            end;
+                            ComboboxText.Text = GetSelectedText();
+                            local SelectedItems = {};
+                            for _, Opt in ipairs(ComboboxConfig.Options) do
+                                if Selected[Opt] then table.insert(SelectedItems, Opt) end;
+                            end;
+                            if ComboboxConfig.SingleSelect then
+                                ComboboxConfig.Callback(SelectedItems[1]);
+                            else
+                                ComboboxConfig.Callback(SelectedItems);
+                            end;
+                        end);
+                        OptionButtons[Option] = {Button = OptionButton, Fill = OptionFill, Label = OptionLabel};
+                    end;
+                    DropdownHeight = #NewOptions * 28 + 8;
+                    if IsOpen then
+                        ComboboxDropdown.Size = UDim2.new(1, 0, 0, DropdownHeight);
+                    end;
+                end;
+
+                ConfigStateRegistry[ComboboxConfig.Name] = {
+                    Type = "Combobox",
+                    Get = function() return ComboboxAPI:Get() end,
+                    Set = function(V) ComboboxAPI:Set(V) end,
+                };
+
                 return ComboboxAPI
             end
 
@@ -2452,6 +2735,112 @@ function WisperLib:CreateWindow(Config)
                 end)
 
                 return ButtonFrame
+            end
+
+            function Group:CreateKeybind(KeybindConfig)
+                KeybindConfig = KeybindConfig or {};
+                KeybindConfig.Name = KeybindConfig.Name or "Keybind";
+                KeybindConfig.Default = KeybindConfig.Default or nil;
+                KeybindConfig.Callback = KeybindConfig.Callback or function() end;
+
+                ShowContentIfNeeded();
+
+                local CurrentKey = KeybindConfig.Default;
+                local WaitingForKey = false;
+
+                local KeybindRowFrame = Create("Frame", {
+                    Name = "Keybind_" .. KeybindConfig.Name,
+                    Parent = GroupContent,
+                    BackgroundTransparency = 1,
+                    Size = UDim2.new(1, 0, 0, 24)
+                });
+
+                local KeybindNameLabel = Create("TextLabel", {
+                    Name = "KeybindLabel",
+                    Parent = KeybindRowFrame,
+                    BackgroundTransparency = 1,
+                    Position = UDim2.new(0, 0, 0, 0),
+                    Size = UDim2.new(1, -72, 1, 0),
+                    Font = Enum.Font.Gotham,
+                    Text = KeybindConfig.Name,
+                    TextColor3 = Theme.SubText,
+                    TextSize = 14,
+                    TextXAlignment = Enum.TextXAlignment.Left
+                });
+
+                local KeybindBox = Create("Frame", {
+                    Name = "KeybindFrame",
+                    Parent = KeybindRowFrame,
+                    BackgroundColor3 = Theme.ControlBackground,
+                    BorderSizePixel = 0,
+                    AnchorPoint = Vector2.new(1, 0.5),
+                    Position = UDim2.new(1, 0, 0.5, 0),
+                    Size = UDim2.new(0, 68, 0, 20)
+                });
+
+                Create("UICorner", {CornerRadius = UDim.new(0, 4), Parent = KeybindBox});
+
+                local KeybindLabel = Create("TextLabel", {
+                    Name = "KeybindText",
+                    Parent = KeybindBox,
+                    BackgroundTransparency = 1,
+                    Size = UDim2.new(1, 0, 1, 0),
+                    Font = Enum.Font.Gotham,
+                    Text = CurrentKey and CurrentKey.Name or "None",
+                    TextColor3 = Theme.SubText,
+                    TextSize = 11
+                });
+
+                local KeybindClickArea = Create("TextButton", {
+                    Parent = KeybindBox,
+                    BackgroundTransparency = 1,
+                    Size = UDim2.new(1, 0, 1, 0),
+                    Text = "",
+                    AutoButtonColor = false,
+                    ZIndex = 2
+                });
+
+                KeybindBox.MouseEnter:Connect(function()
+                    if not WaitingForKey then
+                        Tween(KeybindLabel, {TextColor3 = Theme.Text}, 0.15);
+                    end;
+                end);
+
+                KeybindBox.MouseLeave:Connect(function()
+                    if not WaitingForKey then
+                        Tween(KeybindLabel, {TextColor3 = Theme.SubText}, 0.15);
+                    end;
+                end);
+
+                KeybindClickArea.MouseButton1Click:Connect(function()
+                    WaitingForKey = true;
+                    KeybindLabel.Text = "...";
+                    KeybindLabel.TextColor3 = Theme.Text;
+                end);
+
+                UserInputService.InputBegan:Connect(function(Input, GameProcessed)
+                    if WaitingForKey and Input.UserInputType == Enum.UserInputType.Keyboard then
+                        CurrentKey = Input.KeyCode;
+                        KeybindLabel.Text = Input.KeyCode.Name;
+                        KeybindLabel.TextColor3 = Theme.SubText;
+                        WaitingForKey = false;
+                        KeybindConfig.Callback(CurrentKey);
+                    end;
+                end);
+
+                local KeybindAPI = {};
+
+                function KeybindAPI:Set(Key)
+                    CurrentKey = Key;
+                    KeybindLabel.Text = Key and Key.Name or "None";
+                    KeybindConfig.Callback(CurrentKey);
+                end;
+
+                function KeybindAPI:Get()
+                    return CurrentKey;
+                end;
+
+                return KeybindAPI;
             end
 
             return Group
@@ -2789,13 +3178,14 @@ function WisperLib:CreateWindow(Config)
     local SettingsTab = Window:CreateTab({
         Name = "Settings",
         Icon = IconAssets.Settings,
-        Order = 999999
-    })
+        Order = 999999,
+        Internal = true
+    });
 
     local InterfaceGroup = SettingsTab:CreateGroup({
         Name = "Interface",
         Column = "Left"
-    })
+    });
 
     InterfaceGroup:CreateCombobox({
         Name = "Theme",
@@ -2804,18 +3194,175 @@ function WisperLib:CreateWindow(Config)
         SingleSelect = true,
         Callback = function(ThemeName)
             if ThemeName then
-                Window:SetTheme(ThemeName)
-            end
+                Window:SetTheme(ThemeName);
+            end;
         end
-    })
+    });
 
     InterfaceGroup:CreateToggle({
         Name = "Notifications",
         Default = true,
         Callback = function(Value)
-            Window:SetNotificationsEnabled(Value)
+            Window:SetNotificationsEnabled(Value);
         end
-    })
+    });
+
+    local MenuGroup = SettingsTab:CreateGroup({
+        Name = "Menu",
+        Column = "Left"
+    });
+
+    MenuGroup:CreateKeybind({
+        Name = "Open / Close Menu",
+        Default = Config.KeyBind,
+        Callback = function(Key)
+            Config.KeyBind = Key;
+        end
+    });
+
+    MenuGroup:CreateButton({
+        Name = "Unload",
+        Callback = function()
+            ScreenGui:Destroy();
+        end
+    });
+
+    --// Configuration Group //--
+    local ConfigGroup = SettingsTab:CreateGroup({
+        Name = "Configuration",
+        Column = "Right"
+    });
+
+    ConfigGroup:CreateSeparator({Text = "Create"});
+
+    local ConfigNameInput = ConfigGroup:CreateInput({
+        Name = "Config Name",
+        Placeholder = "Enter name...",
+        Callback = function() end
+    });
+
+    ConfigGroup:CreateButton({
+        Name = "Create Config",
+        Callback = function()
+            local RawName = ConfigNameInput:Get();
+            local SafeName = RawName:gsub("[^%w_%-%s]", ""):gsub("^%s+", ""):gsub("%s+$", ""):gsub("%s+", "_");
+            if #SafeName == 0 then
+                Window:Notify({Title = "Config", Description = "Enter a config name first.", Duration = 3});
+                return;
+            end;
+            local Ok = SaveConfig(SafeName);
+            if Ok then
+                Window:Notify({Title = "Config", Description = "Config \"" .. SafeName .. "\" created.", Duration = 3});
+            else
+                Window:Notify({Title = "Config", Description = "Failed to save config (no filesystem access?).", Duration = 4});
+            end;
+        end
+    });
+
+    ConfigGroup:CreateSeparator({Text = "Manage"});
+
+    local ConfigDropdown = ConfigGroup:CreateCombobox({
+        Name = "Saved Configs",
+        Options = GetConfigNames(),
+        Default = {},
+        SingleSelect = true,
+        Callback = function() end
+    });
+
+    ConfigGroup:CreateButton({
+        Name = "Load Config",
+        Callback = function()
+            local Selected = ConfigDropdown:Get();
+            if #Selected == 0 then
+                Window:Notify({Title = "Config", Description = "Select a config from the dropdown first.", Duration = 3});
+                return;
+            end;
+            local Ok = LoadConfig(Selected[1]);
+            if Ok then
+                Window:Notify({Title = "Config", Description = "Config \"" .. Selected[1] .. "\" loaded.", Duration = 3});
+            else
+                Window:Notify({Title = "Config", Description = "Config not found or corrupted.", Duration = 3});
+            end;
+        end
+    });
+
+    ConfigGroup:CreateButton({
+        Name = "Overwrite Config",
+        Callback = function()
+            local Selected = ConfigDropdown:Get();
+            if #Selected == 0 then
+                Window:Notify({Title = "Config", Description = "Select a config to overwrite.", Duration = 3});
+                return;
+            end;
+            local Ok = SaveConfig(Selected[1]);
+            if Ok then
+                Window:Notify({Title = "Config", Description = "Config \"" .. Selected[1] .. "\" overwritten.", Duration = 3});
+            else
+                Window:Notify({Title = "Config", Description = "Failed to overwrite config.", Duration = 3});
+            end;
+        end
+    });
+
+    ConfigGroup:CreateButton({
+        Name = "Delete Config",
+        Callback = function()
+            local Selected = ConfigDropdown:Get();
+            if #Selected == 0 then
+                Window:Notify({Title = "Config", Description = "Select a config to delete.", Duration = 3});
+                return;
+            end;
+            local Name = Selected[1];
+            DeleteConfig(Name);
+            if ActiveAutoloadConfig == Name then
+                ClearAutoloadConfig();
+            end;
+            ConfigDropdown:Refresh(GetConfigNames());
+            Window:Notify({Title = "Config", Description = "Config \"" .. Name .. "\" deleted.", Duration = 3});
+        end
+    });
+
+    ConfigGroup:CreateButton({
+        Name = "Refresh List",
+        Callback = function()
+            ConfigDropdown:Refresh(GetConfigNames());
+            Window:Notify({Title = "Config", Description = "Config list refreshed.", Duration = 2});
+        end
+    });
+
+    ConfigGroup:CreateButton({
+        Name = "Set Autoload",
+        Callback = function()
+            local Selected = ConfigDropdown:Get();
+            if #Selected == 0 then
+                Window:Notify({Title = "Autoload", Description = "Select a config to set as autoload.", Duration = 3});
+                return;
+            end;
+            SetAutoloadConfig(Selected[1]);
+            AutoloadLabel:Set("Autoload: " .. Selected[1]);
+            Window:Notify({Title = "Autoload", Description = "Autoload set to \"" .. Selected[1] .. "\".", Duration = 3});
+        end
+    });
+
+    ConfigGroup:CreateButton({
+        Name = "Reset Autoload",
+        Callback = function()
+            ClearAutoloadConfig();
+            AutoloadLabel:Set("Autoload: none");
+            Window:Notify({Title = "Autoload", Description = "Autoload cleared.", Duration = 3});
+        end
+    });
+
+    local InitialAutoload = GetAutoloadConfigName();
+    ActiveAutoloadConfig = InitialAutoload;
+    local AutoloadLabel = ConfigGroup:CreateLabel({
+        Text = "Autoload: " .. (InitialAutoload or "none")
+    });
+
+    if InitialAutoload then
+        task.defer(function()
+            LoadConfig(InitialAutoload);
+        end);
+    end;
 
     return Window
 end
