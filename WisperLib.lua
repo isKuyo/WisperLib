@@ -138,10 +138,15 @@ local ThemePresets = {
         Background = Color3.fromRGB(13, 15, 18),
         Header = Color3.fromRGB(20, 23, 28),
         HeaderLine = Color3.fromRGB(26, 30, 36),
+        GroupHeaderBase = Color3.fromRGB(20, 23, 27),
+        GroupHeaderGradientTop = Color3.fromRGB(22, 25, 29),
+        GroupHeaderGradientBottom = Color3.fromRGB(20, 23, 27),
         ContentBackground = Color3.fromRGB(13, 15, 18),
         GroupBackground = Color3.fromRGB(22, 25, 30),
         GroupStroke = Color3.fromRGB(26, 30, 36),
         ButtonInactive = Color3.fromRGB(13, 15, 18),
+        ControlBackground = Color3.fromRGB(28, 32, 38),
+        ControlHover = Color3.fromRGB(35, 40, 48),
         GradientColor1 = Color3.fromRGB(179, 206, 248),
         GradientColor2 = Color3.fromRGB(125, 143, 172),
         AvatarStroke = Color3.fromRGB(26, 30, 36),
@@ -160,10 +165,15 @@ local ThemePresets = {
         Background = Color3.fromRGB(244, 246, 250),
         Header = Color3.fromRGB(235, 239, 246),
         HeaderLine = Color3.fromRGB(205, 212, 226),
+        GroupHeaderBase = Color3.fromRGB(235, 239, 246),
+        GroupHeaderGradientTop = Color3.fromRGB(242, 246, 252),
+        GroupHeaderGradientBottom = Color3.fromRGB(235, 239, 246),
         ContentBackground = Color3.fromRGB(244, 246, 250),
         GroupBackground = Color3.fromRGB(255, 255, 255),
         GroupStroke = Color3.fromRGB(214, 221, 234),
         ButtonInactive = Color3.fromRGB(226, 232, 242),
+        ControlBackground = Color3.fromRGB(236, 241, 249),
+        ControlHover = Color3.fromRGB(226, 232, 242),
         GradientColor1 = Color3.fromRGB(120, 177, 255),
         GradientColor2 = Color3.fromRGB(85, 132, 229),
         AvatarStroke = Color3.fromRGB(190, 199, 216),
@@ -924,7 +934,7 @@ function WisperLib:CreateWindow(Config)
             local GroupHeader = Create("Frame", {
                 Name = "GroupHeader",
                 Parent = GroupFrame,
-                BackgroundColor3 = Theme.Header,
+                BackgroundColor3 = Theme.GroupHeaderBase,
                 Size = UDim2.new(1, 0, 0, 40),
                 ClipsDescendants = true
             })
@@ -937,7 +947,7 @@ function WisperLib:CreateWindow(Config)
             local GroupHeaderBottomFix = Create("Frame", {
                 Name = "BottomFix",
                 Parent = GroupHeader,
-                BackgroundColor3 = Theme.Header,
+                BackgroundColor3 = Theme.GroupHeaderGradientBottom,
                 BorderSizePixel = 0,
                 Position = UDim2.new(0, 0, 1, -8),
                 Size = UDim2.new(1, 0, 0, 8)
@@ -947,8 +957,8 @@ function WisperLib:CreateWindow(Config)
                 Name = "GroupHeaderGradient",
                 Parent = GroupHeader,
                 Color = ColorSequence.new({
-                    ColorSequenceKeypoint.new(0, Theme.Header),
-                    ColorSequenceKeypoint.new(1, Theme.GroupBackground)
+                    ColorSequenceKeypoint.new(0, Theme.GroupHeaderGradientTop),
+                    ColorSequenceKeypoint.new(1, Theme.GroupHeaderGradientBottom)
                 }),
                 Rotation = 90
             })
@@ -1430,7 +1440,7 @@ function WisperLib:CreateWindow(Config)
                 local KeybindFrame = Create("Frame", {
                     Name = "KeybindFrame",
                     Parent = ToggleFrame,
-                    BackgroundColor3 = Theme.InputBackground,
+                    BackgroundColor3 = Theme.ControlBackground,
                     BorderSizePixel = 0,
                     AnchorPoint = Vector2.new(1, 0.5),
                     Position = UDim2.new(1, 0, 0.5, 0),
@@ -2053,7 +2063,7 @@ function WisperLib:CreateWindow(Config)
                 local ComboboxButton = Create("Frame", {
                     Name = "ComboboxButton",
                     Parent = ComboboxFrame,
-                    BackgroundColor3 = Color3.fromRGB(28, 32, 38),
+                    BackgroundColor3 = Theme.ControlBackground,
                     BorderSizePixel = 0,
                     Position = UDim2.new(0, 0, 0, 22),
                     Size = UDim2.new(1, 0, 0, 30)
@@ -2109,7 +2119,7 @@ function WisperLib:CreateWindow(Config)
                 local ComboboxDropdown = Create("Frame", {
                     Name = "ComboboxDropdown",
                     Parent = ComboboxFrame,
-                    BackgroundColor3 = Color3.fromRGB(28, 32, 38),
+                    BackgroundColor3 = Theme.ControlBackground,
                     BorderSizePixel = 0,
                     Position = UDim2.new(0, 0, 0, 54),
                     Size = UDim2.new(1, 0, 0, 0),
@@ -2388,7 +2398,7 @@ function WisperLib:CreateWindow(Config)
                 local ButtonContainer = Create("Frame", {
                     Name = "ButtonContainer",
                     Parent = ButtonFrame,
-                    BackgroundColor3 = Color3.fromRGB(28, 32, 38),
+                    BackgroundColor3 = Theme.ControlBackground,
                     BorderSizePixel = 0,
                     Size = UDim2.new(1, 0, 0, 30)
                 })
@@ -2421,12 +2431,12 @@ function WisperLib:CreateWindow(Config)
 
                 ButtonClickArea.MouseEnter:Connect(function()
                     Tween(ButtonText, {TextColor3 = Theme.Text}, 0.15)
-                    Tween(ButtonContainer, {BackgroundColor3 = Theme.ButtonInactive}, 0.15)
+                    Tween(ButtonContainer, {BackgroundColor3 = Theme.ControlHover}, 0.15)
                 end)
 
                 ButtonClickArea.MouseLeave:Connect(function()
                     Tween(ButtonText, {TextColor3 = Theme.SubText}, 0.15)
-                    Tween(ButtonContainer, {BackgroundColor3 = Theme.InputBackground}, 0.15)
+                    Tween(ButtonContainer, {BackgroundColor3 = Theme.ControlBackground}, 0.15)
                 end)
 
                 ButtonClickArea.MouseButton1Click:Connect(function()
@@ -2510,15 +2520,15 @@ function WisperLib:CreateWindow(Config)
                 if string.sub(Descendant.Name, 1, 6) == "Group_" then
                     Descendant.BackgroundColor3 = Theme.GroupBackground
                 elseif Descendant.Name == "GroupHeader" then
-                    Descendant.BackgroundColor3 = Theme.Header
+                    Descendant.BackgroundColor3 = Theme.GroupHeaderBase
                 elseif Descendant.Name == "BottomFix" and Descendant.Parent and Descendant.Parent.Name == "GroupHeader" then
-                    Descendant.BackgroundColor3 = Theme.Header
+                    Descendant.BackgroundColor3 = Theme.GroupHeaderGradientBottom
                 elseif Descendant.Name == "HeaderLine" and Descendant.Parent and Descendant.Parent.Name == "GroupHeader" then
                     Descendant.BackgroundColor3 = Theme.GroupStroke
                 elseif Descendant.Name == "InputBox" then
                     Descendant.BackgroundColor3 = Theme.InputBackground
                 elseif Descendant.Name == "ComboboxButton" or Descendant.Name == "ComboboxDropdown" or Descendant.Name == "ButtonContainer" or Descendant.Name == "KeybindFrame" then
-                    Descendant.BackgroundColor3 = Theme.InputBackground
+                    Descendant.BackgroundColor3 = Theme.ControlBackground
                 elseif Descendant.Name == "SliderBackground" then
                     Descendant.BackgroundColor3 = Theme.SliderBackground
                 end
@@ -2542,8 +2552,8 @@ function WisperLib:CreateWindow(Config)
             elseif Descendant:IsA("UIGradient") then
                 if Descendant.Name == "GroupHeaderGradient" then
                     Descendant.Color = ColorSequence.new({
-                        ColorSequenceKeypoint.new(0, Theme.Header),
-                        ColorSequenceKeypoint.new(1, Theme.GroupBackground)
+                        ColorSequenceKeypoint.new(0, Theme.GroupHeaderGradientTop),
+                        ColorSequenceKeypoint.new(1, Theme.GroupHeaderGradientBottom)
                     })
                 end
             elseif Descendant:IsA("ImageLabel") then
