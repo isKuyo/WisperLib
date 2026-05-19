@@ -138,7 +138,7 @@ local ThemePresets = {
         Background = Color3.fromRGB(13, 15, 18),
         Header = Color3.fromRGB(20, 23, 28),
         HeaderLine = Color3.fromRGB(26, 30, 36),
-        GroupHeaderBase = Color3.fromRGB(20, 23, 27),
+        GroupHeaderBase = Color3.fromRGB(255, 255, 255),
         GroupHeaderGradientTop = Color3.fromRGB(22, 25, 29),
         GroupHeaderGradientBottom = Color3.fromRGB(20, 23, 27),
         ContentBackground = Color3.fromRGB(13, 15, 18),
@@ -147,10 +147,10 @@ local ThemePresets = {
         ButtonInactive = Color3.fromRGB(13, 15, 18),
         ControlBackground = Color3.fromRGB(28, 32, 38),
         ControlHover = Color3.fromRGB(35, 40, 48),
-        GradientColor1 = Color3.fromRGB(179, 206, 248),
-        GradientColor2 = Color3.fromRGB(125, 143, 172),
+        GradientColor1 = Color3.fromRGB(198, 151, 255),
+        GradientColor2 = Color3.fromRGB(142, 92, 222),
         AvatarStroke = Color3.fromRGB(26, 30, 36),
-        Accent = Color3.fromRGB(181, 208, 251),
+        Accent = Color3.fromRGB(171, 121, 255),
         Text = Color3.fromRGB(255, 255, 255),
         SubText = Color3.fromRGB(150, 150, 150),
         Divider = Color3.fromRGB(26, 30, 36),
@@ -174,10 +174,10 @@ local ThemePresets = {
         ButtonInactive = Color3.fromRGB(226, 232, 242),
         ControlBackground = Color3.fromRGB(236, 241, 249),
         ControlHover = Color3.fromRGB(226, 232, 242),
-        GradientColor1 = Color3.fromRGB(120, 177, 255),
-        GradientColor2 = Color3.fromRGB(85, 132, 229),
+        GradientColor1 = Color3.fromRGB(201, 166, 255),
+        GradientColor2 = Color3.fromRGB(156, 108, 238),
         AvatarStroke = Color3.fromRGB(190, 199, 216),
-        Accent = Color3.fromRGB(77, 126, 227),
+        Accent = Color3.fromRGB(136, 90, 232),
         Text = Color3.fromRGB(27, 33, 44),
         SubText = Color3.fromRGB(96, 106, 124),
         Divider = Color3.fromRGB(205, 212, 226),
@@ -1677,8 +1677,8 @@ function WisperLib:CreateWindow(Config)
                 local SliderFillGradient = Create("UIGradient", {
                     Parent = SliderFill,
                     Color = ColorSequence.new({
-                        ColorSequenceKeypoint.new(0, Color3.fromRGB(184, 212, 255)),
-                        ColorSequenceKeypoint.new(1, Color3.fromRGB(126, 144, 174))
+                        ColorSequenceKeypoint.new(0, Theme.GradientColor1),
+                        ColorSequenceKeypoint.new(1, Theme.GradientColor2)
                     }),
                     Rotation = 0
                 })
@@ -2554,6 +2554,11 @@ function WisperLib:CreateWindow(Config)
                     Descendant.Color = ColorSequence.new({
                         ColorSequenceKeypoint.new(0, Theme.GroupHeaderGradientTop),
                         ColorSequenceKeypoint.new(1, Theme.GroupHeaderGradientBottom)
+                    })
+                elseif Descendant.Parent and (Descendant.Parent.Name == "Fill" or Descendant.Parent.Name == "SliderFill" or Descendant.Parent.Name == "CheckContainer") then
+                    Descendant.Color = ColorSequence.new({
+                        ColorSequenceKeypoint.new(0, Theme.GradientColor1),
+                        ColorSequenceKeypoint.new(1, Theme.GradientColor2)
                     })
                 end
             elseif Descendant:IsA("ImageLabel") then
