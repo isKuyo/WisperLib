@@ -355,7 +355,18 @@ function WisperLib:CreateWindow(Config)
         DisplayOrder = -1
     })
 
-    _G.WisperLibInstance = ScreenGui
+    _G.WisperLibInstance = ScreenGui;
+
+    do
+        local function TryProtectGui(Gui)
+            if syn and type(syn) == "table" and syn.protect_gui then
+                pcall(syn.protect_gui, Gui);
+            elseif typeof(protect_gui) == "function" then
+                pcall(protect_gui, Gui);
+            end;
+        end;
+        TryProtectGui(ScreenGui);
+    end;
 
     local MainFrame = Create("Frame", {
         Name = "MainFrame",
