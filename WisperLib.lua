@@ -1151,20 +1151,38 @@ function WisperLib:CreateWindow(Config)
     local Window = {}
     local NotificationsEnabled = true
 
+    local PreviousMouseBehavior = UserInputService.MouseBehavior;
+    local IsRightMouseHeld = false;
+
+    UserInputService.InputBegan:Connect(function(Input, GameProcessed)
+        if Input.UserInputType == Enum.UserInputType.MouseButton2 then
+            IsRightMouseHeld = true;
+        end;
+        if not GameProcessed and Input.KeyCode == Config.KeyBind then
+            if not ScreenGui.Enabled then
+                PreviousMouseBehavior = UserInputService.MouseBehavior;
+            end;
+            ScreenGui.Enabled = not ScreenGui.Enabled;
+            NavContainer.Visible = ScreenGui.Enabled;
+            SearchContainer.Visible = ScreenGui.Enabled;
+            if not ScreenGui.Enabled then
+                UserInputService.MouseBehavior = PreviousMouseBehavior;
+            end;
+        end;
+    end);
+
+    UserInputService.InputEnded:Connect(function(Input)
+        if Input.UserInputType == Enum.UserInputType.MouseButton2 then
+            IsRightMouseHeld = false;
+        end;
+    end);
+
     RunService.RenderStepped:Connect(function()
-        if ScreenGui.Enabled then
+        if ScreenGui.Enabled and not IsRightMouseHeld then
             UserInputService.MouseBehavior = Enum.MouseBehavior.Default;
             UserInputService.MouseIconEnabled = true;
         end;
     end);
-
-    UserInputService.InputBegan:Connect(function(Input, GameProcessed)
-        if not GameProcessed and Input.KeyCode == Config.KeyBind then
-            ScreenGui.Enabled = not ScreenGui.Enabled
-            NavContainer.Visible = ScreenGui.Enabled
-            SearchContainer.Visible = ScreenGui.Enabled
-        end
-    end)
 
     function Window:CreateTab(TabConfig)
         TabConfig = TabConfig or {}
