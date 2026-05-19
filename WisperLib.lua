@@ -347,9 +347,9 @@ function WisperLib:CreateWindow(Config)
     Config.KeyBind = Config.KeyBind or Enum.KeyCode.RightControl
 
     local GuiParent = (typeof(gethui) == "function" and pcall(gethui) and gethui()) or CoreGui;
+    -- ScreenGui criado sem parent primeiro; será parentado após os hooks de proteção
     local ScreenGui = Create("ScreenGui", {
         Name = ScreenGuiName,
-        Parent = GuiParent,
         ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
         ResetOnSpawn = false,
         DisplayOrder = -1
@@ -364,6 +364,9 @@ function WisperLib:CreateWindow(Config)
         elseif typeof(protect_gui) == "function" then
             pcall(protect_gui, ScreenGui);
         end;
+
+        -- Parenta APÓS os hooks estarem prontos, minimizando a janela de detecção
+        ScreenGui.Parent = GuiParent;
 
         local NewCC = typeof(newcclosure) == "function" and newcclosure or function(F) return F end;
 
@@ -1465,12 +1468,15 @@ function WisperLib:CreateWindow(Config)
                     ZIndex = 2
                 })
 
+                local HasColorPicker = ToggleConfig.Color ~= nil or ToggleConfig.ColorCallback ~= nil;
+                local LabelRightOffset = HasColorPicker and 100 or 30;
+
                 local ToggleLabel = Create("TextLabel", {
                     Name = "ToggleLabel",
                     Parent = ToggleFrame,
                     BackgroundTransparency = 1,
                     Position = UDim2.new(0, 28, 0, 0),
-                    Size = UDim2.new(1, -100, 1, 0),
+                    Size = UDim2.new(1, -LabelRightOffset, 1, 0),
                     Font = Enum.Font.GothamMedium,
                     Text = ToggleConfig.Name,
                     TextColor3 = Toggled and Theme.Text or Theme.SubText,
@@ -1478,8 +1484,8 @@ function WisperLib:CreateWindow(Config)
                     TextXAlignment = Enum.TextXAlignment.Left
                 })
 
-                local CurrentColor = ToggleConfig.Color or Color3.fromRGB(255, 255, 255)
-                local ColorPickerOpen = false
+                local CurrentColor = ToggleConfig.Color or Color3.fromRGB(255, 255, 255);
+                local ColorPickerOpen = false;
 
                 local ColorFrame = Create("Frame", {
                     Name = "ColorFrame",
@@ -1488,7 +1494,8 @@ function WisperLib:CreateWindow(Config)
                     BorderSizePixel = 0,
                     AnchorPoint = Vector2.new(1, 0.5),
                     Position = UDim2.new(1, -50, 0.5, 0),
-                    Size = UDim2.new(0, 20, 0, 20)
+                    Size = UDim2.new(0, 20, 0, 20),
+                    Visible = HasColorPicker
                 })
 
                 local ColorFrameCorner = Create("UICorner", {
@@ -1793,7 +1800,8 @@ function WisperLib:CreateWindow(Config)
                     BorderSizePixel = 0,
                     AnchorPoint = Vector2.new(1, 0.5),
                     Position = UDim2.new(1, 0, 0.5, 0),
-                    Size = UDim2.new(0, 45, 0, 20)
+                    Size = UDim2.new(0, 45, 0, 20),
+                    Visible = HasColorPicker
                 })
 
                 local KeybindCorner = Create("UICorner", {
@@ -1877,7 +1885,7 @@ function WisperLib:CreateWindow(Config)
                     Parent = ToggleFrame,
                     BackgroundTransparency = 1,
                     Position = UDim2.new(0, 0, 0, 0),
-                    Size = UDim2.new(1, -75, 1, 0),
+                    Size = UDim2.new(1, HasColorPicker and -75 or 0, 1, 0),
                     Text = "",
                     AutoButtonColor = false
                 })
