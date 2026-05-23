@@ -1150,6 +1150,7 @@ function WisperLib:CreateWindow(Config)
 
     local Window = {}
     local NotificationsEnabled = true
+    local ActiveColorPicker = nil
 
     local GameDesiredMouseBehavior = UserInputService.MouseBehavior;
     local GameDesiredMouseIconEnabled = UserInputService.MouseIconEnabled;
@@ -1773,6 +1774,7 @@ function WisperLib:CreateWindow(Config)
 
                 local DraggingSatVal = false
                 local DraggingHue = false
+                local ColorPickerAnimToken = 0
 
                 SatValBox.InputBegan:Connect(function(Input)
                     if Input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -1808,8 +1810,6 @@ function WisperLib:CreateWindow(Config)
                 local SatValTargetX = ColorPickerSat
                 local SatValTargetY = 1 - ColorPickerVal
                 local HueTargetY = ColorPickerHue
-                local ColorPickerAnimToken = 0
-
                 local GuiInset = game:GetService("GuiService"):GetGuiInset()
 
                 RunService.RenderStepped:Connect(function()
@@ -1855,26 +1855,50 @@ function WisperLib:CreateWindow(Config)
                     end
                 end)
 
-                ColorFrameButton.MouseButton1Click:Connect(function()
-                    ColorPickerOpen = not ColorPickerOpen
+                local function CloseColorPicker()
+                    if not ColorPickerOpen then return end
+
+                    ColorPickerOpen = false
+                    DraggingSatVal = false
+                    DraggingHue = false
                     ColorPickerAnimToken = ColorPickerAnimToken + 1
                     local CurrentToken = ColorPickerAnimToken
 
+                    Tween(ColorPickerPopup, {Size = UDim2.new(0, 0, 0, 0)}, 0.14, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
+                    Tween(ColorPickerPopup, {BackgroundTransparency = 1}, 0.2)
+                    task.delay(0.2, function()
+                        if not ColorPickerOpen and CurrentToken == ColorPickerAnimToken then
+                            ColorPickerPopup.Visible = false
+                        end
+                    end)
+
+                    if ActiveColorPicker and ActiveColorPicker.Close == CloseColorPicker then
+                        ActiveColorPicker = nil
+                    end
+                end
+
+                local function OpenColorPicker()
+                    if ActiveColorPicker and ActiveColorPicker.Close ~= CloseColorPicker then
+                        ActiveColorPicker.Close()
+                    end
+
+                    ColorPickerOpen = true
+                    ActiveColorPicker = {Close = CloseColorPicker}
+                    ColorPickerAnimToken = ColorPickerAnimToken + 1
+
+                    UpdatePickerPosition()
+                    ColorPickerPopup.Size = UDim2.new(0, 0, 0, 0)
+                    ColorPickerPopup.BackgroundTransparency = 1
+                    ColorPickerPopup.Visible = true
+                    Tween(ColorPickerPopup, {Size = UDim2.new(0, 174, 0, 150)}, 0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+                    Tween(ColorPickerPopup, {BackgroundTransparency = 0}, 0.2)
+                end
+
+                ColorFrameButton.MouseButton1Click:Connect(function()
                     if ColorPickerOpen then
-                        UpdatePickerPosition()
-                        ColorPickerPopup.Size = UDim2.new(0, 0, 0, 0)
-                        ColorPickerPopup.BackgroundTransparency = 1
-                        ColorPickerPopup.Visible = true
-                        Tween(ColorPickerPopup, {Size = UDim2.new(0, 174, 0, 150)}, 0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-                        Tween(ColorPickerPopup, {BackgroundTransparency = 0}, 0.2)
+                        CloseColorPicker()
                     else
-                        Tween(ColorPickerPopup, {Size = UDim2.new(0, 0, 0, 0)}, 0.14, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
-                        Tween(ColorPickerPopup, {BackgroundTransparency = 1}, 0.2)
-                        task.delay(0.2, function()
-                            if not ColorPickerOpen and CurrentToken == ColorPickerAnimToken then
-                                ColorPickerPopup.Visible = false
-                            end
-                        end)
+                        OpenColorPicker()
                     end
                 end)
 
