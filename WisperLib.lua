@@ -1156,11 +1156,39 @@ function WisperLib:CreateWindow(Config)
     local IsRightMouseHeld = false;
     local IsOverridingMouse = false;
 
+    local function GetRestoreMouseBehavior()
+        if not GameDesiredMouseIconEnabled and GameDesiredMouseBehavior == Enum.MouseBehavior.Default then
+            return Enum.MouseBehavior.LockCenter;
+        end;
+
+        return GameDesiredMouseBehavior;
+    end;
+
+    local function ApplyMouseState()
+        UserInputService.MouseIconEnabled = GameDesiredMouseIconEnabled;
+        UserInputService.MouseBehavior = GetRestoreMouseBehavior();
+    end;
+
     local function RestoreMouseState()
         IsOverridingMouse = true;
-        UserInputService.MouseBehavior = GameDesiredMouseBehavior;
-        UserInputService.MouseIconEnabled = GameDesiredMouseIconEnabled;
+        ApplyMouseState();
         IsOverridingMouse = false;
+
+        task.defer(function()
+            if not ScreenGui.Enabled then
+                IsOverridingMouse = true;
+                ApplyMouseState();
+                IsOverridingMouse = false;
+            end;
+        end);
+
+        task.delay(0.05, function()
+            if not ScreenGui.Enabled then
+                IsOverridingMouse = true;
+                ApplyMouseState();
+                IsOverridingMouse = false;
+            end;
+        end);
     end;
 
     local function SetWindowVisible(IsVisible)
