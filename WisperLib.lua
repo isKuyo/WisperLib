@@ -2081,9 +2081,30 @@ function WisperLib:CreateWindow(Config)
                 ShowContentIfNeeded()
                 SliderConfig.Default = SliderConfig.Default or SliderConfig.Min
                 SliderConfig.Suffix = SliderConfig.Suffix or "%"
+                SliderConfig.Rounding = SliderConfig.Rounding or 0
                 SliderConfig.Callback = SliderConfig.Callback or function() end
 
                 local Value = SliderConfig.Default
+                local RoundFactor = 10 ^ SliderConfig.Rounding
+
+                local function RoundSliderValue(NewValue)
+                    NewValue = math.clamp(NewValue, SliderConfig.Min, SliderConfig.Max)
+                    if SliderConfig.Rounding > 0 then
+                        return math.floor(NewValue * RoundFactor + 0.5) / RoundFactor
+                    end
+
+                    return math.floor(NewValue + 0.5)
+                end
+
+                local function FormatSliderValue(NewValue)
+                    if SliderConfig.Rounding > 0 then
+                        return string.format("%." .. SliderConfig.Rounding .. "f", NewValue)
+                    end
+
+                    return tostring(NewValue)
+                end
+
+                Value = RoundSliderValue(Value)
 
                 local SliderFrame = Create("Frame", {
                     Name = "Slider_" .. SliderConfig.Name,
@@ -2119,7 +2140,7 @@ function WisperLib:CreateWindow(Config)
                     Position = UDim2.new(1, -50, 0, 0),
                     Size = UDim2.new(0, 50, 0, 18),
                     Font = Enum.Font.GothamBold,
-                    Text = tostring(Value) .. SliderConfig.Suffix,
+                    Text = FormatSliderValue(Value) .. SliderConfig.Suffix,
                     TextColor3 = Theme.Text,
                     TextSize = 14,
                     TextXAlignment = Enum.TextXAlignment.Right
@@ -2240,8 +2261,8 @@ function WisperLib:CreateWindow(Config)
                         DisplayPercent = TargetPercent
                     end
 
-                    Value = math.floor(SliderConfig.Min + (SliderConfig.Max - SliderConfig.Min) * DisplayPercent)
-                    SliderValue.Text = tostring(Value) .. SliderConfig.Suffix
+                    Value = RoundSliderValue(SliderConfig.Min + (SliderConfig.Max - SliderConfig.Min) * DisplayPercent)
+                    SliderValue.Text = FormatSliderValue(Value) .. SliderConfig.Suffix
                     SliderFill.Size = UDim2.new(DisplayPercent, 0, 1, 0)
                     SliderKnob.Position = UDim2.new(DisplayPercent, 0, 0.5, 0)
 
@@ -2256,12 +2277,12 @@ function WisperLib:CreateWindow(Config)
                 local SliderAPI = {}
 
                 function SliderAPI:Set(NewValue)
-                    Value = math.clamp(NewValue, SliderConfig.Min, SliderConfig.Max)
+                    Value = RoundSliderValue(NewValue)
                     local Percent = (Value - SliderConfig.Min) / (SliderConfig.Max - SliderConfig.Min)
                     TargetPercent = Percent
                     DisplayPercent = Percent
                     LastDispatchedValue = Value
-                    SliderValue.Text = tostring(Value) .. SliderConfig.Suffix
+                    SliderValue.Text = FormatSliderValue(Value) .. SliderConfig.Suffix
                     SliderFill.Size = UDim2.new(Percent, 0, 1, 0)
                     SliderKnob.Position = UDim2.new(Percent, 0, 0.5, 0)
                     DispatchSliderCallback(Value)
