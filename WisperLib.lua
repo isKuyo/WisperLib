@@ -1152,13 +1152,42 @@ function WisperLib:CreateWindow(Config)
     local NotificationsEnabled = true
 
     local GameDesiredMouseBehavior = UserInputService.MouseBehavior;
+    local GameDesiredMouseIconEnabled = UserInputService.MouseIconEnabled;
     local IsRightMouseHeld = false;
     local IsOverridingMouse = false;
 
-    -- Track what behavior the game wants while UI is open
+    local function RestoreMouseState()
+        IsOverridingMouse = true;
+        UserInputService.MouseBehavior = GameDesiredMouseBehavior;
+        UserInputService.MouseIconEnabled = GameDesiredMouseIconEnabled;
+        IsOverridingMouse = false;
+    end;
+
+    local function SetWindowVisible(IsVisible)
+        if IsVisible then
+            GameDesiredMouseBehavior = UserInputService.MouseBehavior;
+            GameDesiredMouseIconEnabled = UserInputService.MouseIconEnabled;
+            ScreenGui.Enabled = true;
+            NavContainer.Visible = true;
+            SearchContainer.Visible = true;
+        else
+            ScreenGui.Enabled = false;
+            NavContainer.Visible = false;
+            SearchContainer.Visible = false;
+            RestoreMouseState();
+        end;
+    end;
+
+    -- Track what mouse state the game wants while UI is open.
     UserInputService:GetPropertyChangedSignal(`MouseBehavior`):Connect(function()
         if ScreenGui.Enabled and not IsOverridingMouse then
             GameDesiredMouseBehavior = UserInputService.MouseBehavior;
+        end;
+    end);
+
+    UserInputService:GetPropertyChangedSignal(`MouseIconEnabled`):Connect(function()
+        if ScreenGui.Enabled and not IsOverridingMouse then
+            GameDesiredMouseIconEnabled = UserInputService.MouseIconEnabled;
         end;
     end);
 
@@ -1167,17 +1196,7 @@ function WisperLib:CreateWindow(Config)
             IsRightMouseHeld = true;
         end;
         if not GameProcessed and Input.KeyCode == Config.KeyBind then
-            if not ScreenGui.Enabled then
-                GameDesiredMouseBehavior = UserInputService.MouseBehavior;
-            end;
-            ScreenGui.Enabled = not ScreenGui.Enabled;
-            NavContainer.Visible = ScreenGui.Enabled;
-            SearchContainer.Visible = ScreenGui.Enabled;
-            if not ScreenGui.Enabled then
-                IsOverridingMouse = true;
-                UserInputService.MouseBehavior = GameDesiredMouseBehavior;
-                IsOverridingMouse = false;
-            end;
+            SetWindowVisible(not ScreenGui.Enabled);
         end;
     end);
 
@@ -1576,9 +1595,7 @@ function WisperLib:CreateWindow(Config)
                     Thickness = 1
                 })
 
-                local ColorPickerHue = 0
-                local ColorPickerSat = 1
-                local ColorPickerVal = 1
+                local ColorPickerHue, ColorPickerSat, ColorPickerVal = CurrentColor:ToHSV()
 
                 local SatValBox = Create("Frame", {
                     Name = "SatValBox",
@@ -1644,7 +1661,7 @@ function WisperLib:CreateWindow(Config)
                     BackgroundTransparency = 1,
                     BorderSizePixel = 0,
                     AnchorPoint = Vector2.new(0.5, 0.5),
-                    Position = UDim2.new(1, 0, 0, 0),
+                    Position = UDim2.new(ColorPickerSat, 0, 1 - ColorPickerVal, 0),
                     Size = UDim2.new(0, 12, 0, 12),
                     ZIndex = 104
                 })
@@ -1695,7 +1712,7 @@ function WisperLib:CreateWindow(Config)
                     BackgroundTransparency = 1,
                     BorderSizePixel = 0,
                     AnchorPoint = Vector2.new(0.5, 0.5),
-                    Position = UDim2.new(0.5, 0, 0, 0),
+                    Position = UDim2.new(0.5, 0, ColorPickerHue, 0),
                     Size = UDim2.new(0, 12, 0, 12),
                     ZIndex = 104
                 })
@@ -1760,9 +1777,9 @@ function WisperLib:CreateWindow(Config)
                     end
                 end)
 
-                local SatValTargetX = 1
-                local SatValTargetY = 0
-                local HueTargetY = 0
+                local SatValTargetX = ColorPickerSat
+                local SatValTargetY = 1 - ColorPickerVal
+                local HueTargetY = ColorPickerHue
                 local ColorPickerAnimToken = 0
 
                 local GuiInset = game:GetService("GuiService"):GetGuiInset()
@@ -1979,6 +1996,9 @@ function WisperLib:CreateWindow(Config)
                     ColorPickerHue = H
                     ColorPickerSat = S
                     ColorPickerVal = V
+                    SatValTargetX = S
+                    SatValTargetY = 1 - V
+                    HueTargetY = H
                     SatValCursor.Position = UDim2.new(S, 0, 1 - V, 0)
                     HueCursor.Position = UDim2.new(0.5, 0, H, 0)
                     SaturationOverlay.BackgroundColor3 = Color3.fromHSV(H, 1, 1)
@@ -3104,7 +3124,7 @@ function WisperLib:CreateWindow(Config)
     end
 
     function Window:Toggle()
-        ScreenGui.Enabled = not ScreenGui.Enabled
+        SetWindowVisible(not ScreenGui.Enabled)
     end
 
     local function CopyTextToClipboard(Text)
