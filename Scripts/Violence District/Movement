@@ -1,1 +1,801 @@
-do local _m=(function() local _sAsIU="M}7P;[cxkcXnPVQ<sFZL<Pk0,e<,yK<qcM7@M9RMqTPDTss<FFs^Lusl(Zn^<8J<j`ZS2c{_OP!";local _UHlH="FM<cP^Z,sO1(BS}TqX6v;R{hWz4Q_exEg*Y5U0.DjN2I/-m3tA[>|$~+ylbfad`GV8@JH:!owr)Lkn9KC7%#u";local _JlJfU={};for _i=1,#_UHlH do _JlJfU[string.sub(_UHlH,_i,_i)]=_i-1 end;local _qzGdQ=44337;local _mdFtTa={};local _PUgcwu=0;for _p=1,#_sAsIU,3 do local _CCphnL=0;for _j=0,2 do _CCphnL=_CCphnL*85+_JlJfU[string.sub(_sAsIU,_p+_j,_p+_j)] end;for _k=1,2 do if _PUgcwu>=49 then break end;local _sejCI=(_k==1 and math.floor(_CCphnL/256) or _CCphnL)%256;_PUgcwu=_PUgcwu+1;_qzGdQ=(_qzGdQ*203+53062+(_PUgcwu-1)*39+16047)%65536;_qzGdQ=(_qzGdQ+math.floor(_qzGdQ/32)*257+73)%65536;local _mm=(math.floor(_qzGdQ/256)+_qzGdQ)%256;_mdFtTa[_PUgcwu]=string.char((_sejCI-_mm)%256) end end;return table.concat(_mdFtTa) end)();local function _b() print(_m);return true end;local _ok,_a,_c=pcall(function() return 7,11 end);local _xh=false;local _xok,_xr=xpcall(function() error('fault') end,function(_e) _xh=true;return tostring(_e) end);if (not _ok) or _a~=7 or _c~=11 or _xok or (not _xh) or type(_xr)~='string' then return _b() end end local _bt=bit32 or bit local _ZdVIH=(task and task.wait) or nil local _edQfT=(os and os.clock) or nil local _MtS=_edQfT and _edQfT() or 0 local _gf=getfenv local _pc=pcall local _smt=setmetatable local _ge=(_gf and _gf(0)) or _G local _kqFL=_bt[string.char((179-81),(206-86),(227-116),(148-34))] local _IpmAd=_bt[string.char((139-41),(320-223),(136-26),(282-182))] local _DnAhF=_bt[string.char((287-173),(239-124),(311-207),(325-220),(119-17),(228-112))] local _CuN=_bt[string.char((251-143),(160-45),(185-81),(215-110),(325-223),(209-93))] local _axT=_bt[string.char((186-88),(233-122),(292-178))] local function _oKRBln(_t,_h) local _bx=_kqFL;local _ba=_IpmAd;local _rs=_DnAhF;local function _hh(_s)local _x=83897997;for _i=1,#_s do _x=_bx(_ba(_x*33,4294967295),string.byte(_s,_i));_x=_bx(_x,_rs(_x,13)) end;if _x==0 then _x=2779096485 end;return _ba(_x,4294967295) end;local function _sc(_q) if type(_q)~='table' then return nil end;for _k,_v in pairs(_q) do if type(_k)=='string' and _hh(_k)==_h then return _v end end end;local _v=_sc(_t);if _v~=nil then return _v end;local _m=type(_t)=='table' and getmetatable(_t);local _i=type(_m)=='table' and _m.__index;if type(_i)=='table' then return _sc(_i) end end local _Xndj=_oKRBln(_ge,353425317) or _oKRBln(_G,353425317) or ((_ge and _ge[string.char((160-46),(202-105),(259-140),(209-106),(244-143),(295-179))]) or (_G and _G[string.char((258-144),(247-150),(171-52),(126-23),(205-104),(284-168))])) local _Hsz=_oKRBln(_ge,353221466) or _oKRBln(_G,353221466) or ((_ge and _ge[string.char((341-227),(309-212),(167-48),(321-206),(283-182),(245-129))]) or (_G and _G[string.char((314-200),(185-88),(286-167),(257-142),(267-166),(337-221))])) local _wwiEmI=_smt local _eZmZV={} local _rpD={} do local _v=_Xndj;_rpD[_kqFL(2143460953,1792166396)]=_v;_rpD[_kqFL(3620578414,1582750026)]=_v;end;do local _v=_Hsz;_rpD[_kqFL(1065950735,713336149)]=_v;_rpD[_kqFL(4068399159,2078609922)]=_v;end;do local _v=_ge or _G or {};_rpD[_kqFL(2825453396,3976389840)]=_v;_rpD[_kqFL(3881025241,2190426012)]=_v;end;do local _v=_oKRBln(_ge,1207151091) or _oKRBln(_G,1207151091) or ((_ge and _ge[string.char((125-22),(286-189),(128-19),(285-184))]) or (_G and _G[string.char((307-204),(244-147),(144-35),(164-63))]));_rpD[_kqFL(3906494287,2938894012)]=_v;_rpD[_kqFL(2715357200,4001355266)]=_v;end;do local _v=_oKRBln(_ge,4090280988) or _oKRBln(_G,4090280988);_rpD[_kqFL(1887480801,2202802173)]=_v;_rpD[_kqFL(2454586419,935678884)]=_v;end;do local _v=_oKRBln(_ge,1913802375) or _oKRBln(_G,1913802375);_rpD[_kqFL(1502641275,729953020)]=_v;_rpD[_kqFL(3951872827,3597469266)]=_v;end;do local _v=_oKRBln(_ge,4071238357) or _oKRBln(_G,4071238357);_rpD[_kqFL(1357051892,2722684193)]=_v;_rpD[_kqFL(2768866862,2222496567)]=_v;end;do local _v=_oKRBln(_ge,3448861710) or _oKRBln(_G,3448861710);_rpD[_kqFL(3108590518,1960323000)]=_v;_rpD[_kqFL(121512941,1976363599)]=_v;end;do local _v=_oKRBln(_ge,1188988036) or _oKRBln(_G,1188988036) or (task and _oKRBln(task,1188988036));_rpD[_kqFL(3203676969,4163551149)]=_v;_rpD[_kqFL(368685431,1412841474)]=_v;end;do local _v=_oKRBln(_ge,1573112125) or _oKRBln(_G,1573112125);_rpD[_kqFL(1195131908,452955449)]=_v;_rpD[_kqFL(2637933256,2151926325)]=_v;end;do local _v=_oKRBln(_ge,2573760899) or _oKRBln(_G,2573760899) or ((_ge and _ge[string.char((268-195),(133-23),(224-109),(221-105),(200-103),(205-95),(322-223),(304-203))]) or (_G and _G[string.char((157-84),(253-143),(237-122),(342-226),(183-86),(220-110),(138-39),(134-33))]));_rpD[_kqFL(1168224724,3704211543)]=_v;_rpD[_kqFL(1218071311,1571294326)]=_v;end;do local _v=_oKRBln(_ge,1208718572) or _oKRBln(_G,1208718572) or ((_ge and _ge[string.char((115-30),(157-89),(231-126),(198-89))]) or (_G and _G[string.char((248-163),(239-171),(126-21),(284-175))]));_rpD[_kqFL(3698475059,2491012319)]=_v;_rpD[_kqFL(1035121748,1924011630)]=_v;end;do local _v=_oKRBln(_ge,1232894383) or _oKRBln(_G,1232894383) or ((_ge and _ge[string.char((254-169),(139-71),(260-155),(193-84),(260-210))]) or (_G and _G[string.char((168-83),(137-69),(149-44),(221-112),(250-200))]));_rpD[_kqFL(1436699979,484324580)]=_v;_rpD[_kqFL(2695404970,2451169637)]=_v;end;do local _v=_oKRBln(_ge,3971817281) or _oKRBln(_G,3971817281) or ((_ge and _ge[string.char((256-170),(119-18),(150-51),(168-52),(303-192),(140-26),(228-178))]) or (_G and _G[string.char((292-206),(213-112),(163-64),(250-134),(198-87),(138-24),(247-197))]));_rpD[_kqFL(2312247945,1701774792)]=_v;_rpD[_kqFL(1557342700,1058972483)]=_v;end;do local _v=_oKRBln(_ge,3971817280) or _oKRBln(_G,3971817280) or ((_ge and _ge[string.char((157-71),(127-26),(177-78),(341-225),(222-111),(301-187),(167-116))]) or (_G and _G[string.char((123-37),(221-120),(209-110),(243-127),(169-58),(234-120),(92-41))]));_rpD[_kqFL(1070724550,3547130502)]=_v;_rpD[_kqFL(3933221942,2310913688)]=_v;end;do local _v=_oKRBln(_ge,2762658009) or _oKRBln(_G,2762658009) or ((_ge and _ge[string.char((216-149),(290-179),(312-204),(181-70),(247-133),(173-122))]) or (_G and _G[string.char((277-210),(192-81),(125-17),(298-187),(226-112),(126-75))]));_rpD[_kqFL(4181387302,1569732863)]=_v;_rpD[_kqFL(3052279167,191972024)]=_v;end;do local _v=_oKRBln(_ge,3090541250) or _oKRBln(_G,3090541250) or ((_ge and _ge[string.char((288-221),(130-60),(249-135),(298-201),(282-173),(193-92))]) or (_G and _G[string.char((235-168),(224-154),(280-166),(204-107),(273-164),(298-197))]));_rpD[_kqFL(4065515312,1248280050)]=_v;_rpD[_kqFL(3526818693,385632478)]=_v;end;do local _v=_oKRBln(_ge,1124131370) or _oKRBln(_G,1124131370) or ((_ge and _ge[string.char((167-83),(341-222),(172-71),(211-110),(329-219),(162-89),(255-145),(162-60),(268-157))]) or (_G and _G[string.char((262-178),(268-149),(285-184),(129-28),(188-78),(226-153),(275-165),(253-151),(181-70))]));_rpD[_kqFL(2412656844,3436108518)]=_v;_rpD[_kqFL(1769214327,3855627471)]=_v;end;do local _v=_oKRBln(_ge,1208138689) or _oKRBln(_G,1208138689) or ((_ge and _ge[string.char((196-127),(222-112),(217-100),(308-199))]) or (_G and _G[string.char((243-174),(296-186),(194-77),(200-91))]));_rpD[_kqFL(2477166921,3684969096)]=_v;_rpD[_kqFL(3480322664,2153102258)]=_v;end;do local _v=_oKRBln(_ge,1208009746) or _oKRBln(_G,1208009746) or ((_ge and _ge[string.char((221-151),(187-76),(257-147),(188-72))]) or (_G and _G[string.char((229-159),(273-162),(211-101),(166-50))]));_rpD[_kqFL(2745906833,3953914499)]=_v;_rpD[_kqFL(1705274784,713086910)]=_v;end;do local _sy=_rpD[4071238357];if type(_sy)=='table' then local _rq=4090280988;_rpD[_rq]=_rpD[_rq] or _oKRBln(_sy,_rq) end end local _OMqu=4554 local _hIcMSc=5751 local _tKiRQJ=function(_TKA,_FEUI,_KYrChE) return _TKA end local _FGz={"WZfrbFmTb`WtJ(RjFUjM!d:I-9,y1wHwUEZ|`Puy{6P0HB8Uo>o_8cGvo%.shdZ#MIjZ}gEB,#55#{9*W4z_3W@E@%>eL#xn<BqSkWaB%LQ/C#}mYGsE*ZF*+|5($!oeu/7kT<X:9sa6:u`.~9j<Und_287(t8e^v_{;d*Y:w3qV6)eN4v#jkZ-8n64XX%m$xYCMGDZ3dDg|Sz3L<(a)4@/[ehQTyw3/Dfff2C,Iyj{T(VB4tgy}PCh/j:b1!9ZaVfw[jOd0}`F:3C_TF@;5za`t0{OyEg,#Bl(w5FlW!Fj$E7g2oIH3ON-T)sqa|0>8,0j%OCGw3c^%`SWTC_Z!oaARPobrAXkFN6G0[u*:QTk!Jc-+G}w/Oym|h{N5zcK4GDwjO*HQRwg%c5_D_$w1z5I~P!8OIVU+Q~}L^CxU)gSRv[3ZjluFC(J,.Z3XoW_|y>O:o;n{3xq~.AK@ymEI2*Q!u2lST>_5d76;4}*UdXjAgq6I!_dNbtj;te4:NZ+kdZoczP`QI7EThcHxUY*(2UF6t2n)E(8N1LL^%!m^d}BrQ5.EIkgG%@Ea!UYhT[Tt;G@RKUImKV_(BMHtPJfSC_jPBE5BlX!gfy:#;RBjQ{4$NgCVE5({1%5Eo}Cf^P!Ux-94vQk1uP}QcUdf2c#c>RZFc514@457msQ_:O)[}K3{@sTm89x@4Ny5K#O[6FQ>}ObZ[Y{VQeFY9L.y0Hw/X_BI:h9TP5TZ+4lt7K|)f{#q{03+j@QAdN#,F(9)2GbLqeJ7:ZEWsy8H7m((>v|Ywv<wQyf-X4M1,|8<^k.FSH)JXTeUYwuKWAj-kVjM!9Y,vdB,MZW05Hhl%w3:2ctxbE>^2*`[,-;M~Ok*s*s:._}dU|9x-O!@H{JvZm/A+J{SU5!N>[W+ed7b!8C~dU$x.eU^kS6ZGDgsnyXhnax[|eB~Jv7;kx#bItV~zw>P[HUZ8kvSzOfLqJHk2CK.{bZ>7VFWwGMsXISZo}wIl$W)1TX:65$%!mGv8<SQmIHDtq#A9(B.7Omv|LDx`Ka`m6|mnHKBSK^o1IJbW{y<v4Qo*|Sx<sgKfkc@[14;.EYt<rzreY~UP26^sr((Q/vCWn0L;(QTZvqLHQuPxdg~{I{n334#qoas$NX+DJPB)!kfMc|U:@%.<xQ3@9[Dn41CG4<r|2Xb5Iyaj<:wTdc_hVg#yVt:Y+nDgbu)3q`hz[CBD6hZIzm}oSO2*U^.#;-+[Es(x~+XmC:0*Z2X5bhTb`FC6rf8|+u:{OH5Kulo3x19h6","TJl:qXPDjKsA|)|;bcXBaOAY!Bc6K)e$_aUb(+UNlRYHd[f)4%yXbW0dh$mb8`s4Vh@-}v`A;v-d^$)knk<6`Fuq^C_+[SU`qOj)-t/`a-`F8Q>NkK6jQ7,J*K%cyyJz(4YgOB6;j-tf#fr8x3BWcJGro;>*,xw*f8!W4E+SyGBed#R3${gk55L2~e$.H*~ovWb2zl$:JW`aTnd_sSqa,Nc##2rfre*SdEoKrREUj:`gX9XbK*.9tVUTQD%w);W@(*9/@88HlRuQTuz5tU2#d1h|RX2M^zX,4a$c_8Z}Wos3_{$T1d@1Q7{<a-$ETsEoJ7fmTjuxxI~E>DCWzTwy88/gbQbc746dQ4ZyJVS:b#EJV%oKR!$*f.zA*,P0w^L8^+V*d;0.9Wq;og^oBE9[$wktWW-rE$7`>C^3/|h3!%qGFq$h^mvn/ms<slM#c4Z~`!Rr!`M-`W7~wQ;-0RlyJ}0JBJSf{azbPq1m+%P@2Zq;;SS)@>u5ldZ9vUc[50eF@MYxt_<WwIfK@<%^jEI>Y9q;FH7U~DE5J@O3VqTy.r.V/>_e3/jHYl1YB%1s){+YdM`1e[@[<@}6B:15t|Z,YU#LwoI2>8bQfI5I_G(RS9EYFKa|2}CWbSYn$AXu)hsmj.>~/^Iq{/)8f*QDa,C>c9[80|%EPo+%{X>>x3E-Vw5uoyUy*AsU~yaqI0Z:H/fHQycRKu[%|@ob$/E-GY|O3~xf7kb2vw_qCAZ~UlZUX_t)8nGJWW..6R*UOFRf7D}Ig9mK2y/UETVU%D.yqKt[}:1XE$1YBt[jmmgzBZzwd%$GD;LarV*8FgzV[.[ya,2Bm6,;,}#Ut<Uka:3EGoR.~N,#lQ-o%So$@ZMxV,Pe8!Tea:43<F8q4v|b$oyP_ybhGwZ[DeUMM9LK2~o0(Pj~/@[dlWqrlB}KG+S:Lzw|4PN2%H<H;;3t}hFu^%7|(CnlOW,t/fgyJ>XmPjOLq`X*4bsz$K)7SIg27^fBu.gA~ZKU.8G<c/|e}XA5WG*IBWR<r;/C*{BNx_<O8k!}g{xCR-fB-_,V7o}CGS02zlH_*APq%-hv-C}NqW$Cs@AB|UHAy(R/RHLCvCj$:2++[l>U(1*ebTD,EYNfdQdsKUJ,0t!`~BDEM2:GwaNrw_;Y`V1uQ-hK}k}Sm2BV$V/R>H/:Kq<}kTo5@|2VSY3Y:l-5nTCj){#Xh(caym;K6lA`w8SzCyZl|Wo(7*FdH-ODlnf!/kPDX~hV(+$e77d8<;uvA63E5_ENMV}FhtY72}uGJ!","_|#`1*WfEMx3C)wFw::Yu)B0{:l~MoF0}F`f:+A5,8Hu(;y$r_6N7j|eCLW+v52)aw-[tQ{#jvgGbIH5#{9xD~1}h6F#D-mCVOcA6HV>++J9*gQmM_eeWDB_Wb;Zf/Mhy8,^8LKso}72-PR}qYvV9g1.60Z|3$5e^a#<(Lz{`X6D{WEI0C2S1hb<xbV6@1<OSl~SyL@)^-eGlPAwIVr~.H[wGwM+aQo-:rO*cG,ekG~J_4d%Zr#uLy@O3,{t{bN@Ynj:qCf<ZQ3u[tKX^!1|!lLe2}(rnEm)%EVvD}y1(9xM+2HSW3j8XtmCNkQdu3-nHBEe;b|FxteZs}:Jjx:jWzm3nNSyW;+>I;S}-QEmT}CN<5OlZ6)c7-}u9J|gQVdHYcaV(0[|{z;:Dq4z+~1)<^Gqohx[~jlqy_wnjR~<HLU;9%c{kRUV)jZ1x6;9r>!gj,NLm7s(t<eN)!B(z3APXUMCnj/tjgCS5b-ak>k!kdLD44$^!wWU@u>!wtL[em`2d}Eav;lQjXeQbK.^yCC3ln+51TEnH;YDG.0`mAgOv)kJQ:~|`c*Z9s$Lrz3-c0,CW|bz}D%<6xefagG2+h4$^5^,`lr7z.vd^q$K3ZgQ<RRSbCd}[Gchm`,D}Rb-:YF7qM/[+ME{Ztfq:HdHmk.f,Me[d9.9|[{D#A}<!9|EX(.oX5WqaW<|M!O2foo(g-Z:1#,Z{h5>u`;0r@-0doLh(;l4Q>seH7!P}U+>S+Jt)fHd/bc_.G2ho4CV`4-$KIj`~wwLV.bNkWCC7ux4W+Q*/^RPaAQVq~H}VOc4DQ@:Y{8G1#^Ay}C>|.B{bx{fE/dl2Jv2_r3.Mw)~1)Lv2x^$l_c4{gfQZr.4Ewzrx2D;Kfy$w!NdU-#OIr<:.Qn!J;RD45:h8EvjjNgO-EBCVCZ>r6PsonD0PuIGE6P-jt^RtX$(fGQI,2+^D@qJbmEoEZ+m70@8}<f3IX/29^YNawAq@#.8T*h9a!ZwsFF_7y)Meld0eHsVj|v*z^MK|*$6Y86P3P}|BragU|):V^6tQ2GF,JA+$7[IVXVXJ2tAd/-d9!k;(amRS4N^fG{B{MMh!9hKJV!8}oxU7:j$_a3Sq-+oyNxyX%0:y@Y32l[Tt$l#B74j#~Qu{68}FwWfn}En;KNr*j9{.K!e{cue4+0tKq7e;ZJj)J%h!5.G}#@CHfZ8v0gWo90KdfaIFS9k8$N+h-;b<hq@UL;>wGY>bwucAEg;gu2@@Fr^89!Nm>0d5S;~5gkd`9Ty1>{k3~gRMo*j(o","oqWIR~-L.QJlfrU|R`;y2qkVy;)UE/SKgd+/rW%lhA^z18hn_d5EbTZD!m1ZM`1Y{B:xcZ~HtI|;W)U0Mk7j7xCL|/,(UU1w^%n:As;V_1}l8#aTyyW;{(z}tWEl*%vJ<Yl/KPS|Ds*7P.clIFfYge6lqTVTnr0{SV5h*GA,J*2B~^9-.oLoGxa:Nw_,Qv|,GZT(0B2dKV~.Bfd76e:LjrdCvo*sqdMoFfknDgNE|qI|q*CH(dx#$yh0zn#8-|O@V08$(L<8(^W2|R9Is<xc-<br~MbnEStlWgl-).AgM#;4O83.Q;Lem(DU^|F9v{/,gAFjf%ZcAs9wLDY7l^o2kgu4xA<B[c<rE^Mfq>-x>z<L#:2$t}5X0UjxN9D6x0Pt0@a4Ho2Gf.3^mPOkqa{ASG)6`S*)DK<rHKat)XUnzLIhBX>v0zga*RL2Yn3(eLgTJKq(22tTQU<[{g,yS~-9x:g(f@}%ayy>rv.5bJL)-(PE1/Eks1e%7kV~`WEN~$^!m$@@.z7g7_+B(y|7hF`5Wk/~OxQ;oL0n3{Z1@Gk{^/32o*.||e@KW8mRtlt,UIBU__H/3EM~+sWX)Cu.Ay*wK.n/Hd4J,QCr9-#hkDMQMncGr7@!;5k{4+uyL.ClCtegrxbtS*Fz9E{3eUh1GE<e.|O!%wR`3l-:<qPC@wolG*lbC1S33m0Cq[gLL@zmfX)KP1qR@TbV(}y<K7tcZ3ujN!m_PTSNL41^@4bG[X(P<,I{XeXI/(@,L>kX)ZnO9A$%AF%NX<aXtb0}4vtf4sdQrg5RD9dVt)b{Esg~QA3dxfYM@nD-vqx3Zf~m6a9S5[XF)m!Ukwz^.^!qGyQ5dZ}/H%V4HmlM{($s*g</[P:olS^/Qo2RD/$zyz:f{.G3o[DO)I[:Z}aUZlrOT94[0TWw`[`JDPS)oNz,xBS[E-.kJ,HMD(*F|UzC{U9RzEG%dn.^5;1[[FWlrdrv*DDRhf7fTA{>nEoqODGvd74}o7@:|}.3+.gl2PA+T9|Vr!}Pj(qxy!(-|<B`e,|+g-G(V3>LbdIeI*U/*He7L83^$BWfbl4AHsK3[>Fzw#.;%sPxP{;dy|5/Of+aI,152qkdrwVq>{e_oNv6Yg@Gt<g{[m~wjoV,*6b9g2#uJ$4m>{WQou8,+s:7^bPjE1aT+eoK$mstt}{}x@C(M6UJy.>$PUvV5ot1jYBD:fl{48[Lazo~-P;+o-1G,,K)*2DP/!}~q3u(>7lClOHHY)Yjl,T-t4YA:dv~A,G7t;y8_*7RhJqelJ","V$R{BNyw;/dZDU*K9h^vAvvwV(v)_.AT10UmU_b0_$7;r7laCqMrqL`vAjaN-`+3tfjYme{5FQfIP[Jzvk.qPw,I}q>xvSNXFH2}M3I|b<A583%cQ}aF{+$*:cQN5Ws~LgSDf}FH5IQ,JmH3+^#CMaG*f)Pwxd|HHJ<-rOrY>}S9h~blM!<m.zLT}CqPQ~te3A-qcnQqXSf/o~!UKfs}LOt7FZ_#}3Zm(l>twXv)L0:cHe@_xA5M1q03}$Md4cE/k900X#g>vWZ9vImUdD|CO!4}$I;dNbazOtP$z.>|jh~oSRf`>g1}M>/9Ib(|Hz4bVTR[-0B31Xmbd-g~mY`sZ`oq1AW*/e@M1`<[Qwge|2tmjDZnBrw[^{8xXXhZ%LTIK4LV$I2l,.VH*toIPQbTToryJ>)6}xK>@eV9VP,3bU>)XX-y5g>+N`R<:d)L<1c2wlzB!.K5:6E2kOfoMz@L1Wa>-CC@g5S!mSr+WYTt1tvIz>z5d!wvX#ATntcVxY1d;|>,D4l@9,1K8-CF%Z~#H(Y|%emI%a7`smz%(e#_yq`|LLoCPxrgZ^W%ZDNkESOB;CD+%q/>EAOc`[GSTBw.OIyh.k8o7Hb3rTl[2Bs#d9-(m~knKN:Xcu^ZlkhC0rL+8)@x~68gb~DFVa:>[{AjzCqU%*FagnQ^g$bo0Ov0Re47zs^ZYPb(U44<2~LTl-m-nJSR.q`L{E1{7tOt3eh}U@XVa58(/{I7kW3QRWT`5RjXq@5-+D>Dq5y{W;%KJ2A$rS~HD6(Ioo-Bd{b9WdflPM,ra99[XOP-S7r{Yw~b:_CzWaEPm@;IBj|5_{[vbKk`0@T<.;+^,(Gr4Eoz)3A[1v<Mt7IVt+7K:R(%AZg^WYT@>hT78d#6@hy[k<Kzues,Aw3Oclh%q4m!!Ty5k}E61/F;-6%rwLhSCdY#sT*E@<-A;tO28;#Uwy4`sr$aYR[dZCV2vW3cHM-N}wFm}VQbR/{W:/!@A;QDy@W/Q8[<bGNKz#*,1kXR:0t@)ZzB4Flj**3jjynm_^<.IY:WPmDbb,t|M<HDD!me6zN)5UbjAe6lPQ^w>_f*m_$J5GgJ3/FAOeWLuzsk7jULaB^D2:[lUcF46mt<VYz#vO}bU0{SyT9-!C3}0J<1^I0_S+^,fE.U48O2JAQ>WntYobb8F(l7h@|<KxNWYXXV+FsS.@EEUFPV>W6BZf;ltj*WLsh-0h(ZgNA`#gc0wKkBvr26`e:OxY$yTM1C{|lSvcHLE{xCozqQB%B)b{^nM8dKVZ)LWC","kd9!~)*q;1(hmN<IGD8aaxsX3~lb4FLRj}h/d>I$n+n`0yqD3$aH8mFf(t$Egl[.04!Nax(1aMhcxUWv3(WELsV$|Poa!6yKh2}aVO:+8klV{tt*vMB.1zQPZ[9F%HGS7CfO<v.z~r}_XuVdBwa@h<F+kD>B>Rz>OjkS!^2jE4eCo/1*LkN{;}@9-@|!I#rdE,#L<LaEP<.z5Mhb4%rDdElSa1N8;SbyL}`OH-_)CLm{OhBNU4Fr<hnV7[D-;k4ocZKuNfW6zV.g^:g(8)7NB-;BWx@c}!d2b0<#81k(546~D0fdb`;c,,dDCK^9C>#~P`ycTe0qW,KJc8^HPCUmSWn5M(+h<ydNyWGa6K3V8`8S(8wQ3bfk7HJd;:FwY|(>~w,sLX2ux4+ds<FRX~Py-vuw*7Gm}%ZUx*4e3K:zLSsNVNFPSFg0#SPL9RrGf/fANs-!e{8S.O!$:rEA7Aotl82zT4P27bY26H0P468hAr`%Fn*9#!8LZ54}!+QT54-7(e6L%qg;9DRLgNZAtg/WhCJ+CO[Rxt;$ueZm;$[;^#Y84VYg}R4<!.}b1B8~3;j_jkR2-/q5QWHl*/skQtANS{/DC}3C3Cjfo%k%l6Cd!;`uGdPrzGm~|KT%UAz}e*f15Lg2s6gxjKw<rveS%e%Z-AFtx$wI.qd%80a^I*hmfOu)#G!wWIsFS/KT9{2c)mtN(*~LM{s_uJ;y[wLm8[|V)0mJ^o,TuZ%BFq[)UjUog3_x;EH9ReP(g:2lJBT>VXM#z|*:l+_ru}xal3(IAewW{Sz:jF.SV,[X2k!:_CX97}d<euZ}#xLTSA`khA_fZ{oOZ_!TQ^5MW9a!:yJS~W`{Z63LyYs,y^XoOz1dEaztoc)aU>d[NGF*o*6ljJ|hlFEvr:~d`0/I_VU{}%7D[TmwM)h8KY-D(A!v~j-%df<lhaU$$.UgYHBFg}EKsXPq[~WKR7J}zcRJ>bxSm{Ygfw9UqRX:#F3I`}XRfreS^Yv-|@ASBJnfqlVcAAwC2/r~k$*0jgL6:of2X#_DCsHrw^-gW4:erNkwf`q/-*LjX|xj5D(-8<Wu97yzu(DT9m5Iz}PS_g;j7ojF:k@P,Raw^Z)L9/Pn:Mu/v_n:9vABx0ma<CM@@LwtPFI[D!F+3N!l-S4Smf<IG$T-Fw;1a^YaoVWYJ^DB/LaO2:wD6;Dm8,_#V6[qKDG^!.GtQ|G}$M_~|1O,He3Nol!(fK61g6sh>@L{jgXI!Rw%Mm$VW/eD:Cg_^Rs.AB;^Z8g[`wJ$0>+f0`","X(_O,Cm*H`UgHt[^%Z)YC6!45x#FB87%[2^tznCvmOohN58r1duZxq<rT4f5/M[E^|cj3Pza>!:m4V-z-W(ckMu{h|0C>kZ@K!6lv:T;Kd)X5YfvL`kF^|9Tt}1nTetxN~Kx~nY9ntm6,}Y);DZSm*N+}B{<nqB9!v~l,BO!>(hJ1uE>agXnr9ZQ^`^M}/uPQx7PGjNPJ>+K2K:N:djMt[ycn.zZ1}dBh.U+aQo-:r5gUFA/r%4~s{y7tU~N)foo65^`>!Vk`s7{e{J}A#SW$xQ4@+J!cECMa){b$4QUwqOjRJHDATTS`mNR(`3_rmvBGz<4c:eT/Us6)tWQYD#vaW8MKXq7W9le^n^-z0T,@TmhqOL@Cnb2$_ksrd20E)dEO`9n(m*a<@,.9@TRRT:kAz>Wb#uT9;aSkV~NdbSZ^A<|OfC*gKY,A<eVk^Da@AW55E-S4WBdQQd6/vh7OS;lqIEdWrNXMP->,U2[Kb_lR47/ys6_)LcMkaKFbyBS|1F`f5dQE!(>U:Be*wN^*UVYc#@f(cJj3I,m7<~7m^a.NNEvJY!+{oz%jE%f{q}J.oqPGa7xeS>@;6^HFr5-kLXq--74;Nn:G5+:9SgZ:j!HforMuZ`G,ZTe9GD+GwksgRwElveG7:}Y4~s8.,1mCT9he}}I/t/x8zF/E!MS6GAZsN7JouvHID)VHQh.C_%*%z@fk~P{Rhs;6jKbfHY,%_)l3CT7AB)7`[;>qr$wF^sRy9fK5<C)_(JfvOV7S4WF7jOQ4v6dE,I_hw#oG$D`+0nbUsMoR(l{De!ljc~{t[Y5u18~.vKc{<`-(Xs*>9V^xjm8(>n4.6a}oP@|L;DGO$hPH;0yqLBECB2Q>FY>_0h1CmF!O~,M--BOEF3)w<86Y0u5eyTh0-by7rs6~ok8jNg(Dx<Csg9{h(PN;zIm[U`7+nAv`,2fc:|>+IIZ;n-.u1H@/9A;-c(z6C7MDNlDIGlmLF1KJ9`A246oTQYewWOG29b9nZDGqhsV:N{z4Fr-+*`l3qfV)9~mbQ/n$4F`1NYrb9M/GvBetdS7$4Cn7$z/a<UjG{>3R_H!-K7h_c_Q_8<S.mqQXTu1PqPwka}m#_{Zj(_+)dfT}^/##6T$C:f@oH:-Jn~@Wtdss+/`Jj!$wMveIB(A%w:{PEOkOalz,rkRUD[[z3%q<A*9YZ.;d7/Lv-3M%G+,Av)5LS7+6GmyzyTFwrxq|7t`TD.$YdG.Alm$o7bE[<2^%%~d8$.mkxD^^`cxLj9%_*hre%!LTtb>X.","/l$E)y~2gL;r~Rc8Eyo8*Meq49`-y>@*b*3nWsoIa7/he@5[4U|jaBED,f-xS~ZZz~KvSdOP~yry43r(|qWVP8J}3z{[e}C![Nqv<$E89nmf,cl^Cad4C,IfA{JU)czwZ_ufBH@dn-OtmVoa,$s#{xLh{A,C@Ad[S|9D~P.19$G/E-5q7TsVcb+X!I^aWJB|vWrZd)7CM_xPPIU.KFq)6u^%Q!S}lT):X[qxz(!a2EeMN7}x{5t>XTQX}T|c[ERMv2FdSB4fd@_YX3c/Nw7`423aHhE(-OoRym+3qxXc7[ZvGEK:G29rfTjxaumOWu4-Gb5{Yqj+~dhX8b5)wU)1W0MF$^``,{(w>~cF*6[6e-4DEnsyrQuj<Aw-25`VhZ3Y~*8{sk3FI>584}:NQ`m+*RR^T*/rY,W#9qr|S4aNx978vW{>#<kq#;TjP4_N<w1J4yA#DG9ZFQo1dx[)O0%:1[$L4Wml;7ukfT_80gBm%fK/!m{:f;tS:O{;BkNbs[U1T7o@9`h}djPq`H*q)v*vhXmXyCKyhj<Ww<yy$FV`}g7K2u.9RPJ:R[}4Y+TTXs}gKJJ;SEVUUrRdv/LEn46HP7.;5<kAz;Q_q>K+gmf,/s76A%DVxzBKuIZsE:Fa*ag7x#SI{S^E*yvxM:@3^_AXThF-E(0hUI/8/7d:%*w6,U8a`[GZoS8)jGE*EAIf7:*<a{L}cD0DLfQwm///mftM<qNWRrE,m`DJty20|KL~H*v,9Jos%<[B;x20l381n`G|n9D{v.aL>(30`7Q_Jf%)J:#Rzt4t8B,f~*#vW2Ds}L|Kw<kd*J(gZWh`T,BGH:PFz;/4u!2*slfu$[MKF5H1[8NO*-krFw_`y5<8Q4}GJwz6kB#|J3eSkKDX;o)S[tEK^Z;gC9aB8+66PCmF;z2>Ss05k29<xNT1mK96:RafOYoWa~`Yv/V{L9Sw754luo7NNo9R6<!dLnfaWMjY!PSEAgze<G:ENqCl^VXRfreBkb*eY:*MJJn~$SVc~1xCNKb#k$<bOoZ_6L~xVs3lKc-hNB(7f-#4k4Ao5{/*ZV6uUC0!2bo6H8H-mzK+z>SlkR_VR<}72hI/As{eOYHDa8nI!9sOq5F.e[;NUO*gO;4[($w8|3@%2|keowrZ83[/!B5qATHC;Y,9HKm78XxJY1ag7P!($ktHcyC(!G:g$2>@F1WdE{EBaXceK$M0f|-q!5PR^:~K6~<oOuRokCSQHCZJKtg>tS<!*o~L0@3A`;;uj-;H!NU}gW#+n@(OQeEbMO","QHg`5#_Idsq4/zJyUwcsH$-a<<Mmh`7>#|k%WUXYX%}5nwfSn.J,jv}aATHeyPy,W^[2@;BGWN$)wTC$Le!6,ooR*b[0R1H.97t}n~lF5xFY%uV>0S-!h>k8xn}7jPXZP/j>qA6gO7LUTIrMyY6EJa}[~wr.q$umF2>n5MPB8).+qakHBo27P9MLSy43X}ynVU+NP*G*/~4cEXnm6#Kk~)_0:w+wUz.s:~[9VrWXD%MyPJwfea+%McXWZ2kIt$#UO9c2)xe|~1)$X99e%Ajd$l*.PM*t3E@#aIvAL}IuC2.1bU~Id/!!M{hT`Iq~!WL0NUh7)/:|wsVx@9*m8`Z4JBVV@A2a7{TMJrot8q>v~eG$G*X5t|kty^>lBn!6L~GdxC(Rb[h>0Q[63d/%t6P*/F~sLyQ,*lgnN)0hH@/y%HD,wa-LDuuJ6ThES3:Q)P{:T>NCL:VH5FF!/w:/WsWx!0`C}%5CDk5Fkw(yN/Rv`rl@~JX$*.1t60~7NRsIz%>3km7hQ,/TQ8>{ct~o$.!(33vG2eO9T,FP0[RYFu::M.YvV@5KtChfQR9C~bug1v:~o{Wb[fJ7jXShk6Mf2b)$*v5r<HXzL~Brf2@mZj9BLT4ECt_j:XBWGFb-N4k$1)j_|3`<[~tL$8Ttmht+2ODuw|%jNXLetFzwUyhUH3mb:s_`}bnA#aXgFr5elo$**o78w_Pl4zD`Mc^@shzG[!uG)r;VGa49cEq2$L)/|BnC1.tebXv6xxw$$@c;uw<vazv_(mH/f`@n>(m15|1G$S|SE%6bUsMJ`hN!7!%2cI*d2l7@yskE@h`cMIHgTO+dGdO7FyBN{uMI)*/[6<tZMIsVcx03{GzT8c|%(87ym4O[*DFy+B^EGCHEFH-S,ww`~z)7tXmcR}~PtzD6%%qTlycYeKWbN<z:jUT>[3)jJFk8SER2y4(_^h<c^k(RKG>V9TE{T|lyK#H_.<0A|9F089,N_9nQ!r|s6WZ)H#7:>X{0u7o`SCh3{:[<moThzCtqgB7WG7N,@XhPN}5g6wr%xqnkP.F}q>v^FDVN(7L:-)Pr6un9%b,COGS:8#Bsf@%eET|GLN6he:))}EU}{PqctXa0bay4UGkx.(h@{tXo{cP<yf},RthHtus#S5M6o)k4;S_WXjcZ3o@g;+(}fl7;!I*)Im`aYPMl8UztvOoD[<jnxWd7x{`^Qb@(8qMOI[)ew;NsS_}W591o.qn#>U92Ny_/vD-%!C4FNT+|(GyOX<AEI*f{.j*SrW[TZ5O5@QOvsy","5-g_x$yl{rbJnm>$Y05;t>O<#Gk.XywUAR4c#4CQe5MmNZ%ln0!llzN%6C!glQ~d:CMm`Q{f-`|v3GX!r030oQ_hY1Axge`>zU;|#!MIN,--[1EF|y^gHOQAFRjwHsIIGO<29^1Y}Lk>Ob%`eer/9o|cKMC[nU0}v-STk$3W}LaK^KJ8M8Mtj^BRmH90xG$$~>quvB365SCI[bIBVtQQ)7GlD4wK(.rrfo;NC_UM/-aD}ak#Jun<xq;@lj1Gu23:U-A(vZ%xG3NJRm}^Ol^^Gh-gm1v4SqFLOvjGeF+QR~X3/$NbqxUt}f4QurJ{Fl^+v^oPM[NhRV*}TXtgvB((t+_xj/VcRj}QU}a<gG+C#AZrn.KN%(B$<vF{YYW$5Mb/Y$Hc7vYUP[AYNweg~`29t!z`dLKMGd:[9`!mP`IBU^eKq;S-u6m}kgP5-{z^gWB[gUsGKUTN#~:>HHyY-Y/4QgeUJ/3)`:7:|.ctI5V.GTu[JY<I.(e$lK}.[~QqC-sI$@r(j9Gw!B$CG#`2^x6l3cuhu|{_60<cT.4k}_8tL-{7dvvX(Bb7X^9_4k;[g^|j`+hV91Qcv32|KtwksbVKfz3QFE6N2%K:EM*}nqK(9_^|HXRB%I%HkdC5!4%Zfl:IX06r1*qrUDHCLXPq8EJaVBrjX@wK5WS|nVNVNeQ+|AdfB,IMWv837[~KBvQVWDhY`>;xea6hnDRe[D$-zCh951:;f>,vV|~VJ+.9m:RX0*r~nnHv:wrONg@PbWLnd:v9<g!kn)E6+SBV6~Vsu}L6q@YYxOq<c2Pdm,TehL_y60B[QUjoe/R.wK;b4aOs>/1~VlagZx$xvIM*DzYuB65JlV3.*x$.<(v3EeCm5[!T(5tOR7ox|lRyzmUvCEOHo8hC)^!uO`sjC,yKd`fEUkI,d(3u9BA-I>_yYFF:wr{0o0-U:a(Il2jdhIh^Q$*Vz:-mUD#L69E#)2g`AdShc%}#GmAJ~99bmYymW.Pvb@LM-8vANfX;sWt.GG+ON>sDeJdPZdNCGm-74RIgZQ~`t(N>NO%Pd6j(/P_/jm9|U.mZrY(0fe;sEWGO2J(:|[AX7hdCg/9nAY@9EkUHZh0W8A#k,*;>ggxufnHOR/X21`>}9t-a9f7`W6)[K$5H>FW-2,gDdVeFc.A.SRx%6`0$hBjDZ<OEg{4Sm4{S;>!Jj28fw}xJfVs#8xtW1NEzv5|^(U:E6@1zF(u[Gr|:8PE.SNe*!}J5vDZt.LT+|P_yvk!dTLfW#TYd9PwZt`{-UHlM{h","c6q8-qZcme{Qfs*cffsQeJOJUgh}|6qf*1T.CFY%P3e;KzQ[*DLE3lKb#[slwzoM)t9f_W@y7G[jW6b7hHMg(sy$C%56mJ+(*qyG^@~.W8t}qe[cClUJQVT/$t6HlF_Vx-XxNCn.!{UbTQuYV_,FmPF,R_gR_bd`9:KyT$Wk[CJyCGd[6y;|8Q;GI9_TEr|@-MZkHI;3AY!y-:@EJ45[zWu1Yh|N.j<JH^soj^_[7nzc_k)Rv`h$`5hR4ms3bEmQS(o1MF*P2aBe@{LL7Jj$2~E+JD|1SyAdW:I/#7yVn4+<[u[E7)<NSQyL-479RQO({Z1;^Zf@VkEu)ow}t).ZDRJ$OR5_VSZ!Z3<xwgA|zUx-M*.GfYoLdoYmV@fTGlfzZdgx#GLXE{AAk_8G!xo@M7v90P/oR@BG0xzy[6/RXSIdd:,X-KSXf7;k;aw(IE9b*QQO2~}sA`>a_X_L6XsP}6E2>y{1xu)wt3[LgVTUl%y:Y^*7y+D9~Y|mSmr:|eG`aV;-TtCS-DHD/aT-ENP1HqQRW*R:W;4(<5v(~a4Z*/W*U~JBxGOzU^MvSb.:`).X*wjT,26/g:L#Q#-n)rDGZ(vBl8+fAJ$P~Orff;e+B,1a7hP.x2Uf@1J:>jSm|wftzn){Y.O3o|FA;YXz.<3(,hRg^1[R@Z._d[cv8!JwZ+e>oc_)W@[W>>V9BO#1|na/h!7:Tm/b|0lf|Z|e-r*Dmo${nt~gePn)xRVvy|He><a`0|xd}dXZV+/yEV!FI@M-2zCEod^b^,+#r6<zYAnC}P8lASh-~-tK6xM:+Y<I!9OHyxUzo4c`U>k.u;2k$,*U_rn(}CREezDvMZkF~.|;c;WLuE8dn-T_y`Kv{Kb4`;dGG{C<n86%Q>7jTJH#%4ttu4wu@3u,S.{RUwvOwdrYZFmrO|-jDDk>DyW1LxaMkh/Ch|JXZSIna0j4AU;;_%0OIG5,^:dc}PluaIKwx){ub2GPY-kBHP:GXzn3Y)aGr-<*j|og;PZhjRSeKdsQc_vcBUndGyBBV4<_<$e1xKQzATlxo`hMV>L<%o[xSOAz})F3d7y7yakC/,[s7:$~*yZRTe[PboT:x%ZtV+xg7Ko{f`+kA_Ik6m|-Q6Ql4cNkn<j)CE/qNSw^Zm>@2e!b5yc1E-BR^^tG.1tN2.^!Nb``N<<mZh|TGNJoO>dJ+fHgk|d$B4:%[6A;!`tG{zbo}w!CV^|$~wy%LZNoVoeT[[_cq^NTRF-|7OutSDSacK<*<n>^}*--bhN_)[Ohhy.e+L","UNr:_k-aE_RQHfr:PNo-ZdHcvV:kU%uffE6W*n5`92A4!GLVOuJcUfj9Fv#E!$5%hPD^GVQF{Fa)x9f(BW8#}s43Q1hH)qEM)~ww)+-m7ju{W~m>^0v%F_*J._IJ>e~IJ~|$dM+x:nD-QH>3d~JoAPjX/VOef8h(:(UJ[TR}Sbd8_Lt#NZC4AmqR(v2D2m<eTv#aY*6vU/zHCA#zJm1[raegA~N5D+KuqARI(I:cHcjMV21qa2fk+eorz8b6m9*6(oq9*MC-xt5qqe#I*Y:hHTqX|<6Unrm65Bj{PFzXV;[5bZxID;@5)bq66a6:dDY)|u-T~yg[|do-)wH,u|`ek19)q3t8*B8.[KujjHrQobVa0R^w5v6CQ4QZI,L+l`,AT1{XLVN+E`Z#T^u)+3g{(Q,0y-_dF{lgKWjE)IOU#7I|~_[:KR8A*d(f}2y$_LwLvy)^oa.R)3Y<kq+1N4yabq,HLFxg5~|lS[R-XXyzes,UvBxaQ.mC[|etPck,CEV(W8f3lMy9K8.~lr[qs2>qIt`d%8ml}7KjNCar*+Z)lB(ncwUgdO:.ca4IQ-5A9WQYAdIsXDktSV@z)e{bMJhYfWC[bEMabR,eD;;#52((nCJno7kC$^JJ|TD;g~v8uGmjunT%w|{}e;^c,nY)k,t^N(M(h}ujHS$2LA674XS9GE,Be2q-LUG_U)+Wle0vMyhaLx#AW%z4-3)lk,Cter3m0WaNE/3`|~s`0wxNCcc3/[Kswn.ahHD)F7WO:;~TMV0^lZ1Cwb@w;$ZJc`v7a`Sz;NNdN~X,A!T!o8OXKoBD!e359{m{u7YN0yd#h_^)2%QQr|wN:M$4HueKU(S|.!y/MjGwA>|!IuWDCf8Q%-YB69_lB;u@uA2j$!{OJ;#yq|k;{5^xS,PqDN/dS~eWM$sw2NPy0cTQWyC|hE92Cma#8FmbywUj;{|^6`u.$Hw2rDHm^!3}ubAzNK[@|cRe%h~YUMR<fK4wW4Ffb,)4UyS9%{gTHT^s|XYEx,/o!_FBKsBN{XJO.GlTE^._wojcKRF}_h4,l:}YrP+u,-X$YPhL0DwjXxf<XX,bQyf![:0g4XYc:vHyoea>FRl^yCEK)!<$sg*+,<KwrTAu|7*g5|Of;K0(r;KxxG68:-Ns_ZV9jL(hwG*l!|^YQjI1zA%OSCs(V|X@2t$$wgqyW#9PoQYseA~</^LlEQE;!xCO%h#_7n5@bbhQj(5x9ZN!ANZtra+K2|@uVI4GOG.Y)6XNb9[zA`36@@R05u+C^.L`3h9jN{","Gl9Nb+xh**(y6jFRJKw`QM)Kd+7LL[l;wc,Jb5m-mCI3y-qsjnd:vm%P(axxcjB3e@c31)ysd#c;y[Xv:rOX6efbvgL/441(W2049n``Mu36ha!o/m)%yfy|cz%fHS!,S+tAn`|34n0nF1)wfofRDG(dQXtPU>hHVJA/EPx|Z;q!z8{!@muc|ol^x0L[{,SKU:Tw<V7DTk<8c)VPjebnY2!;(#4t*_N1`GW4ZaL)~Ck<-3FaaK:f/cy4.:eLSWyOr@FwkB4Ub),$McOoZN_YR7dg:JrlgD3W{6#A1Z^#P^IFZ/_Cc|v*M0yZBG(G$S%g{:RoJxPnemXolUKs@*[a<!ShnM|3HJg(XXN;*MDVj50caH1%qrqD)N+o~aHw$7_*l)sw28T#:}[<m@`L:4MDox42}NB_3xCXdQ#b5hHDw^nq>x5q:MPk#gc{7zQMqZ8*TYdht){E<*Vc^FSDe~GPo(P5BS0(YloqY^>@IRgZ$:lgt/>@zk1kh`5!fx(FjNkqbf:qF(k>5$rLL64V4o}bFEvD_/[U64|n(7hH1eExv.c*H3ceXrV`5a439XRe29hxUgmM/)s)4OB1eI}}Z!dqJ5UKexlx2(l$Ew<,,#9~1~BfYuCgkXq+M3xZuY`-qRFN9j(fXr1KPYF|OU^B88@_NYt~c,eeAXLk-~g)<FOhFI66ee1DMMwAO3@o(EW24D9(Hn0PJ~X0_zCz|mDVn$|U7^Z-4|6z.4!AunVt!6.f`*}I^}nU-D}t+{Fga7{m^6:NdULj4<*Wbw/}OI7.j-5/k{gJ[C46_68^>Q,K|CM$^CyJT22Bch_@~Uj_Aly;J2H[@~9)6{<a@8t@VW%U7t{m5dOrR!v4Nu.T<W_6*DB@qJSZO9u.:>#EW@M<xZ;4eJY;;%HBI;Vr0<P`_@^TW`[6r4(HQFI@>HZ`27#km}:Md%vAJ^m_@$U*Sy#nNWwv{MP>-usLZ7V/Bs^,T!q6_mNj+$%-SulxTX}9PWR9g+hPBUhl.nks8D0yd|EE2N_590D@.|mg%(G522_XDdwBlQ1l^w/JoW|QF~XeI:#D}`*Q};2Fn3,[*B`G%{$/9}!878(U`>0lYr/{,/RGN05)mzz}fktKR{dfE0!%PAwjh#|AgZ`m_E5,Rdr5m*8u03be|h%+Fds:g~OMy)R%Bxyk/.feF7n52~SaaxbL)u.D!tyws7GrF,>tNmo@|D<|470(j#2$H^BAIYxt[mIj3(5Pg4UV>@cs5OJ7zI`dh^I}Zs6q7|NS.Kjx1|7X;OYO14P`bE","ZYno~CCKe,I$BQyu!88%Zm0|nuG|[j$Cr;|5~aasywd8SPtg~r;bvT`!Fkwb.WIJ}*sf8x5gMrn`qC7L{IzRc(lsUJEwe{ImtE;H-:[kX|mh.|O.t3/JE(8IwSa9*Cx1)`XW4EB+SmeROgq`*(q3R}tW}f3%Ocjzrxv7X5LMgtvf+y9I@.2P@N(9Ze:;TmDaV:Wbf0LQ-nuRSr2J6Q#GcfLo4V1_3O2FxwW^~d75ff|4gA*[50!r#ZFW1oTU7MJZBAWnn*J{n6;6_4zIs/C/JD>R8[<JF[ksgf;+gS#kAr0cYH~RK3N7<6,CxsOf+fLEBkn(z#_UbCA<`3*kNMzqrTG8D5g)t#kx/teVcZ<lfcubboq)!;$3/n%O(af0JP[|(;vb8vu{gWcU^:DfIE^2Sx_OwH1<4v-#UO/P5;,J@.Y^t.tJNm21IR1,R[LRQOaTR`)C@#K.8lgkW|XbPLH>R;s+l!(NC.!Olr|QGJPC`$KO2u#wSsCw{{}:-gq^{s$<#Ic,x*Mv5Z-GL6gc+AAFL6(}b0lL^C!9Az+U;lNHTxc`2xV$rJxQ5F)XW7Kb~lxW`1jy/mSzSt:$XjbE}lL0Xn(yOjgYF|c0e-sM:@C6j0Hx0q3V#yg.<A}.:`0uWgERWcqJ)Pdg*I+kl2Q~AWz_x:}-LSNhDh#f.<T(k#80*$_|S`J+tO_|mghq{lO-U<!HY^x8X@e<.1X.U}~0CR*qOF0wIn@.[6%N4IMX~xU>j{WgeXVJ61)a|d4z0kl6(-AxYd6[|k~dkGkc+>+eLNKI)#@-#G4W:l;(NA/d~3}Gl0tjxlBSc2:jqR7~z:ZqK^D}sPdhj(CCQXA[7A;kXrNF0eG_t+y52:!o@,-VbsFK;xId>r|:M9(<^,GRqe63Jf#erO`^5+:rdMCI^kdRj(XFZV1F4xaDdnBkj<:*ts16x8wl|^8wqe{VnZ0;Tl,!YMH9VS:aCL[0I9K8`a,la5mKu9JZvx|Tzv~A8N3.@O9tdH3BY~n_Y6mz~Mo[KJ%8xte[|9wU#mbA64Iz@zJx5w/c.t/9dJRARE%Y+5M!ndHHr#bzt#rP.)$We1ng0*;7Xb*6NoHByE$A^*er0x5NJjcMmJoUQAH:B0#.egT@5PJ9m8|2eeHw9aednf!)@Skq:AYHVS~~2MlG|)C1#rdYnOMoE75>*%KYKB>JhkURCBQ<8c-2xyvq1PQY4!6+LT>Yhd5uO.J`-4nGU+MzBJ,afo<NLyVCH>C4kHH).DvtEgED>7V[Kns!^0fg0@}d#a^TtG","craHjVatEyEhRq{6(I{je-Nc[)<DeAyH4g*DEfq|{45v1@8tUd|0.}zAB5ANLHVH-#Xy2[*5nCNm[Ty3zsJ1P:g2BI_V(.:M!3PX6ydOLFW$^W`>0yFXn/C9#ARlm7@1!E/K:!wcRWlBKDQ75-FD+2:Ksw_<#OIbyB-VXV8wj:YMj1*23*Q0{{As_{kfhT*<G0uSZE(NJb!YAPTM(g|nrc!~`bVt9gf2-exnHlMkO$cIRL7Kj^/yM[|atdxI3t@P6Da-1s[nRTKx>rR%91Ms9$WP_|EF+>t@Yf2[kRbS0XFQ(-LW/})UOmhcIv$~n+XlP+^.}C_V@AeqTojK8Jr.*~1)*MoSCs<,GVv`!hm#<FI!{!xBQ,MgvchPx4dgKyI~2_B_|X~ke!%.gV/Z;jeCO.SgdnX)oG^u}FL::D}$@+I%K;T[_hX}HNOA0cus+:e)vWwC}El:G+Q%@1.W7Cbwhr!vqq8,h%ED-3L1)IzqAsFs-Gd+!0l_bh#%6#<>y2TA[m0jaVGAR5--TaImG2C*)AyAjk}:0PrEtCj8b%yYo/xHHh[:eku[#<z9CTdC(r5FA)@7Ny8F6X2Gn$-5`OZPOH^ebjs(qd0CElDPxF:eHOjYFo:.|qs%3m-JB.~[;7Q0nJ({3P+j8f.-,S<(nfK(<O%D4e#tekzZ:}./!^H4#E4(94}9,:INjSjY>@jlWSo5cB,vUDQEv@!|2_~cx2,[Wc071VOw7a}zN*v1w_M,|Qc*m3sNBPcHKI1/q^~!{6;j$OfdCSEs8[CTG7G5S6Fs[X5S%b0QEZ~H92nvcE(vR6|-~~{uao)b6c[6%xVPT<UtxPy0@.B$P9.Kz/YnXHlI3+v{tR{x)TeEg4kFyjK9<DR$S.bcb0@-cmNS)tCM^Om4wL.76LU,tmhN(>)eb8+l9-BqQ^O|6Z5M`mC~}7u0URv;;S.bzql2f00^AyXdOC|gEelhls<O.;l%};~},>8}zX>hKzqLCF(4J^-(BQ9Kr@zj!w5PZfs2o1#YwJP)P|3)V<B1r>cXU9e.BY7lwMGB(C9la>bc%lLClgT+69bdsHP(ldyhYg+21m)fbbPco`D}xkYemQn@*DC@~Q7OWM2@^>JI8<g$<3)7SB!w@g2J+l1)!f_N}/U+$)2l0bM)ZHHmULTDKh$@H%8IAvMET(/{/!hr[BXFnXX^}8)%g*SY%c$O{aD2WQ[7xv7_4SCZZY#X,D)yF!^*Z-HlYINy/a)L9$T~~S2J!7JLfU6Qa-aD#P(08B%GcG:VK>>eCob:zH","aFfq#6;LbL<jNOrT)O+H!)fVhv<AK;X3Qk[xL/O%k0vzBP[:$/g+F3I4w)+b[nA}~AN%[ybkWrv2,)q@~1j2n3+@HUAq7YIM8JoxS)<^0^17Y_`<[GQHRdN|AHX)Sf@**a~XB}H)zBsLX>mFx+`1,H+XQ*}b|;JIH/R|y_^$[l_lq5m5d{Z[NJ3@4gb5w<WSFM[;Tn_DE>19Nz7u)0~uGSSPEZb5dum9PV,o/QL(wYK!!@`c}04ObS-Ptxy^Cx>aY.}E3#{}TlM2)*,!7h~YZt)t[FA`lMz@<Pg5!eU_d4RX[yHg<ZB`x`O:4eP<ynELMD-~(n,)YOJ<(8|)}Bu2c8<D2LrqX%or%Qmb%uE,4r+B-:oY|dljuT92I<0w~EZuAz{UMVRmJEfQefF%_eO_S2xNyt(V!XV^nrG.1}azM,!d1hX-h+m`rE2C*k2.0+kYtaY@>48n*j4f[)<VbaPxH*05fN||P(7vY8qHx{}T2b3K/9R!__5MWBqYNJ^RFeHKV`S/)@GPEIIF-r@D75G*`z(:-cIc}x,,9m>W1kXRn9CTh*baOIJz)<mL!SD47!0dHHofC@GHGb2,FaEGr^<0;)TNN%$,wt%8nLmF`0((/WD/Le@nYcIV)Z[~2.A|4MJ9@>LGjYKa1/*9D`Uz`<xJsjIPWz;Ia*KHL-Ka67d:C^8.9Jtq~(h#1`.O:R(VEA0tX{1!!kYjk-+gOvYWM*gl%W<S)X(g!nAcwRr:btz/K(40LlgsSHLF/29o.7hU3^!j5_1a_E67,%MTw8w%5Yk5/y;}*rew//d4HgbdxR:40*Aq4cmfLyh<)fyL$Dm5cHrcf}6{++RdC*/a1W/9g~_~x!MQ`o`-cq~f}>$L;}6>eKJj+nXQG[bjW5M~B_bY|(dXQ#s[+D@xR,~}0v+(2b_-fL{^qXg1Y2(mIxsB6W[A!16;P9{f*`NVjXUxmH{sHovQc[P`lsw>stWuEYJdkMEfxI;j!rIA5@4#y~MC>acdS`9Ohn5NDr5R0@@L/KlT3cwEIO<Ql->wL:K!1!gv2SRVQ)bl7015Ucolx%YMVbRI/3y7_bS6q@Ic5!mRl,|*|F}>Z.[agqyMSsorG/H3CP:|r7|KWaTJRW-Vs5JH*ozLNT-!,xDMw|(_~!8%o1k!:0[#d556IarSOzt:#X{jaZbNTo7Sa5JGU<}VaVc0dJDm8<eW<rLDxNEukW%x.3lg8xN(@-h-^_MFM11V-3cay+WLuO,9FFncySNx~GNs3cSgBO-k9VQ>!3R{uo*>jN622_","4C0N`^`/z-zV}3#%N)$95Geg-RE>e(::/$PMOAJnF[^z*}{<,X1Xn7L#fE@9/}W../WCg$GFK$d[s.2JR!1c|4k{,RVEddc:)_<[rlnBm,_@a%Y4$ub$l2CG2|Sog:;I#*Htl#a/6Z4<zXraoa0F@Dm8o`%>W3j,dYG4a}h/+By#vo@#DEWa#4E(3cber}T`cbb_3Xu8cIDrGl@XYfe#R<IcsOI8oo~yzmtwWI~cf(*(O847.h@EVNJ`+d*n9C.+C~YqWN7CCQ$3)T_;`:s>uj7WEr5nKw2x>ebvYq%br0.lXNMULfZcc052xe;%x(Bc{M(9{F9vh9!!-6KSK@CBR^$bW@#kj44wfk#NrIx(z_2(Kd#IU$T_n{R6{+0V-kvh-ud44JDd<60mXD{Bd7,ktT{4KmN`g4U%Q6(Rfwz|%}GMr.j_4$)yP$DT~jlhaOAfD0/cvJ|J4mQ,C3rYSPVLl|2)%O5!$`.Y<MHLqVTHyrjr1:cOwvI<vP<G|*@<0l3:3C`SIkA;K!4~HR)(Ixg;RuMdtogyP)4:~>BB}+hP/$j(e4dR##MWlQr_(N^)6^[B.9vjRfnW)Yd+I~O~D_IK,[4:$Xm:(f}m@}T(6eOtR~#^CZ>_J6!>cvG:dx/o70C.e<I,gCrwb);,M%~/Nyj/NUG%C%Rg-IT~$I$`QG.~g7Lmr_I[u^FP);FUyI(DdEVQ7I;(V;$^1E2lyB7.{WPh|be6cjuY3F_SJFI@@-,0AEV1zQvVX{{0,VAH7aJv/,/wc>JLn`}NFIrMw,e+q@85v1ceh_1C6/S+szb0IY(O.eskHNklZS._Knx0T|r_^G$D(z5XO<((Fu`3D_l}HWW)}9,[nN<Xy_G<Q6:f0M/u3zCx`)#}g8(T[LUsWj@},o2{0tuAbS6Kr3Aa$J9!auKQ_VOYkSdF3wL:x3RgYzkbTvt+.GnyMKz^$+%aQ$%bQVY5<Qw[eb<KNrP2W(t69/mu,jt*xXhKb*~~*+GRKebFeMM76kyTvGc}RT^YZ5r>|1K%wtN03js!U>^mM6jcJ~WfkU#<-tk9S3TDjGP1JP0LLJ{f[vkRXIA$CzZLoky8``5vKKn>ve$%,Juj8v8Oa%|93tGInbcQ*mf_nYtOdOqbo$dSyrO3GxdPcABU`,<{%{^BVe1:%(X~~-W.h5yq4{L^+hJVJKgEN2F!MuzN%cj:/Ph8fY.j;@^@M[+{2~XW[U%,#>S{$j:x(|>I:|k-DePtbg`X;1El1Aq,`Qr:5@2__;DGoY<GD6c{$kw8Zd^4eY","F5|L;<1m>DKr5{`R}tY/L,r$76TAOlR~Lzrr4U8oh`MU/+8ZVda[fjb9ny:)07r@zdxKvO9mCoW3yxeT!%,8*cT|tHxDBULSFu[2cJ$<97cc!a6{kzLk$UhQ^TR^M<[M(h8IV$4J4rL5D%AQ_ancA,A_Ug;rx7j6Zcsb5LgYt}f|V:Ad)FC!Ty2S!+@FXr6[,Db,{;--^%5R>@)Atmn2!Q)SVf1b|vFn;[Bu9zY_O#,w**;E^>88Xad4sg+0G44*XCAKPrdh9t1fq8fwl^AwJq0(WqZzj2$oM;qWmUh+G[`sT:uB,z5Q*E^(fCXK{@{z*~!w,Lcy7e1cn,kxPM++GXU,A)x3@3L2s7N~ncfCf(DvkNbuf)TqJ:mJ4xd`T~cHYD{5_6Mdq:58^ju,tUak;tblXqW2U:M+0C)g*te/ey59,xF9:5c{Ehkl{;NJd~I+HyNbQ@:[0h|IJ9E|dm,>fnyXlR$yjO<oYvaA/;m+(8.2)qqjnZNvYo%QWS6hZMw.~dME>Y(YZxg#v>rdy.mZ,NFv-#Yzo*V2)2L.!~QY%d!#jb`Ih-Q3JEfl[2ed~+l7shFtfYrvwzMey+7sJ`tf}RfRFDk6,6`;te`Q:5SKGvcDtENFWl.ksF70ShQm6.g}mz)~DQbWJ64<Y~-%kTv@>dTdfW@k`KW4>q|^Mq#Ah>MS@xnu<2|dU594{bP|*hXwZ|%l9eM7[ePvR,!0k%hkQN/_[^xIdtBm%%v{8o%ITJPZhjC64kS}|a}mgoo%G#B,x-2rDEC/zT8~f*[#[8G/#HckY<2lrYo7c2Q|+([AxL,tysxEr>FOal^tY<%hLBw.ylU6@I)h}uXcO%X87Q2aU-(,kJrUJY87G3Jr//!,(/!G4WP|kkSn9T4%|>#q48tWNR_6AXD+B4:l1FMF:3_F|,DkC>3(fzFdy9sS3U2u9*{H|6Y#wV#Nl+jnM3C#n}72S($SV^z.rt2BZC1:J0CE}Cdd,6,0,_m:q~^cIKAXG(!Fx9Z@^SJ^T-6O~o,PqeHDaZyD;9/zt$|.[Wu!>k4B-M8:/7HFQDV~2qW~v2#0oLI@SmdA,8Glv6Vj|6a#S6Ql|gMB,[Z`O-;Ruv;30ZX7-vn%0AY4+@N^:uv3(P/yo<UU6{yVejtnBr)QI5(D:V!S*|[7^/K$g{jG-Kh2HaxcMU8V7_w[S0+n}(a90gI:HqqT1L*WZ[XBO>u},zXr%eMDbm9e,!EmTO#l)E7(gB15alU-Fx|%:KlTfmJ$<S)~yw,b|m8225#9}@Gkv|[LTa","7ou$;MbTJ;cK<{[2_A1,KF+Zo9.5BbgvRE$(Uuz(eQFkoTFN5r<hGU5-EJI,r5*4qy!j^XQttrOVaSbhJf.Cw$keHw-xZ;Qx{P~-Ucy>KAjJ9~tqW-*XPm#>loe@qGIo~r!dryT-fVNm>)mP/IJm7h~[otR`@bfKxlX4Per3fC-|w^f4PQZ{H4wr@%BUNHLBfV|nq|:6`z4@gJx+BK!4_^vWgGSZN.)0(o-FlTf2BcO)t3B8l~b0dx9k%nTIKz)2Pr0`^Hmo4Ug$T(n>sL5e7s-^|6Gn-6:1sU7KBS9IAh2Uvml$#O$yTro,rn4ZwYO.R!Cb/V:#AzfQKVj6TF;D15`R3eoZD3(ht^$F^<9GdjM.*[)#j:e2g6|{X$Z:8<6a6/n:HuJI`j,bad/gB`B)Y`^!FNf.@twx[MNb}.aondtxCqO)1zRb4LhEM(N+s437Sk;O~8IHmwC|CS)JkNKT%DG1|HqTD!P<UB4zr+ww$R24c9YJMCOgns}ae@AMc0YG%MH:wAr`>/@CS-y<@0rK~)|vs75^ko:o95AQoo#cCATuLH`)z/e%0RKzCs3OMUqPUehE3RSoV!mF@{6qBw$26(GuPd1+-g360Hq!KL07x-EKqkf@DOW1Z{*X:_@sq6W3NF)):oYVXKLhodHqgf(zr(<PjZ+3_c+),W.Xj2+c~jXmRDG6afl)6*/!NB.S,Mo$wkhk*Tg{~|10z7fxDtayLY76+VHv1!#GRVVxJKd|b8XT!ml7k0HIjyw9A3#}yR2:k`MJ_;<D-gI*<9snz<y~C<0bbU5Hf@dSuIgL:>KgHY~<kq`rTu)D#0*eZu-8l4!qv{g/v[w9Rsb|4B@+H2F[x$ja+#:9UJe<9RwYa_ut{08bI,Y);K@WucPCT+LAHcU2*@d01|#qvRhDjAB22.gHa>3XW*E#_+C[+1Bo$<OH{f<YXQtH[T1jrSz-RtQf6T;cZTklt^3,TEV*Ef0bE/:6T50X7fc,INVMcDHB+sET@rU`#yEcM^YN(b(*bW[JH:GM}k5DZ{I}xAJBDo8aB<Q!~jQ/oU(B/1[P^A:6mWn@!FTmNKk*-TJW;Es:I2OMQ[H()M)AaZ-2kYgk{y%Ie^I6_4lGTXbjtAw^<k:ru#fWT6q7J0-Gzdl6|ZVy9VEGxwv^myOu{/9H-DECJF}88LPELg)>^*)!Kh*|}F%sIy`aKQ)J9StLvtv^Tf`}+Ptt!tn_[A*8;7}*^9/kvWV:rvaI-fWnYqOv32g>`./}<d%heH8KUFODL5q3^9d0H<v_(X","*tVx;:r~^;ILuz/(Z;K#@Ga|8[S7H<yt9gKmn}T#)W8P*4w)ev;}sZDIzAEo8J,;mIv(I!(%-8Svd~@-fGFwgA$qb>D!7FcCf`,Ij%*YNFHJO1Wc7zvyUExB6~h$W^qQ9M6hKaA26n8Q:[;taJ<B>>,:MwdZ^UbqZ{VVk#~H>MRG.:~E~{5b2(@qyN#|*cCJaXw56@x9y*tea`/+c|;Oh{USPGqSQY55*Xr8:o_0}A7BTA8wGzkyLUMA)Wzc4yC$1TIW|e@!TnIW+dNRO%q3~7~Bk$)Zl(10R~IbhPWEZzDYX*2B0%lv^mc,L4@__yM4[M|.)7xZT4|j<*C-d,ojfL02FuL+9:Zk.G4hTr3/8WkyhG+PKKYKyby!(E`_n}V[|ZYeS8z(c*U7J*O|3EaRd5aqZUr{HE$DAUQ[`_g<K:Nyjf!Z1}D{e_D$VN~VBLs^mA.Y)o*X~S~Q2gtKc[<vL>WZSNSSY3:R*<Y+S8627OblVacmQ<P*sb#44HCnB{.6LQ~c9jFylbCv#fCk*#0BuBJ%Uhzr4kIck[mBaXYojCZ+A{y,tf`JJ3rX2w^/EJ9wqArWO~wfWUc:@[[Fh[GcYCVC1SF.BlcE1++g858Mo|,nd2+{B.me0Mj0*T)z.7*s2mXst0;HWL(Zucd*46atl<^wRFr!tARJqSf,Urjxb#q;%kMZ,qJdZ_AgB:TOErh0^<$ZGh2c~IO8s#Jh2Jg+!<J5C~M,D8l~)VCH[wW$:wxJ@rG^T2sM,@Hd<PXYccsWUjf+.Us{cNeNc_#em;#JYdRh-}K4-g.CcbMMnR/`45YY5Z[wN8|f$T)%(K,$I70,gCk4O:+AO;(meM9TGu+$S/;[o07L/^D|}nn3ZKK#zQ7%+DF(%O)jSacP}P)h<jqZVzM@YP[,vzf-v!`EEqy;-Kg.etU:deq2mMa4V`(L*nbf0/8L.7E(o^JGL>;mBQV2{5Vb}>o>r1Lcu$esys^CNt~z-AtU{0Q+wcSdWIebknGE///Zq~+R(D@Z%tP[OMzzo#xG)K}0t$BnKhne6<h-:Tono`>~Oyz2PTaW{FTGP!`W+~ZRTw[75BbsQZ{cjzn|ejU_%Z;SgEgkCF$66FUQFE7N[WJyZf,nMhng#GjhXdoq{.IOzo`A-Ee[6r-XHx@-[AP}ut@MNSW96|.G|hkaELxoe0>R~Bk`sKM*.~<fdq!5-mq/@D:1Zf!)z(mNfOb<1lcJ7/I0:}wJOzSfwzk.Wr_YxdzaE__S~P~7M|6C:698{om/,mg%yVCcc7OWRl","~D|.#:q_.PI1K9uGlLaD0Bv0;}yxJW|$I}wkL_v2fk/@_2t2znHV<OY[dk#a)l4T>bbSh#P!-^mRmQR:,WAv(*dvW<5#55{/T~.9ajy(GwJ.S0/G8a;V;z5U3(4Cl}SSD!jN_tmXR_,N;$ws/O87E$0|>H5Y50r(;<2(@;At9BT8;^m4e4snr5GL@ass[:yWXFYdTON+~2>t{H~%s9$-Pzy8J/_YfDB>F)m4K[x6)ad^oTQt{n!~m6IB:I*G;mN6(B7|PN4/@4@4;X6+jqv.<{tz(txv9[N4xx8wadV2Ne.wn/_Dzy{U2>t/ysG!;f%5:C%+Dnf}3n>-G+ew{FwPQx@YTc3TC[F0sW3WVBQz,7HsVBD(W,.z5_);g}UF,`>K0Z0wCm+:/nDw3JOE3)FbS86>$~[cO<VLff;*2_musN4kS4+^G-k$ZTnCJI6NKzQN7+1F|^R_XI!U(BUB7j^+q^{eaHS<uh)le~`A6(T:%s0(N9rq>,lDI(|JR:|-y}mQlCS!@EPr/e{-:b%z5RrK;Fa+%}vW!$L_<2n+a3_0vNhU,(dHB^scWe2Q~:c*5vs_urU-5L%2nTnAX8_g+.CZDkR.RXdlv%ZuG<7OnbarKO3H3x5$Y8L>OlH{lXOfT3THk;H[A3g#b*>_ZJRN::fA0+:+t*%6P|o6zu9lJl2})Zk1P:l/|4/z~%c`{2svbS>__LxsP84)#SUOu<mChH%t:qkKBOg~Fs8QA63QE^/{+;T3)bQuCjms%HZ-zW;%Qn;}6>>ueNLL^%HfC<_lc`m95;Cfateb%)0[w80Q,[DMxH@qgQ1-*CAW6,#Q5*c3sL}Jc/KE$N85gAzlaccH/s_xkBS^SNo3{_Ty6vFMHZ2<t~N@0wfcGdC`Nrl$eAK4lbcr-y_@9B,ld-%-08)(Ey>~@Olv%c*ZDRq^N#^*TSd_g58D}NTCr0(%frW<s)T<^(*[4Jb>1}/k7yjsxaev/,Q</,oY`+^Sa^!`#(.3X8ALG/$c>7xJ3QK9^F%wOw)4t`>BAVcE_`z8*Qm;}2:|*r@<j^btQ.suk,7qwvGsR,^UnRyPau,ePCCDhD;/}+Ju@t(FTrI,)2<I#TUu7%Pcgy{9coABql1:,R;VNmt*ZCT^SIy}%fWkSeXze5BV96:gqIWoHxWMv|<KQ}vaFYnUs*vcoagU-Z!mB[TquQJ({Kw_uuNy-#~PK#xZoN4/RP:Ra^%2!$$Rl6Oo%n9qe<2:moz8Q/g8[_et.(d%:X0h*)b6[jX.zOOy4Ol{6/SgboE*O,","(RTC_,3hW./LO7D%ae9$%8LE)fEWwh^66+y#t0nzoE(jVe!sU{bsO)QQT<0O<cU6:sc1gKx^bt/ab::,)6-@e(TK{GAo7|,8LZeT:c*q[rxgE{r3TU#@_ekb6|c-}WWleQTPr/H1ly/V/*:brl*I8Q79d(EP:nao;N$rPC;oU7asIG<6n8W@^BDK(ISO3Z6`YfR>W(G`oYU@5`IWg@^8v4kV5Q8}BX1Nw;LU3h}rGwRqsI#D,OoEcCe$HKm4n`$(e|hhm#3!a25HyO~+|lV[MLwNACf);SyMPTuuQE8rtOK60U*bx^a6Er|PP%vbn;!#yv,NtL15Vz<h6P`TqD[}gt8$wqVnsg|$A,kM6:e|sfND|X!f_#g~+zF1:$s>WsJyPq$2,ZaLqL-D^DG(:0}Evy-Q<6+4FJVxhUUnD#{kMcB<;+_{TR2C@;Eq@w*j;}t@9)+(IThKI@1Jdur^X,8LE6dMoB4Um30~DE~#0_na0kD1L|[yC~Dcc$ObaO)j:S>7cPAI{{+0x8^qSWtSR~{{N^D#(qGrUKRRA>fZY72h|)P%kL*_Hxa%m-`GMDmc3g6#h`hc6:KBMmlf^^zq`q5fL-JFfOtt03TE;LdY.)[g^j<j45c4s;)e*g#$Y!PSm(1#.f0>{W^PXt*{eE(ME,rfDry<+.%FznxI.D|;n6Em>h5b!2nQw/>XF>r2uWO/P;v.<205_#^f!(la<l+2%V$aC@[A/>an76lO*74GaF/PcVs3[9LX>jc7ny46UWU3!+>y8`n4wGUF5TZ5FRLZ+%(k1M}2RT2,AXVCv%_0o>WN|sqRZE9,`g(Yz(R,}l2coLG{vz7um9-I/lnJ81q^[!4jh`NWf|[vJyH>}aQy-L<V2~qUb)Y-c!+rttI<.K;)6562s8I69^s~1BJmt~7,r[~X3~qOJ-aHut`%ZrTRy85g@3eZ`cMH(%6ZMhj/JsEKnLD[hQhbTvMcmSw2m*OOR5D*C^rEB0!-B*15f}B7q$Cl|;2,jdCO>C5/e{bo(S4b$y_nHnf6)K^8fr2nML!~md35kY$>b/G#TwctNBw$ZsTB3dxqJ;f4eoFCaI)kICQjVj^jk+wjXzuz{`RNK%<<cN4++^bem+a,fnRW)QA3utvt@hg}`:n^y/k<OQG!j<c52z_8(3AcCD8n1ovUjDROMoR`f--S/TWhvZ>tTmn0!mM}CZ*8WgFTsZM#enK.yXFY1oRPPUNoeY{FesB1RRQ@Y~5S8B$k*NUr*m,GogRZ2C-8*@Z2N/fqo%orueyt:e:5{A","K6Gh@hE#[ydPDlL,Hka~eN|gO4fzuRgmOaqNetYDR!8<S3~egZluVdDk8oN;BRYdROA3$1;f,Iy})@Vwk+,:b)N)xVaX*Im2R,)1eIfrZ9C%UWY;|#6d4#w.S}y~(_7MDAWgDMH;AOQ[qks*LBY_Eyc>+gI13V-8F{d[>g4FWw-5NNfRmQAC<R~AWG$0l,tVSZEf*y8}@9|3DwR43erth*LobR>|3;7%HK~k0bXLJ86x/Fw0~5`11t1[LxUK2z<gElG_P}oXEa,:Fv3YC[W8aUsMGltlQSQ$tLYb#s|-MYenwU4o>^kr@dLFB-nj,JXaJ`rx)w5zotg{W{@l@ZGmvA}V6f.1kc1l7AZ#f0z_y/2IPBm^eqZS~Ueq_4K^CovB*q6)<6x}aJI`HPF2G~2xmL608nMP*[b~ak*yGOM{9_Tj%+LeqY!Vh[!Lzj,VGDB}IDV~R!qX|I*Dh9oQ^(*##4vCtRxkA>AZI,1aD}s$#<.Uo>xz)2b*UTxH+c1Rv9)7c.2~Ot.`m:vd[fRCR|I0N//R$)t`Q4QKlr/_nLxgROe*Fd.NFH`YR0f8IvAbt0g/hsoX}QbgF{+Z^xN<tETq{P>g1-XqXg1(+/F+j*`c9O(AyQjj76M3v|E[BG3xrq1odDLn/m6.o9drY)+>L;ekgO)S_*ToegZXPz.I|hmvs!125tha%z8O8O6SC_WU;aI*M$$6)e*$E#LQok>$04FJ9WB|h-$5CAH6:aJrEACzJj(jAmS8U#7y6I2lgdTW)z{V|_JTOP^Wa7M;3s+E}V8@2012Y3RQAwYPI--oeDN44BZ59SDu~/jR>L}#/Zhv+:XFfb$$cK@LvDt`dyUYGN-S3FBa~|C5ChJWsjE3dRK0n*9)YIffIBQUkskh3NvWn%8_J~qACLP%y}n7dn*^JON/87d@^Ug*tKQwhBh6,R5@P%KBo/~Aj5YTLEBCr#Z>r5w[Gd-RPuI8^q4_d4B5/x-BFW5QJhac%8+s,CKrI4,K/}}nr,ETJ[HNqx/Ey0.N-|~~tgeQ4/;B+8>P`k_D/+>bM0d`ASGQ`,j^KzsZWPKrC,*#GGK`vgAXk)yyU$^fhgkhk^>:yvZK6(J7J2cW3DyQ,zV)}Dcmx[2Km+4Tqe_u)1TIboE;[IlG1)/Jme5{IrG@#ILBQllG%wb[f44,j}_Wm_cK0<~r@W*[(~)[{z!qJ7UPk$vB[Q2:KE.{[em~tuo;<zv;nS;;3y`19D7m)2~zy5WZ:WSFnbz,EMLcB~@4D~Z+8o$M:*RW[FU~(.6Vso","q(joDl(U_WyCc+Cxd>Qz.A_t<J;K/)vQ;3$:x/7C-NVqlLLStM+Oo:HC~dUOZJs|gQ$J8f(KIyS/;r4lOPm2.)_a#/A18J)M.,`jMGBnxw9X.FEldrNDGh0,^/*<Jmo(u[eg|:r>q}d2..HXOY^OYArxt3nR*.0IcBNghtU>UkHccL<ZxNs63O4Nd)+F/$C8OVzkdMWQ>9(E:>|V*x@[.e7K8/9eQN-rG/K6>}#$m7R{RH<zfxHscn<H{T~USeMy<h10+0G^`hR_2t@F:1CwMzJF66#Z5jY!#Q#H{T0jk~rZ9V:Erndga7GkIz>g::rWutJ*@1dCUTMfhl`tnOV_0+r$M%sI@YZa%(-*8TE`02j;I,Jn1McLJ5(rab8A~K,#w7HPN)TJEJ4kgHjYCS}}TZxbHu{<e2_)z#Il<(^(-A;5A-0QI(5v(6>!yYd$+/Q@>4B2vVSJHh|FT>FuY^LqGUPfNQjU-a6W5d#1*etd-T|kCAUMf*60VC~+QTWk,m[}x6~hemK`^ZV:,mReKznDIOo}STE}g*1^sV^hUu>;`9):|.I,-f`.G{kdkwrtzT/V`__a[3*YZ`|w4MMrDjX$tt2I#oOP.l/2xqFqvUu#P4R<ETzMD!_tNBm<+XY7;h`PbUA_kDB00yQxxL!+;jZ_<W4--:7^Pxso#<}y~X2W7)MQ:S>:7eg/;.:2oAP8P3ltdHwu%g:lJ;7C5sw/xhCoF{O|KK3gNh3Xqh-y|Fsn36MK;+N.jox;FR3{nzZuN,sW|T(>rv#3K4!B>a|gZU8mZZ_U41oyM.c>vcdm^5/bKaP(B-AjXAet3X1yHA*0x~/r<y0D$f{cyP_B)Hzr`9,@s}SVjRX5+;r+TjNJBEIP#aGF)[nR[R:ZtlwqLX4Dj`Wmby1J}P*/F<Gh>XoKKOUVo>:VdDY06!Vmd#~O(3VSH:y1jU`kf<7eoB2W/W$y>tv|u<zQlu$H`+|qOBchC8Sz}Q$61Lsn*Zd1A{S$MS^E)$hx9D6::-ugbAeb|yqh(cOFLHIxZR@v!3Fy_zhtL%Zm<gVc[PFC2/Amk$Y04kER>)~EyXBq@GBXNBY~W-#At)AwfOlzaQ+bUGc)zGR9-YM0Q+gB}mnrLQU<%kv63}ZdHa$:9@_nJK}ABdzc%~._G6$lqQ[5m$Z[y4}B`!8`e%5+%4SB^3@Ga>:7/KWnX(fKV-4;lZ4Mt>eGI{AeU1n^BP2UaC>)[I30u8}`!SG[4reS,El~,fM7sj6KL`SYTmo-8Rj@7*kB,g2}f4vTmbWz7G","LKCxm;j-H6t6A{tRLUoHjm$0k!hC:$hSAg0uK<)sMv#Wg/jV@*[h@s;_etdgw0b^~at.%6YWEh_;sNFP<hZ$:edASLa>ed}FT>@zG}!vo%gZhdZ7T0ur-HEB,#Vn1,N)Dwg*nMCBvkm7ZQPsZL1Z}Ib$[T2kB{RKf+aW6T[Ux~uOFE~q|E.ZFfZ9n+FqFNYljOTY)7SZ;ssB84_tzZjAj3@RO7n5QGF9j_f01O/tImqgD(Cr!8#6YxCo8aHjXmB<w4t}TX,((~7z{WHo<1VMq%Ly<<u8cdy})fbzjReZq@*,jNRWI,UG-d;)D[TXnN(*{c$rlIZ<)`[Z!YwR.0c_4Mq|jI^gCVN+|y|gqd|0-#nJVQ:Uf_OX~gy$xdVL`jULS%:HN:h0!XqEf76hjSD$P_+-HFHIBhF^P1@`C`z_dsWDd-,!T[yDu+U<t~.WNvszNM^L4JzO#ol+!E,k2+yYW4O0/[0I<LP^^awOeK|+7v$U$c(IKR.)Lo:/qqk!lQ[fH.aK6zXUE/HD3qH^j%76P;zDD6XDwCqL):2x{5I3hf#)Q*a.wOq*!I+~:11M*QjSxRLR~y-EI2ZCa!mDsFMJGLtuYKNV%EXDCH%{equ4P5/oO;#syGv%Mq}uM1A*n39EP%JSls4#>eLC;Omhkn|xu^|6GEa1g26<e7Y*rbE;LGIXJxx;/fgo};|+CMK6QEI5E|{S8FC#Oe[~kU<Dg@oHV|mPE:4DFLBFc|*K;wL|MfO}EbT|PG3N$Q!Q)(bPNvDnl0HBbk!!t_W/JE`dVEVn4}sh[L>N%_(t`4.)x(28P#v3O!IU{hgw#FP7JnT5yGNJ_.0W3.laE.%f)xxo<Rl^2GPb!^@m|XwL;4-#.x6e9J2{/92_7qH_ksu~940fd5$tz7@Ef}V{Z;oBA.7$Mv!K<Salj.;9nBT}V@;G,ccbzvlk|<Is(b#OnIjhx}3WgjnWMCOBhqcja6%_h,`@%eIS`wF;3WeJR1lr@C+1*q{x3FvXuR+a$/D;rW{Gw;J8VQz*4@j,oQ(NN4{MR<Po,@+%^3jMRt1d.LeRf5j3m[.7^ow0*JZksAm_5HMdc$Pz`jg}g2atQ~K,_l^b).w2y~e,(8^wKlN}EA5Q1IefgMrZ>|`K;AyQwL,e4Kzamy8QJvzj}akw-PZOBZ{0_E3/CJ%cBc~xXclv;UL,vT8g/sW-*1Y/g@j(x*+a[RWY,~%MR|$z3uS@Y~FtJzUPvk5%w9Eqt,5tUbmX~;#lbJh<2V4>1|P3R9gr#L@8Db26jHTkjI","qG(Nbo.sVBE::LR)^%RLxAd4Q`6yv$$zan+M(C;z|P_,WKRlo%WEkwHbDc:0X[g3;AGfE76NYTYJOavw8fJ5z_ue|IyM<g7gSIIOA[G}^lY+1$}dGY1HC0/uW`9+dsA},arhb^k>oUAvOy@o^-00nQ^/;P1fWl{-gv0:3ltZ:WP9`eK-b2~*q6HW_0|RPuND|aD[S|Kb3fW5q$G/E-qDs|XzSs:HecK<V4}.a;gAm/zKwlzI`Kj`aI(8rt|Ls5{HXH%UV|L3>xzI+fR3fYu3-ob}V9/@YvFlN^+r%*G7%dllFR{;}fK[6UaLz-3mLfbEtOz9KI@DL>`kdTnnbnSFc4[)`Cs*dAXCn>P<C(vC;X7b@Fl},Ht(rVr}YgC4O~dQZDZ%^;^MSd8<CNX>9Z+I@Q7R~_<ZSb5Mw[}XEu8OXXmYTnYuv,w)$sVu40RVyE-7qgUUxssam}ma9QJs#vX*[r@#OM7(C#WB^XE+b299MHJZ6S#aquENKl</)5r`~)2IeTj6x<T<*3}38M$7j-mx(x^4@q/J-GLBmleq*N;5lGLUGIbo;VW{QK:>X1f#Nwo*8yO)([NwOV^{uYq)d%+XIB#B[yOxVg<M#tmoyMFU/QmtEj*r``{$wJN4|zWUISz!-y!An)5VPe$2*zS0/2./*hoVP8[2s#zOQR.lWE9*F4>,lwWZm1k#fc2nz(aE|%kLMR+GE(ODd(Sn)}3Qnqtg,LD)oyaA7+xUoS`EJ9l@<l81K}7hdA5;G)%I7sjt3ZobSv.DR0t<eQ08_tV_@d}VIfm05s>M0H;VjjfRF>v.xnd@BQM<Ce3h_|bAK|g)GwX>d%)JO%Y2gYfKt+K9>F^UMn0d49|{a@>HgOn:TFgaj(KfV9V_GzI*+~0u[oGPa#.6c!!}Y3o{33b8C|/2lBJgm7Pe(gw;g(V,<HTX;K01JRL^NR^Zs-2M1sVj^zq1N7e8hCer6l8vaqn*x@b;m:cSU{5Y[IOur$O#`{bKZ:EuD)qYBb08ZmFNck-$8|NJnnlnkTwXIuQ.Z~x2RKEh;-_OB3X~%*9>4a1Fr,k)5;Kv5~t/R0e9~rND:4G#9Ut`}Mc4d_KVQr@vxglyj*;N~++^7T)n;J-XPtt,YY6ta|`$zM@!6Po,!OSLh8+XgIL3FZZ0~YVJf>zx682(mK-$z3_:C3[nZ5xONYa{)Uk0PRsc<uJdu8BgmKeg(J_zmyYcu*HD[|)6Oux_aVU;DXzOrI~,!LfUzr3*Q01%tA{Q#n701ox8OSoMNkbeU,Q,Ke@EZ[","od-k:B,8DPj90l~vK5%<>>MX:*IGP~Wv`jW)|t;``>H6Y6c%q:P3;K>~I)x;4xN|g[GQ`P@2Bx6Zo)fA{{(rY#K%{>Vuo{ZoNzC2@Icr,FIqO1n-TU$E@L9sAUH>~47fU9~FDwg*nNjEhY3h*U,A0_evR{[u9y~:@`GZx|d8eJM!o@lDA)lA7AP>lk7@/|Q^KvU-5P^80(0xewmQ}IK+nK-<_Qn*||eBo!A1x((t_sSmo<0_Nhyd3*f7kV;I~-I:wJQP6$Ig,<$Hh4/tahFIr|t}z0HU/SPAI`##>R<j$0GXrv(Zn+X*~!(j11;|QzY_EX.!>Y5eNwn0z~@RcU7+6I81Q/qgN!LBm$0<:/uHNrxg`%rEk~WJ>.xDY_g+BoltF>>0yl^@oS#b|LMOyTVVDKKqCE@`HtORK6)^v/m)[cBP0+fz>K<KnZlU_f[bV`Cl:7jXbg_gQw#DFz4(6Tl0<Pc*A4y:bSLwf|rWq0b{96aB8hYG.xenPlHLX>DHy)Mc1:c.BC$Mx0<G>z.<0lmEZzZxk5~eBH*,5sqk}:H4Wl8`GMFqNS6GVkecMW.Fcb1e:CH4XKCYr;Kl/dT~3:SVAcw<!8>$|}-el1}BK*)}R{j@o_:9+ty+eU4f@Yh8<C^cBIX,oSg|+F2-[)sMm^14:}$u22DLYy)oF1W5yy0|bho$IsR@y@Jjc@G1ug>TAaP7X,l8cfE@nuF+$BMa;EB.1:nqyWCwrfo*TW|xD|Ed8*$$jKAI2$c6/.{^y)s5,bRr|:$u.}o7)3o$qxXX%z4r>$ow`e6kQX7k.hF/3Zyr/F~vN7c*C4ANq8SOb9A+QyK><o!B^C.OJdt_C$s*-}>cCI[`([:@0GsCbm+w)APxl@PbVf-s|.M9->$L}>>|kGhRwRTtY}R-o2LdbEr<2MlNW5/ZlWkzNV%KR)`QN~12sm^EWG65y|MKL1NP.h0.$BuNf.n^tJ(nXD8rF$BGKh650vxJI+olGhE+P:ObewLYW7E6|EHE8rP[PU3f-IAs!IoXn!h!HTY~5<gq*/4@$s}TKQw:2q7/y{hZRY8A%$XHW{6bXOA$ANms9*AWnm6G`fO9m}nlma[IzIh%jcj9hC|nhur:JMkeNBdekJcqnq+7k}ch<Aaq$z4!B<eF44a$(0-sXE_8SLWUW}ZuF13.|Q}*4C_Kj-qC.)vX6)@Tk*Uno/`-S,ky7cLk`qTrZXN(Kj)F/8^#~!oNI4O8kz+RfjR17|`*Vam_LHh>TE:}/8:QP.Bt4rE@>tbUKJ_EX~3cxT","MMU8a#I!*gg24k).Zxa_%19v!PUZz+rRC27c<xaT:2#fo4fw+lVzSn4GyrnfD`W{<z%0n_aT<@/<Qo8.do4<b1Q{`v_t8aUR<|@Ovm:kE[0}yFm*z>5|#LUt9Ilfcdqun0)H2gK)[XQrbNa<Zj9BT%^8s$}CRtI|^Gs9l#r@*Ktn9WlzbXSVLT}@@NCU1Q%*y_XE^!s(BMBObJctdbv+~fHq^)4fLnw5GmmA6FU{}8-e6.TeOn2aXEL)HXJrUec`H_,L.eGW[hy0eIeDj)0X{2<0hR(83(qNBTc,n*VTLA.F:w85kutG8,:{K,jCZ6QRn~Q$^E}m^Y[$S#IQbht@3vdDIy$JO$mtCxJ5.gS!ab-$b{he2JD/w,1gA^Y@8ut~d9SMcc`2zb>Ydyz%;ohcKqOc6N;H32)x3e~Od[qwt%*hlBo5SfyTuR9wF|WVgvgABzy}XkM^$9!xU;lfExrK#bw03y9}J@jS[|#}X{KZjroe9HCyr%l>sCXuo3[-(lfjNngrUqE^C#}veQ|ymjDG[J6KM5}|BcWEKkW4uqAQ<SdDz)z!frfQ<%r9J(;Yx6G.*@wcqNc.I~bzZJt<Vy$RK1%`~<zgNmfaUFoSE9TWMgPKT28|>%MbOZn~2qf*J>/%(oqq<FZ$m2bdCk<M|Vkn1It,@H`IO.!RQ^.coP{Ns*abs~7mLfeWf|C<2q.v6%%[,nR:u0#4$O6ETPajn2PbzAg+ta#%8E;)A)X-UsWlX656Lm2oEq3_!:wyl[j7hQ9F*zFhS}|yYmEgDVy`*n+dM_t:_LC:%UOnz[5maIvQ`SJSyVDSX.wyxj#rfN}U:CTS[[`|IxA}bmUS2nQKOA;~FW[ZvfWrD~YFh4q3St-HVSCy38BW)X)<0Iv+I1|80LNe~U,7Iva(kMQh$0M-2SBDf*ML|4qs.E~e{1RByZcU3wBGa%0@fmBof8^Zad<mOPedu@~MPWHW,UL|E,+MAw/D/rk$mE/7{*WxQZbeDxaA`+))(E7T|}jMIA2yogNa2ttd%vaZXl/$t04>~+[4@$CSYaT@1$}{I%ZT3b}}>:OHaFvf~E[RBa8HhtdFsIlXWx<k_{q8b;MrtFxIGaP9QTsMTKK@S-1HMBUG>j:!^NT*{jV|B.8f-6*t>|.yBX5SnIsz9C8:/(_0`v~CaaNnc!NkCb{gbU9ZQ{N,mM)^7:sBL>$wlN{*%ZUKA|FKdhcD*IC%ov7P!2YGo5EBNHm7F67H8-{anML_0q-(r4B[[^Ns{K).5M-Vw>W<J;C:3}5D(S","MHH(y:LJq+..hOv)|-L1:)n~.l4I`r-JW`V9}9y>_eRzNtePZ3*dEmWC|0zZntl1wyHlqF6xWhm`euwJ[JsJfRXXI84gXM1y9@oQz`d6nU^AYGQ~j8}NG%y|eFHVkEf|,B<9eB;(!~ru)khU-E74L<;:`_<bZV1WPsz/rj[r/Aewbm>ug:o;FL/$T~Ldn<CGa7c1:.)ZXe;6QKP1JTO([WRuU!g*-(SUgnh*my~G_Y($P:aaEA4DSbRO++z:>QLz`HUPP/nkGGfX*guE,Gy$}`^#bHzvCZ9,h(kb2*{dO#j(}QURQ/LM6C-h(9c^5t(TUY>dOPDBs~Q!nC4DWqFr%Sj36#<AAr@N^`wkmCV6Ky#_-gx[Se/}Ue4~TIoUa/6MJq*23nGJ<%^qg/ot,|;<zDjEsTtEb`PB[wN^,SY-1}IZ2.!m6kCY9;j.1On/Eo+cKlnCwOJbGBm!Ow(xAfO{|mM[9m1d^`%s)9Ih-RIklxn)qLVB0sKl;QzDhrY.XSIlRvUvy,Ny/)KTVcK}U;+g|jFKA.}c37+`XH`z`GgJoFR}8@syWBrq<nH6|*rSwH.vXLV{@q.D~4TzS6K`TOF!Dj$7#vGk`Z(,E}av#/8qWC2X+/hv6JtMsEN|%-5htuFU`N<e@JMsQ(:U^DSn+S;~qQ##Onlm~bUroC~k.ZL3ZZ<;{;})2@+xZkQv;KY8vXMr[ZsOHLc|MFm6Z/KxHHP!RZP1|fmZg}{)k%wXSVAL%bK$D(4xjywf`2y6QIFb-YA3w{;8,uU;9k4_CVdHn(}8v}n;*2-e1_Nh}(%8Yuf~!7Fj0n`MRNO$h$yFPVeFbPF;|e;y>RALYsdO,rVTwUN{%+^*~zjSxh}{>Nn_by2+Cf6T7j0rKscc>2rd:SAsgLGf<OZx9Fav/3Orb6_X:9ryW*W;IT;Ce:ZEYJy$`WN`j</a9Tu$I>|JKz[bV86F~j,w}~bDG0Xy(+373}Zc7c^yzKL~!UrQZ9k7d[Ib1on~$$1FeaDS.~eS6*q3,sNHnUD(aCzsbb(!w<08RoY)_2UyAne.!3hIUUb0fTb1D1ggZh>[UB3/D{y*Hl0tw3<YX:-Yw~YE~o/fww>>JML:$c689P)-4yT;XatU$zWuVh+7[cOh3rZ`Qm1Z$4qs$LW9:a10Nt[~IHS1dkPYRmJFV~Bg0#I>d2:<dhQwn^)gBVAH7SC<L_x-fPb)D/nK##7}ClgG^DUCGDUE_!cFTmS1A_}fetxw/6z|ktMeKos.DvEgYISqL*-$N+l!k{1Nkvy5dW","<K(D{0mWBBVdsb5Ot3h2,+c5-t}!4h)_ZWqtwZ3yn(4488%R8dL|3[}4Oz|2#6^GBjB*C!3lJQ8}EMK4;V/TLrb2k|BXU.^*t>PESN,3#BX},^BjM%;w3g>mJf6X7rU4KV/Xm,$f5>ttXDGq:tB[z$$O^-DeEKRUr<>vO$@h!t~rye/5`M1QYJ2:YVT96c>+U[Nbt57NZS9f!Uvw$Qyy~BcLfJ8Sx~U^o5-L3(McrNBL{C>EoE*ZD@YuI0L$trekn;geFQcxkk2Lj}EyKQ0*P{S*0W3W)RI9UIgC1Fd,^TOCY:aO[J{TGVks~{OswJ8;oxl1e|Zt-D%)k|4rH[I-QSy3,nIYa3Lg;3y#7aev;J|@~;xJ*QCk(R3QV!51gC<soZ^5,zS<cb|2d(6Xg)^k~2*eV$/4.kz#by`u^85hr$O/KC%wMwcF7uy;t2Xaj}rY3jWer<dUwcAU;hK5wJl|E-Slv),P<0W/xk<(HHGc(VFI.(4q-/T^!2V6797v,^K@9On>nd9(((}I_3|s@z%`kPlg~*G^wtS(X9C|d5L2waG10Kmy).OgUn7.xnw#GR)v{qY}g!3^TVfS4Zun}hnI^nB~Mn:4j|L,sxrFLO*rl[^S$_gFnjhXL~T@c)!PbDG$@O/^EKB>7BU+>s`(BdK;9%ddan5O@1[,xrrNC_Su7_:7AANn,zwL(q;G$%OF3%kYxU*b*xt11C<*lOh3t(~>Y4zXfY8Bb[0k^%lU[d!v;Q<)/BIk|J.tbU>_@#QsQQ$J|RSKv6/J_z~F@klsD<Hs481vE|NN@lj4MlAZ)eLXZr:y,0Ln~m16s,#CWcqJ(oChul-0;/`3n0`3>Oe6%^Oo0c|Njm9r>qmve{.a-w;b9+un85>U<gm6b@}X4^1`>V%<hAe5NAfzO^:axrF*@D+FZ`,6j#qEK1-YSr_y0}B53n1ysrEqb}(m!qd`xYE@D~9bLxsMK^0W+qW~$+N|j%>%xN#tfnX0AGNKQU0(NIjB2L8S|Zm#R^`$ygDn~GW1lnTa)lNRT/*B6^W@q5On(HfVYQ>VkCvQ,00(g_rwCAXJKFHIoNSvTNwuwHIG@`6E;/<-b.6^Zmd-RVd*[|yket)~{^}QV!AyP8Y1^Y`[#-yCFf,lKMluSl<|R<SOeAOfqjc/Z6;bAyH`<1_*eL/V)~-;Ze`Q*-wH*9NfOHh<A.T*wAJ%t$f1YYvED27W{bK~bTsU<DWGM>#_)h[6.-bT0Yk1a#F2Vmv0jsOtv-6>W7R-RhX2)1rrMQEB8n0`zkv9;9","rZ1q09!2{FtEEY!lDP/j[Rw^.~KERb$w!{)Pkmz.;7*Db,D+)Hj1Iq,_Q51..<wg`dYXqTPNU^-}[kgd(R~vMlcj#0J-Mz@h2D2O:blR:k[Xbrrs3r>>Ycfm0H,8B[QE3zhSRY)z|6doR.wo5t+cuZf2WuSfrU<st[D#FE%-G%%B}4s;mtn49wEA!4K_3#@E~VzGeaT*B#3L$e9%yPZHr(2T!J@K1^mN9(Cw^Ug{@U9*}_}fh)Y2od01D)aqoOEaDG;:y#sVcEoeu://CB|mfQ307P67h~``_q`^C_HB;RQ680L,yv9yG%T.)aP^UeY;OGO5kt2C(*hV,4njP/-HR~E#ahFePr.oe~u785zy>MC`<aU{NE|NbAvthLo$~xb894I(nqJ`+%brPywI7,~MMF)0.+P;WECIj@yB<-J9[{n@U$v_X.xr|s+{YXkIHKIVyV_hAWWBe3TJeCab1hlqcn$+:ydSZUAjI@onldNQ0JwZ+IJMl6NVLeu#j4PhmFJeJM.):j$3XrkHY_:kZmcNy|dNexTVF^e/j*EndMDfuwQYc<+KQ/GWR_QPQ6|n.E1l2YYcy(HNSzxWu>tF*$<}QR2+rX,(lwK6#mo-lsBDHvoNH_yqKe>S,-TqP`jv+Q:,F.CrB*_eM56z<I(@Dm4WqXXmwX~Mh7c()QsTjA9kn(esxWoL,_JmWQ<)*P98:>d{Q[6Yvc|l7`h}jB;a-/[!6|f}oaD7DqmY,RV9.cw$c4cFg8W!+YR,Z`SoeDA88G8sM5*s,{t4@fJ_Y7)9WPPsX^tHFV3sRb}IfDQ|6-@>b,J62xm>0$o$!2S-txrn.:w6kkVC+w<><BUmg<Uk!evheb~}lghNqP~szQlR%:WFRyu>E:rbgz+,@!QunUtP|^y2STt#[7~K2cA2JU|Lk5z`O[z~J@0B-Sr(2|k7Gy~!sQ<}r~;tZwk8%E1,Ir%IcjLZT/}TVT`Y_X58b~tAxc*0gqmfH8YN_vxW+zZ*RDI9fEUHG_$-h+2[--chqrCCmOMel<bwOqKM,-@GUL2|!hk7RXk@3gS:faxO`%UB1GmZO<FJ@-s%RTvT0cSBW%I,+W)4P>UW1fG*6%w.DIj`TSbzJ_NTbn|3BBL1yhCd8f9f#ZVqO{o@r)SJ@O2IlbI.k+K>#kM,^MH8^~DbxqA(0_}E!9M!WBm~Bmf:XV3@/}e#$32Yu6cGU7`Z<[H>}Q2{gSuO|y2WIo!IC-h3E>l3U3y_8dmeGcRfV1R{U2KnnnUP@q_j9R${cXEuH<ccm9,C`F","VSB*<:A2#,>V!Q$mh8HVV;JhOS3K~3N/L45X5n-(,XP,Xfvc%z/uq<>y7mYJn[6LbLEeC5ZJ;JnJ,4fDJ/5mIZ{EHJmU>zx}jH2P>`389j8lmYyLysz2@g7x5Z6D%~%_R>,/MgMV>ZPv:aPku}>)94bT9|aN3)WzyC!W0of<)auGlA@~1}zC^~f24A@a9R/hNofkQ.d_kegG,@~.>~zF_!{XHz0FAb4n/tA,-{S.SM|f>!}jxe<3_VtS^l*fK2a%`IODVK73C~4.C$_EGn.o_knRX`y[kGEHoz5P-$0d@<h$NfIW-y_R:OyoD9Z3ez</o|4+%^tr9OMeZ!4>|T[BTdvyOHFy5n)3B<|bFlEcbv$LoH9Jocs$%vH-WCZ9^G:,>x0NnBlC-:PIs-O{WShmlUsDU{uu4F8s/rg3jVD^2;9Y!y-BE,OST_7~nf4oQaaM0L5rcNC-@E|<~+(.vxgKR[u5CjT.VK9gA$BOS4(JFn)PaaV4cjT/dh3VxgJNj`7U-4@wS$<TqnPrZ11AfT;)QlRw%0TM1~jVtl<<r{CHBDG}2IeS8{wAtJ6X`>#$Cq!)Soz<Hg@9RF%_)jZ.VV1CFnETud!0t#6-[lJK2Roa5,ul6_+s$5Ve|H7dUw[,SN!n`H7y:8!3`,hXgz({8Mw_c,W2OvW~k<DzQFrwz`lt(t:Zo1{G0M{8mqe(@D+rZ,$-d^t5fqjT%(sr#oE>D{6xP,x;-`ut1wD~Gf:ow1c^-F>vC>R~^gw~CM4%Qdg<v|2/.eb76Cuf9vE>gCZecnqV(ZfY8_hgVV!>3UZ[75)w0/+d-t:/~WDZtZ$XU)bF#`(*dM~,Ib@d,@;EM5nW{KBfgn~8<R59Txz0^vJC~Hz},}gqPXC22)@%AU}M%yGrVt*6DYuQW3w*-xH:ET-HCRJJt`{(5_LUn|5Mv6Ihl~xBOt2ylMAo)`7Sv[MWRo$e*!`r-g+x9:_DrZbyq4j~2lEB3usr4AR3,ceWFn{hc<`989NI|x$K</og:@hrNoCr}anXNqz|L8eg~,mB>5;u4t5y:;1S^elr.cn@bU0qmrx4<dJhLDON{~7DVx3Jc[0_|1>52gYb}WUJGS9Tt1MYU>4JME#*!n/Gro[REjMs3ozT)@:<[c}rm[TSaHl6SjI2.X6v~GH_<RT*~zBn94Aj#2.AU*v$tQ325g_Wq1RyvDhtFhWA)1mQbnVSVI|^-Gl0oo`Xg{s.JbKN!3Yd%fbOkH8mN:FmLb7e%;sZbx5z|:USGNV,3@-To$#~bTh7QMVeJ8","RSKZ2LG6_Z#Xro1R/~fL@@yJX|X1Cdy1|ETvrc|RhG0j+GLvXS9Y:U9!}+A52^+roe[j[~b2_-2N(D|04_uHRH8|OSHVPae(>^xjwjyGU~#Q@<>sc)Y11h6Pej1ytKd9akS1R0`F6eyGL-|WL19_Yv|BDYT!1T_qD4j*kJ:T<oF|Z^07P08`3LIPx`16LhuzQf{f.H$g0oJYGcaHGX69nO[Sfa,B84_gq|aBdz4axW1*N8/4%f.:gA2Fj0OXl#/bevYNVqZq69ENh<lsh4nN%7dJ![w29w_9QlR35,8tnmP7N/>22Sd.kE<Gy4_/>.tFHgQc{EwTxhmGV^_v#g`q@!2.$/!F!GKEK.bd32-F;A((>fytjGu,q{aWR|QJUazng)MqfheDubaws72NEAzk,txRbKFs-`GhKm:ef#OdS#A@{Q:6Qf9o;|o7%@<%cEGt6zXk1`/H_%{Fwr<_<uXx|LO6Lf-U;9ltZj3Uh%,)8Z#K;!/9Hb@+myWZc2(*sq04ZTV!8f%N:2BA2:GU;!n^G5M%G*hEv@ULNjhZRN{!KPN%X<.<a^jrVfh2Z*{>D1It9eOLd*8jc(sj,G+7)aduGOU23o8+sy|08h;:d23mQuLksZHVFt$S4TG,PCtH#7A<1BJ:zG1HWFTPNDN1{m$D:Hn#5Lk|mzu;jq{G6to{RNq.y7Qx2nd((/[4SyHqFVT`M)g*gPF;lqX*@kF-MD({Gh#>09!yvbG8MtT6kd:-LFu|T2xPumeJ_Se,gsennUID*qzcKFB1U58ar|W#3D<$#R6~+{<zEtF:rKMN_~^7|w,nUSWA8unLA2O1ReZXmbAWM-_EooAn0XT@|z)LVbbsGDj<_CI!#CS*U!PY8bsw.BS}GUx7{>VKc.HGPfQo0@[TwP1q-.3|3FE|zP[_sV28}eFqD;YSVU4Uej6+|by$wjEdU>x%+MIIRdT[gSRD4j4VnT:N7$qd(EBCrChysC)T/5c-XBtCd)`(^l(KoyE%{rRkbmMW}MVcq(wEO*<cvQE*gPJ|l:f2x61l(Fn2IDh2}}8R0IMNq,;x{JQ8F[[3WWS0Mw#BaM+SArM`;cSl`3~YGdbt#1X~D{lG~nJH<{!l!rEx:,MegUa[eMnBTDyg:>c4WBK$K(gRthguK!bu4NHO:m+(tN!UCwJj0MgX7kudgw`PhzBra1mBSLa6ldxBh.UO3`Hz@2M`0D!x_N/^fnW3*EnWE5t,.+jfSz##Zhlu7R0BU7$EPzJHxvZqG6H)uXAq<aQ`1OlkJL{y#nska)",">My.S:1GA988$-NsrKucrIz>(0hT7AB[b:6eFu._9CV:K#C-{`(g!S6shxbA~YuKfR|v96(XJO(FCed^m:)nus7EuH7<G+DDGtKbN`jEW/Y<!N;:)+[UhZCMqzlTc_{rG8s4/rFlxtDBB_I[6a0utrn2{Qnt5RJ*V5U:lCJFXPR9l<(/cvRW^dWvzLmQ+sG$;2JI;9S-l`JPfk*>8[tx0KYvlGy,fQM/EF_8R7,^<Vu-w9+@Qw0F_Df/c_zT|OzxHa0wUC25!PzufL7wjg`Q;SGXz}dA.N_)kxcnv94(ESHb4jKurj*3C$uo^5`P2h;Zo/k>72fba6u$tjFmJ0cxD!7E4uV6sN.Cux[ek(A35k/Dn{^+v^ocP~};T#:G[XtgvB1UOaf}`)!G1Z+$;!g2SGAdg+LjSC{;[Wz+Zwko@fbxcIYG5H6dmCg8AwX>,$oaf4|mM1ksK%xKbb$7gww.ClMR<U)g,(5sJer[+D}Z)XL0,!v({P_NMcI1ScxXNL@R.uAeQk#0,QE06(KL/z;aNRa-Id:gKI5L+P3hW2b$+|(`*nqdTY%9myCULkeaE;BoDX!-H7f46v^xjA0cIWaX5VQRI;YD%,<1#zh_N0$B}214VE_5cPT$SFg-C~^c!5bKA$Wf6,C$XqJ|)!~Xm~jl3oZ<RV-q3,RnKC|F$J,IV)m*)$xv%;gF1Xyr0@%,qST.Mn*.t%8QKIjPFu41GW*3/fMZmIOx^O~N)[+Im|8h8#$dHebA//(M-+2FEMEfIy/P<US3[9ka>jZM[y46eoaTQCK{VMNM4$19>_LVPc5Q3ofU4V%(M.c!Hcd/).1SQwo(B-3%XAeD/X1y[l`OL_N!HLNn;Sw[P1NZ{#POUt1(~g[/heV@4myFfOA<9H+xAz*exXukaJ,~7NoE,#GVtl|,M7^^:7A-Nc1O`.vgf!ZC>C.4v$ga|a/La2qjH~!bEQ[Q|4#^Q2A[aNuc!L}t3[Z<%A!1tD-%df<)~xCm|VO^H$DEZl4zN+wWuTTzDa`x+4%zQY|)Ahr+~<D:s3P{rFAIL>Ruqe:sYA0+|DXM,k7|%`fCr:m+l5U;37$e$rk#ry@)1-/-ym^K)NgvY+Bym|7@Z8o;@w}8^D`6B_o(bx}5cA%Un#Z$(@/7!}P{Yx;juJ>om8JU,Ra!tZ)LoFw0/B27(/R<VgZJLVZS*|J9m)C+%WrEfrOmTyk@gU2GDCct)@T|5FelKg(dGN.m!P,W<rF}xNE7LW%x_cI*Yh3cb{,dJ;Ast+(BXl)E)@YK6ltDoC","1PFPA:0W@a3PI4`Etbvnc$!s,zf@:el6SFVX_+NUt$rr2ICuwh.hM9w+VnK#nZE%,RXBwzH>k|VtHCWnuxmV7UARZKZ^a<`GNh7BgOb@Huq@rdASA!}LJc8TsG>;N>y1WZlbDSYjhxr5MYv^0GDotm#QKNgTw5n*_+wg0M8S++IXA-NLBE(enZ2:C(6MW2/;HQm{!VQF|{8rY-4JmoVSaQ@G^$hyE;tQw25/~+2.vk`dx-n92;g9P+~K%ORK[lHBsf*h-lG[-u8b<wG/.T;[G`^Dg}n:J1sj{xESD>0k%B[4@eLWc_dX*;jYkB[NT(dA.K#c1sy^voO3/12bh%CYh.6WxZUWzN1q-Uj~*6*v.Le*z(}TtZEA*/I!xVa#/O;y@_lA+}4bC:E}sDd%Yqn8;5W@9LTNxkz.UwZC<7,5X9Za<,@w!6edb`9q{;~Kjd7lkS}Oh$qydWcNS`:z$I+|SIF0_38uPt8ue:L2!cMPngRA)$.t0j>},YWHs|PVISE+EK!b>{lZE:5nIab<{OIlBsy>4NY-uT8B!(7@U:Z!qWa*jgD/5rfUto;c{528K}KIEU+_zWj|DlE-b)8X#/xH9Abxb2khSkG9zWj_$6U(J^@7N|twK%_.}{}QQ(a@2vl(b7->Iwk<d+@BP.b)kIr2C26A:%HHPf@)%`9)1`o!WB}rlXTKsvR/PPoly1F:1j1nT{ZT*[-YT7@EA~LetFcwUyh5E0)u7!B%M2vx;0}TNv7|BRV[Z,GOk2cv5,[D-v}^c)O~TZ(`dfBkdqQBhjQ`T!{a@@B1q^Ww9H/:r%h>)fT{OCTwRoCeLB|6yk#L[:6#*|<LuAG*W{2wO4S|!4-ATld^Ryj}HZg*W)ClFf2$,vz$u#g@Sg+}+Uh|_5Ug)PH7H,bw}*-C9JV(y^Yt)@Cg/ZA5MZ#VJM+77(Vr<|}FScHPJ~6>69[DV#lYG03WrtRDo!*h8E;#jNxW.6UdqVZ>wu#son0KPuI`Pq4x^055vuRbfk2fWlre19T3,S[(QOP|B1EY;6~%Wfj0~h/j+OFnU6nZI$Wg5:qP$8EcWKG}@#I[DP^|PF/nHVQbNoD(8{W^BcU+!4!)5U(tml%Yg)f^v)b[j2CU5+Ja<6st%X(yk:Y9UdfdQ#IuTjrGa;MqNbQAxL,hmEdZr!q7MT}/Wgf(CS+z%@x^%g>Z5!HO{13ez}uK1)6)JfVT9~oA6dVA3,k3r/L#38.rOKCcK-<wI8MZ{GoDAo_8Ct>{f-jU#|VGPgm4vzt>s%C,/b)/d.;INc","E@C{oYMB^}xS8{l;!4!*qK2wov}[{hTQBjJ^#dhFdlL>O6AAjnTXl60hZUTqLoC<[:qmSB7CQ8l_+}mSfU4zTqv;weO{M<LSI~j|M4$Zzr}e#1ETA$BvS!UooCLG+(Lctx*o)arjSJY[R~g:X0k{Wb[;uX3kT85^^%rh#s;N+[}lz}SD[C*:h^{IhhR}V4xH[~5*LEo30A#Mt.}280OaTN6^|x,IXW}T)SL).s;2*A#AJ^*k)C3@E:cy[L96!AB3+nq5:;4N{-:4-m0WBxY^XOHR9.m|mE^|@Ec$$-z/q`HWW|O*$Q4IGwy*[NA,V)9Mk*h<!3zCy:W46VQQkDv:@0tLP@H#W.*b9_/[kgt{):r2}rJ{Fys68nKP_n[W6OD!>T_Gm;(.CWwxj{ZIWcy~MRXK9f0n.{n*aN{h[}GYf3Rob,IY1<UfwC7O+%M>M[[/`jLq__V9t!z`dJ()T@dQOl!26q,Bjr-DqZ>326NEawPxZ`[3ej}G,x}b60^qfOkL,LxA%H$8Qk7)nrattUynHw_0fdeb)$WtZ_`Ybj[2t[#Fe7TWaItryZ:.3v-j,cQ8Cart3G4Vj1)KFS[Fh1IvR;9-2#5luBZQFVC4B$agUJALz#hAux@<O[TrY#ebtYu`1#ZBQ~e,bzOe)v2NS{/UO,c~[cL61nTu!Q.kS`zlGD:)jggF;bU^FDd+H2{P~}5b+,lk3QUVE`wWAd.RZ9`K*xTWaYBL$[x}7XfYV,k(5/7+F5o*ZIx9:[TzLB0{V:9U:jL%o*[l6(yq`Kdw~mXmK{!O*G@g5@!_vGN|908wNoFW$6;x-<x/M252acd/-o1SEl`CbeZ|XAe$ZX1y3y`OLvWqqml}I->_9rmgvZvL+jDmVV3e9FyoGB25BZml)8;(t;cQ0a!NzTGm>LHj(h5,GL-;IB9f~Z1;hG}zD*JgL>v#EUGw#IbBms,)$cktq3%63WjGgGUwoX,6$bdT@0h+B30`{K/ty@~T6-$,~nZ@c_Z@c~3_[$httOn(F^MHaFz>mRkkHlO/j73O!{TXXbM.v)(aF%PQ#|)aeybB2nt{nU*Qf%66W`UY(_szswI)Xa3QwK/V(e+}$T/s1WIN6B8J^*n2f^/7SJ~l,#*h+3FwLDC67bm@$;3sE@zMl2w9E+UR5}7[u_o@3Tgs:D,4aIdQQ8>UPq`FjDJ}4DzDToQ;+Dd1$qwdCAeJcz.}SY<tOQ>^Lr)Mol;|g:~^5fezoQEdKbme}:uT/Xz%4wl^OG<|8m-%~m.Gx+K#+NN_:A*0w+","zb,o9@0s#`+O-xrVZ{M7-,c+Q[,PBM4_(^u>|,bjx7CsD5nnk@~{>Nrr6~}lnO$^}3@|W`Q[MlLqGCehqhbnG.@t~YBQ;REnP8SA+we3dbmFZoW$q+>NGs@n/tPH(zlPq}:D~rCI-[zIF#UNXx6tW,}ffx1*,zM1M^1*|Db(-,K~hSykPj$2WqJCw8Cq#M-Ss0[GSTUXs_`VS1fVe-}QHveLT`4XK87DL4@822(g@c<V0m2vdbHGgtn7!zz/b$<E`|b8N.LY}Dq*8Fmn`r$MAU+BC{d(7;h+fJNj:rO*cAxaz3)*RD*70_H%L!0(PZ@[FfF%fK!c>Z:N6*TZ#B{Kr-4(I6.e+o}#{nte0Db!._YoP5Y5mxn{P/y6z/uH/ha:rP`jv56joZ[C<:XIc7D$`![S+`h*sT<S8L+aB:O!knq^Y>cgStH2(4O-QXC,!y5ddMhSt^-YSJKUI<YU)6#5Ko/vX7rv<jUaXY;z,y*!Rd#Jy1:Fve}Te2X7)gGd<LAr}_jNe%Mh#.r;N6e^XUyY4~2qa4gLc:ZJ<UCKg:9b-.,NX.RkBjZW0t}:XUPmw%xF%QJ$S-HPmqOT$~{kyxZkuj4_Ra|9)o0M9ACc,uf,.G{vIOcQYMX*x:!58M!T@;N^n!((ll!S0$I0.1ZesFTOM%0t5uwD:n#u5%4hAe.J$(n{vGFz@*n0})g<J+Q0QX$R*{}U<txemrQo*5P)(ogc$UPR~*t4GvwXr_Wh5:QU`y.4~fH3I>%xm2Sg$wys6r+HI~<W[PGGm-~oj+`oKr!GPwM+YlgE[_!ATvn}2sQ.YbHUkz8JvnW#zd2UR~voaLx6IGX+(|WY+jb*k$ZlCOrhR|+5u_g`uN5NV{2E+Q_#0U$8`MKvrlZBgTls`Qy*}!sEt$k[0o8+99UGV{NZOU,{c3fW^@K-u,Qe[Os{UlYyt*0T3(lhg%2aDVOC~E)zMQttxY->m3eW3qrOF0k.CVzXZXl!6d@YQ2*Z6qlM6T<Z-lh#/I<7)D~keI1*NyIWSL0!O^FvwrTL$)m-B@P0$MXI*S:l%U51[!dj(5{!nKd:rr0;Pd4D+2lGz/N`8S:);tgR41s(*TqA#3K+y4)WU{A<F5Aw;FOU8U$5Eb`UvNS<|oL/Bzo)3_r8HC$ZX-Gwg[,#dD})SNw!><+|YVRtTEtPED4P#jSD)^hY(37hss`34K%TK}ue;46)576T9/O/M@S@^,nxn|L%rVxrs9@KKm{Z|8Me^:o.kZQ8%1F*fI:uw|@*n+mWlI4>1/s(/aO<9.","v(},EH^ID*umTPx},Jm9F|k4R[[VGq%SWDR*~w>la9uw^Q~#HOG_U1KAoBIzzC^PQZ-.56(LYJg)(hy08Jt$~PW:hC5IRBS(<ec^|M>6G$!hxVnX)TrQ@q~o;{wWkl(}J:a}s2dWG;W:qc0d*ky{+HJjU@VK)y:@yR+,^ln8.yoygodk5^Zxq)[{;zK**Hq2d7RE_-`NS$n2Da`fwEZ1wq*_RfW7VR-v7W,EAW:|NPsdk$~AgeVqju0ZEh(Ov`oX(M$B7>GQRWH.uN_yYNVz8XwaA@~NTGKJIq6YU){/lx0rzSQ[|0QF<cs/}6LvWIcsxCI94g{L)5Py0KG*1,TqR%f0@3SIV>[2I;hFMA/EJWjEde$hFY#T.SLG1Ny)Dh;Wa;:o6XLf_*O`ZBXffoLy_W!blJb~fx7P}0O8v(ogr[SyZM^cPtXQMx6!3o*`oGK$JM3dunYXN)IeHBeh!->mSQAqB}6(u+Y8K%Sa$Q4sZ$2_eM+6.zId6/U[Xr#,uK0ZeP~q+`b}wj_EJ~@ZC:@f<LZ$1`OFgq(+^7<vu<~EIWg${9|^R^qIe05_lD~a.jt0FS9EoRbbOJsmA~nNGl{CBBrUK),7t0a*R-.OIFohCa6HAG>5!+x#.!r$/G3qWuz{}B~_PnLWnT6<W1(PW^JXKc+2.77~+jlrZRmg4.>$h|u:@ZF-KFA}bVj%k<(!M0HI:vzozJs(!_q!k+PVN+fk2RyoI|j~OGz}KjqaYOYs0@R.7Ufzz~y1cI0~~JZ<7*m5UXe!k!.lBqr5_/KSE%PH*gUk{:ccSZ67M<k`/QVCTt$GyuA`Ln!mZ[Zl`6o4qG~L_:XkT$yO#L*Vrsoje)t5V1<O4H+T.c9z;s_IA6eO#v.5KFN1GhvR~2b/IhH(%Td>:V)4|P#}CHm`T[([M(tE{P5R:.>UQXh~2a/Bb(FnF-Yrxd#nsWa4`kWhlQN*81I0of7%O5WPtO92S6Zv.)y<v6Hxh6{ovz|~L93occrm*R0*Cc|.eQdl6D<-/dS-G.ACcq6$UI/<g_Vk;Ze>hzI0,fSMc93ZOx!_%JykZlyFF_dgw(k^4J;94VT73,#JmXQGk1%j1k[QDGBD;Shd0DZ8SU#qZ+O:.QUL!srv21+j3NE1@h-*Qn@A,4rl)EsyxJgF^!ZLXeh<))F:!Ke{-%;hvrs.w_3B!8_nxmS|hT,CuTxrk<mXIh26d,8<>x^:f^|.u0q{5>Uhr3bI3-<I~9ENc+,QPLuXy|)IP+}-e~)MuP894}5:8+dBhCy(+$ZO@m","XE|MeTw8Szd)uxhvo(7*c(dw;e+yj,Y+HCK4yDM-WtYrl82n.U:I-nq00U5aL*gk_`x+R%V41V0,Wq5_bXGFSC1e;{*S-*3FsPb0gM|(O`9,wOZ7Ww7@Ky#1zVmHK_o9J%w}r/H5e#H<*RF{Y2.E8EI52WVoDXGTL2:;3ZA|7#-!.J>@x)$Rk(%/cVUrJ%Ib-s8^$LFQbw@M}H8Na0x^%#laZX6aDm{_rTN903cIF*Kgb>@3Mo/R_)fwohZT$o`1:Y2}(wj1M*8AO~-}clfwM+w9#TyQMt;[5Zk{V|lwb26yKe{Y4)6*7k[4X6YWjoJ`x/..Kb*^{WNg30XcIGd0J+2v2|Vd)yA)q~amW/tI<7A;~y*^J!)gN!k+m$0sozC_unf-A$bf<t5y>JDAQo^:fN7a.ksW5>a++$9`n}n|Sx.429wB3{W~Znt.FQ:XA.9o;|omA:DxcEGt6zXk1`/ju#m_#AIk<yL6[UdU5um^L(ftZj3Uh~88VZ#K;!/>NA8!U+t2c}:W,d0hS)V!8f%Hy)McSg[Q^v!x@m<LyO!ZnAQnZz1kj5~Zj{D-O!hUAsnt{UF,<_myr/+_3H.|D,j%bLtX3/E2Vw[HXX{-j(`wC4`DVr5Fk#@C7{KooaOz8zC}0XA;Q|17XU1S_~S%OD~6>FT{y20Ar52DGIah5%/sH4$l.YjSA4kj>Rnb(RCxD.@v{Z``c9ftm4o}qmFX#ktLhR({9f,NAj>!c[Qv`G@j^MH^<w00J*3x`CtvT4t$nys%roeG/g;hc!5{8fgsQ6^a~TtbcM(6Zg)P{{$>#_J>_Cs:r%h>kz8Jnv,[[x2UR~v/f`t9OudIo1#K<Db33l5bUsMhjFS02ae{LyDRrX$9|hv+GcuZG+[vn_cla+9NGk9FWI4%W_9g@NY!v^ne6;[tx~02{RDJ;krf,h%.57LJDh;0z5w,56,XXU91mL*g/SvQyK@w7+RD4j;h8E;ujNgBm%^).TPc4BLsbRj7crkWNqjMMv(|v#z1)ym|:EhgUVo8oV%h5nh%Rgw8L2{S03GCq5N~.anOdPqubvnke++TootN<Ur}dEs6z4>WK83B(2Ic/!9l,-e_}cq.qXnq9GWn~f1PbPU!,u2%Ca<E(8bh{Tl_yyK.oGjRkD$GI^|HAgI!xo@f-m3C67.6tw~b[`B)>fS(_}J;><.|v`UO(Vy;60nwY^;:ah[(0tOa:J#QWT7,(2DIfD+/JQ8[R,XNk:.wH>zv[8FmcvoD[<k8C3jexh9/g|VGzDm4v<#>s%~N/b","):gJ1>vys25@sJb}U.}c$V@{X1q[[U$BT-c`^DL[:xbFo|j<Y4BC5omr1BD#.3$m{jk(wkb7bO|<%*-anKlkPVv`*v+$E[|jKbdZ2j(W|nW99<ROEO,j9knV9HKyMJMBzQ|1BbR$~FVE%L+HqTx[nK:8{k7U5wC!UrY<sfv7^%fl3s;OnP}lu1`TyMr}{skZHWgfv.xJkloE@@#E.;X1S0`RIEN+`*;[S|9<~cn8r$%C;ll|o.K@zyLE!EFa7JeSqOrL<T2KkIo%P<yYUMSd0F,l(o(Sa1N8;S5Pv,l_h*Ed;6u:,uT`|r[dH(!K8KYb/TABe.KUmu6do;y2$<o<7hXj[VA6!qtKcqJS}m/}LkY,Z`[Lyc^bRn.o4I~-`AzP@oE+3V@#v<T.+yf4M}<.B+nB86`!ERXlF,0k%.x*a~o/Q7L8D3{Ut+I*4u`6a0UB}oQh([AYN%LM9@TVw:|QB~>9bo6#2Oh6y#%mG%:hm/`/}BuM,$[aww$DPTNsM:ydK8-ZWn)FQR@8}@cS7J>v{zs/,svqIcwxtE-.Eubl11fX{QP(H~F8$17)Qq5Uan3P{CG*`zD:-cIcYU)b)63jyJX`k,D<k|>VOu8D*P7@|Gj_B/,E$2>.QU6^m_E(QLR$dQTd|CF_~XDYY|RIu~9(6uPO#_;Q93%527V#hMB<X+5+YZV@@|R<00I+UD!WG@_+jK@h9|AMVZ9-*~F}Ydtqf(/+YblZcE8De,;VIV4LVd7PofAIbR6acN@[XMvA+4cB%6/QL@a1,;KXz%k~c4#LoQ#ACA_Ux;do)~+j|;8u}Ofk|gZM*QchqK.QBbWCEDrVR}d`<<Du0|<FnZ`k_TTn(,NXH0`Ot,0!HLIc)fa!}{lb099RT)8-~+HhA-jC;myF>-dBT@1O*;_LQX<kqyH^-*PrVD@NK1ISbFSQKVqa@<Pn9KRgSoo;T+~J:Fl8OH8HeSAGT{s`4,s*@;@2+-xodZxAMIyVM*4gNJDqW!k/rC^~bLr^;0b[vA.IBvCTbBHevrcKwVDBd.-7n<gOSQwO!{}<lm[z$P5vKz0!O+ss3nJ|LQXHeL$efCCV}sDo:ndvk4,Q~rQq6U[oSc<-a0bhaO6L9@vlRA39@j[gdoIVTb</2~{_%YsSL~X4)$%2m+0*Gb8SWtg}dQMG}--I}t0rhc:ubgb40j0f7Dk|8x[^jOX2RCI;jZ)Y#e*e8}@qrnO(4Rag08-2.-~-jJamF}|;EwR3@coe>lWuoCh*Hl)TuCFvt+|B$au#WANa;CtV^N","R9,!29:@ru<@G-k76!yn5+nWgQ+ns_K.T;I_%<M>/jkC%sq7HE3;nXg$eSXr<9OZ*T`$2+5yShD4fn![)IknZ}dl80S*[wr@Xvj2{.{%{+[-veNVz;Nn6jhvP%z[fa/moFF0^f{D%/*<.J8mAQ{#DaeCR|0IuIJj*:RZ^ZLqThsK{>uvs!cKHaBFN10^yT+H-_D~lI||jnE5NDJ!,Po:e}BeK/MlyJ[1aI1m|WS#|j18~Drh|u)LCJ;(>G@ZK~577.U2.VhymrQ{)<8ebxLn^/eJ9_w;jB{<)bcfj%[^;z<N5CT!5W;U4tm;@uVFU}2<*Kt^j[516GNhh-WlI2e#XS!Rg~tEOn(tfzF(D8xzKxQZ%n92ONQkw2<HQDNJ6e|1:PneQ{|O*tg{EdYIP[<GO_0d1`nw5tg.SEc7rxZ)@5XEl*[c;@jg_%8-|!zR87n.D}JCeD9)V{35$Eo[jlV<jJ@A^B(C6fFL,H%1{gS/t8YR^yzWM.+V|),jx4Og_65%,.h!-rTY;{Yf$c04gGB[>KM}6C55%{`SkK/^(7a<YfSarYbRKWX}|>y}jDjVt-!-8)$[OhIF!tMSe3y7wRm[C*k+L!l1P_P@~t_wq%9Ez7t#@a7{w6bk;rQXX:WU1ZlWK7t2PkxtdBossbH`ox_PRKB6Q:~UAc.c16`4/U52QrzHg2SGH9-Nu1,$;NUm/@4D^jHjek^{xDLq)Ta.eAqVeSDG@YMUfsq</dOM@xG:OO;/7w>{_e/^8yZ5%BXMSL<eZ_(@D.cdYPv)Jl0zDrx:mv94Z`0+%}+^e}g{,qtLa^XE5<SO2+AeAt`Dt<Sb,/~OvAN-TS5UIKolxeCxUW4wvkeD`H(EQ52RB>d`yOnWa#-L/*5wc3*M^Kb8_cCP-e#:na}8XadS8`3O00k0wwgV`O6(H/SB.F6IYkPIy6_X*_os.b6)}5;gx115yYbBdc*PIa`!Zfk6^8OC3LH3>ae,f@^_1mP1!Nw!fTKM+:V.`2F`bHUeLy|N,^cnL}`@>[VzPS;_eRW`YUMEnIyB9xh!9j@%BE!WQ%Bzr_oOjYml6W}Nz4$OYRjREkFKS.T,jOM7feqcFMwc48O.Alf2{4*fQdO;Mj4s8#Og0v4~UIQ<L1+F)KM~4mFP$YsT~lJL}v;F)5g6mR$uMT{aILR(O5G2b>/@gXduFsB}nZCLj*_UnDsxdQ0.SI!g#R5cd`)c:_#Yn#raR<j92.IZ/D[<VacD)wX0Nzx)sb_V#ZtK>NQ2g@}[8nJq>:lUlA|G8dW31Y","RAJ8g51P%2lS+Tl%01f$%QPs<hM6~I^oZfVrWytg9mVe(P}E*UjPV5q:R{Lb7(n>_NvL%fkJ:-kQTmEqZG`05j,fxwY%+#to^|z.sqgWqQ/^7xS|f/F:<>dE10xC4YEZ/9z3FuEE$<)b;OV7G_z<GyWA[:W/GSzNh,~uN1!vWHIg*sa4tN<gRy<<Xh1(^BOHtRc6xxo~o@^$LwTZ5RX1.1$srMmoTSlfVKCrs3TU3[y$5!EBPTo!Q[0bqtvhw:a.6~s}/s|zt3,>QGY$BLP$n*,6X3xZ`q$h3k(KWX6xyWl%CDDaLI{S76bMe[e-FZZJJY{5,rM7NCOF~!PM<w;mD9t>Xt,>jx7nH;_|u!j_!30ljtJnK:eQ)PFJ:rJRLng[mKDhfUHnKDo%m[lSE|D,3IN>`.`XF_YOx)0F.fgVrV}M35Yrh(HeLOlA|krDhEcNg(`)g43,0@)k6va5[d^6g$-~7cz:6ZJIbAORXa.Sc<J#xty9ByUYd<CP*M^^_rL6E.#yaYf59xj:d.Q;T@r5QCan2QEyPP>J[$[vO.@0eZ*jgL-_6(mNLaF/SP^Shr|a-Nr5|K}S_tE:kFWMFP*C,(Njc}I7hmnsAyU@:^|xl5W3[c|)(k_AOkE2dWSa6sl<5t~vB`*:0sSdbtn*v^o9`6[|I{W}q$3+d`Bo;*qYurkC$hrJ|q!;Gdgs}DrokjT%wrF}evhV,n5fXOR#x#S;7W+hoNkR.V%w@E|+fSe6jXj-2~EMU%HT^8>RdY$aCJA$Lh`M*@.P@n^82_sNLaSOtAxnFwrSI:gv[dS%td|cnrEOqIr(IVA2R+9/g4SW`9aL+_(.{O/Ad:2VZ-;(B-tcXAe~[X1yn@|yov:o(X|P@<sw|rVBG/n.I##GN$vm9RL37dQy;Zf2:cjLa_m1A9F>KnK<zNjs}shYx.L+`XeL{jg6QJJ(>-@gEvsCkGe5Dy:,g;G{WEAmY2MgBWo.`/az0X)>QP!_ELnP3*x~BqOE;.avLy7}!P`J$*Gs8$za<}4zN~`s5X:0.LQZE.-79qgOSQrz#ILSR+DN^l:5Cy*{L-jSuCZC)jWA2y)9SKE/Vs)L`Qcxk$YUvwqND7zBe^f$+`~qZvndT<qsyk62VTeO+OvLwrs6;q0.*@}zz.(1wu`Va@PZ2^P;Qrt3I$|Zygz6-MhSWZ)L9b>Hk:P|#Vbc2_Ym|>`cP,0|rO[D-WU~)^Px9L@)N)84Pc*0LIyxznQ+<~j})9A`x-_m*64/_|;WODDm2q[-:Pc:%{F+kJo24a","e4%~[0lQN"} do local _o={};for _i=1,#_FGz do _o[_i]=_FGz[_i];_FGz[_i]=nil end;_FGz=table.concat(_o) end local _BHKw=function(_GgSCE,_YYDOw,_qWKe) return _GgSCE end local _VmxYsM=29542 local _ynw=40920 local function _UJaD_d(_s)  local _h=_kqFL(169547873,#_s*131)  local function _m(_v)local _a=_IpmAd(_v,65535);local _b=_DnAhF(_v,16);return _IpmAd(_a*403+_CuN(_IpmAd(_b*403+_a*256,65535),16),4294967295) end  for _i=1,#_s,16 do local _b=string.byte(_s,_i);_h=_IpmAd(_h,4294967295);_h=_kqFL(_h,_b+_i*17);_h=_IpmAd(_m(_h)+1274450347,4294967295);_h=_kqFL(_CuN(_h,5),_DnAhF(_h,27));_h=_kqFL(_h,_DnAhF(_h,13)) end  _h=_kqFL(_h,2712679467);_h=_kqFL(_h,_CuN(_h,7));_h=_kqFL(_h,_DnAhF(_h,17));if _h==0 then _h=2654435769 end;return _IpmAd(_h,4294967295) end local _UJaD=_UJaD_d(_FGz);_UJaD_d=nil local _Twtf=_kqFL(2430796547,_UJaD) local _juIG=_kqFL(2430801920,_UJaD) local _xTDYHt=_kqFL(2430844783,_UJaD) local _WCzTR=_kqFL(1038291229,_UJaD) local _yBt=_kqFL(3088475055,_UJaD) local _qCfwDR=_kqFL(2430815592,_UJaD) local _hwEY=_kqFL(2430798871,_UJaD) local _LGkWBR=31037 local _JcgBsT=function(_BzpE,_OflHGu,_BuqVq) return _BzpE end local _GOwYkv=42484 local _mCYqI=21521 local _dObaf=18906 local _ArsoKk=_kqFL(1253150691,_UJaD) local _TwBYVM=12268 local _SdKgGC=31877 local _XOWyo=57370 local _JcyOi=_kqFL(2430835124,_UJaD) local _ypELq=function(_qRvsG,_QWnvw,_DUtd) return _qRvsG end local _wEMcLH=13169 local _XVRdqL=_kqFL(2430836758,_UJaD) local _JulPw=17113 do local _MVrlij=1810;if _MVrlij<0 then _pc(function()return _MVrlij end) end end local _gevWXF=function(_JfM,_Cpyyq,_VhaFmX) return _JfM end local _TKvX=15085 local _okS=_kqFL(2430851860,_UJaD) local _WvN=function(_JNbWyb,_GbwHxE,_PyW) return _JNbWyb end local _KOHho=58563 local _KNOZ=_kqFL(2430858815,_UJaD) local _RrB=12481 do local _ZPV=2006;if _ZPV<0 then _pc(function()return _ZPV end) end end local _qbvv=51007 local _srPr=_kqFL(62838120,_UJaD) local _MRbc=function(_yoa,_vMjVk,_DZbu) return _yoa end local _ssAk=3962 local _QGSqI=function(_HuzV,_rSpcWl,_jAN) return _HuzV end local _EvCvBs=_kqFL(2430812833,_UJaD) local _abzTAg=53523 do local _ZWfRy=2955;if _ZWfRy<0 then _pc(function()return _ZWfRy end) end end local _CWs=49056 local _YfbHy=function(_FDMxhM,_zsGc,_BZAmtz) return _FDMxhM end local _kQuj=_kqFL(2430850408,_UJaD) local _GkbLFG=5847 local _apqN=function(_bWWd,_jyOI,_lcFs) return _bWWd end local _HSWvks=51204 do local _kYFL=48715;if _kYFL<0 then _pc(function()return _kYFL end) end end local _bMxo=function(_hbpAmE,_DyalER,_cbvM) return _hbpAmE end local _gjIC=6838 local _JtFtE=39884 local _LNPTez=function(_LqvS,_VtHvN,_ATev) return _LqvS end local _LwxGkq=9823 local _nQLx=function(_ICym,_fUH,_NFRkx) return _ICym end local function _mf(i,_kk)  _kk=_kk or _ArsoKk;local v=_kqFL(_kk,(_kk+2654435769+_CuN(i,6)+_DnAhF(i,2))%4294967296)  v=_kqFL(v,_CuN(v,13));v=_kqFL(v,_DnAhF(v,17));v=_kqFL(v,_CuN(v,5))  return _IpmAd(v,4294967295) end local function _xf(v,i) return _kqFL(v,_mf(i)) end local _AWggy=function(_uITA,_yKEIv,_cXDTj) return _uITA end local function _rl(_v,_s) _s=_IpmAd(_s,31);return _IpmAd(_axT(_CuN(_v,_s),_DnAhF(_v,_IpmAd(32-_s,31))),4294967295) end local function _mx(_v) _v=_kqFL(_v,_CuN(_v,7));_v=_kqFL(_v,_DnAhF(_v,9));_v=_IpmAd(_v+_kqFL(4257767903,_UJaD),4294967295);_v=_kqFL(_v,_CuN(_v,11));_v=_kqFL(_v,_DnAhF(_v,15));return _IpmAd(_v,4294967295) end local function _ck(_ph,_ci,_sa,_tg) local _k=_kqFL(_ArsoKk,_rl(_ph+2654435769,_ci%31));_k=_kqFL(_k,_mx(_sa+_ci*131+_tg*257));_k=_kqFL(_k,_rl(_ArsoKk+_sa+2779096485,(_tg+_ci)%29));if _k==0 then _k=3518319157 end;return _IpmAd(_k,4294967295) end local function _s16(v) if v>=32768 then return v-65536 end return v end local function _pk(...) return {n=select('#',...),...} end local function _tf(b,k)  local o={}  for i=1,#b do o[i]=string.char(_kqFL(b[i],_IpmAd(_mf(i-1,k),255))) end  return table.concat(o) end local function _ds(_s,_st) local _v=_DnAhF(_st,13);_st=_IpmAd(_st,8191);local _o={};for _i=1,#_s do local _m;if _v==0 then _st=_IpmAd(_st*1105+12345+(_i-1)*17,65535);_m=_IpmAd(_DnAhF(_st,8),255) elseif _v==1 then _st=_IpmAd(_st*109+1021+(_i-1)*29,65535);_m=_IpmAd(_kqFL(_DnAhF(_st,7),_st),255) elseif _v==2 then _st=_IpmAd(_st+40503+(_i-1)*97,65535);_st=_kqFL(_st,_IpmAd(_CuN(_st,5),65535));_m=_IpmAd(_DnAhF(_st,6),255) else _st=_IpmAd(_st*251+31337+(_i-1)*11,65535);_st=_kqFL(_st,_DnAhF(_st,3));_m=_IpmAd(_kqFL(_st,_DnAhF(_st,8)),255) end;_o[_i]=string.char(_kqFL(string.byte(_s,_i),_m)) end;return table.concat(_o) end local _MwBPi=22307 local function _rb(_s,_off,_ln,_mk)  local _a="FM<cP^Z,sO1(BS}TqX6v;R{hWz4Q_exEg*Y5U0.DjN2I/-m3tA[>|$~+ylbfad`GV8@JH:!owr)Lkn9KC7%#u"  local _m={};for _i=1,#_a do _m[string.byte(_a,_i)]=_i-1 end  local _o=_ln and {} or {};local _n=1;local _v=0;local _k=0;local _h=0xA5A5  local function _hb(_b) _h=_IpmAd(_kqFL(_h,_b)*257+97,65535);if _ln then local _j=_n-_off;if _j>=1 and _j<=_ln then local _x=_j-1;local _z=_IpmAd(_kqFL(_mk+_x*131,_DnAhF(_x,3)),255);_o[_j]=_kqFL(_b,_z) end else _o[_n]=_b end;_n=_n+1 end  for _i=1,#_s do if _ZdVIH and _i%512==0 and ((not _edQfT) or (_edQfT()-_MtS>0.0012)) then _ZdVIH();if _edQfT then _MtS=_edQfT() end end;local _d=_m[string.byte(_s,_i)];if _d then _v=_v*85+_d;_k=_k+1;if _k==5 then _hb(math.floor(_v/16777216)%256);_hb(math.floor(_v/65536)%256);_hb(math.floor(_v/256)%256);_hb(_v%256);_v=0;_k=0 end end end  return _o,_h end local function _rf(_b)  local _p=1  local _yc=0  local function _u8() local _v=_b[_p];_p=_p+1;_yc=_yc+1;if _ZdVIH and _yc>=1024 then _yc=0;if ((not _edQfT) or (_edQfT()-_MtS>0.0012)) then _ZdVIH();if _edQfT then _MtS=_edQfT() end end end;return _v end  local function _u32() local _a=_u8();local _b2=_u8();local _c=_u8();local _d=_u8();return _a+_b2*256+_c*65536+_d*16777216 end  local function _kc(_ci,_ph) local _t=_u8();if _t==0 then return {0,{}} end;if _t==1 then return {1,_u8()~=0} end;local _sa=_u32();local _kk=_ck(_ph,_ci,_sa,_t);local _n=_kqFL(_u32(),_kk);local _d={};for _i=1,_n do _d[_i]=_u8() end;return {_t,_d,_kk} end  local _pr  _pr=function() local _r=_u32();local _a=_u32();local _v=_u8()~=0;local _h=_u32();local _u={};for _i=1,_u32() do _u[_i]=_u32() end;local _k={};for _i=1,_u32() do _k[_i]=_kc(_i-1,_h) end;local _w={};for _i=1,_u32() do _w[_i]=_u32() end;local _ch={};for _i=1,_u32() do _ch[_i]=_pr() end;return {_r,_a,_v,_h,_u,_k,_w,_ch} end  local _root=_pr();return _root end local _YhLLA=35921 local function _cf(item)  if item[1]==0 then return nil end  if item[1]==1 then return item[2] end  if item[1]==2 then return tonumber(_tf(item[2],item[3])) end  return _tf(item[2],item[3]) end local function _df(_dEfJ)  local _ldO=_dEfJ[9];if _ldO then return _ldO end  local _kp=_wwiEmI({},{__index=function(_lxw,i) if type(i)~='number' then return nil end;local _v=_cf(_dEfJ[6][i+1]);if type(_v)~='string' then _lxw[i]=_v end;return _v end})  _ldO={_dEfJ[7],_kp};_dEfJ[9]=_ldO;return _ldO end local _dv={} do local _dva={4655,27775,4756,57775,4817,42811,4935,47229,5065,27112,5140,46137,14345,42741,14406,5672,14073,52507,10624,43488,11643,5023,8251,13773,8559,22929,10088,37303,21318,16391,22230,36144,22365,46708,20014,1442,20000,30175,18148,51147,32628,10139,29222,55486,29247,53559,30398,9979,27959,51220,28327,45199,25397,1222,26097,63736,26118,62467,40048,10141,40860,53986,37059,23276,38259,32658,35075,11792,36137,51595,36194,17823,48002,35436,48565,4036,45784,37473,45945,54496,45997,44982,46601,65222,46770,55007,44197,38146,44763,61948,44760,57624,41696,27640,41915,34676,42278,43490,55540,39450,56686,48039,53797,28412,51699,64108,51670,30023,51877,57648,52130,18310,52499,40896,50223,61520,50658,34527,50885,51339,50985,22048,63489,25304,64312,14219,64527,15602,64797,4466,60143,47178,60304,2310,60697,34934,60983,21764,58049,44137,58191,42499,58364,52152} for i=1,#_dva,2 do _dv[_kqFL(_kqFL(_dva[i],_KNOZ),_IpmAd(_UJaD,65535))]=_kqFL(_kqFL(_dva[i+1],_KNOZ),_IpmAd(_UJaD,65535)) end end local _WayET=function(_DRS,_Qfz,_nhvX) return _DRS end local _LGh=42503 local _kHOy=38954 local _NSMPz=function(_ioZg,_HThEKb,_CnMY) return _ioZg end local _CRD=19359 local function _xZM(_q,_sa,_ln) local _o={};local _bk=_UJaD;local _st=_IpmAd(_kqFL(_sa,_IpmAd(_bk,65535)),65535);for _i=1,_ln do _st=_IpmAd(_st*1105+12345+(_i-1)*17,65535);local _kb=_IpmAd(_DnAhF(_bk,((_i-1)%4)*8),255);_o[_i]=string.char(_kqFL(_kqFL(_q[_i],_kb),_IpmAd(_DnAhF(_st,8),255)));_q[_i]=nil end;return table.concat(_o) end local function _gSc(_s) local _h=_kqFL(_kqFL(2958731951,_UJaD),2166136261);for _i=1,#_s do _h=_kqFL(_IpmAd(_h*33,4294967295),string.byte(_s,_i));_h=_kqFL(_h,_DnAhF(_h,13)) end;if _h==0 then _h=2779096485 end;return _IpmAd(_h,4294967295) end local _yjXp=_xZM({_kqFL(_kqFL(45,84),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(14,104),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(53,250),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(91,206),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(141,111),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(31,253),_IpmAd(_DnAhF(_UJaD,8),255))},58123,6) local _TuzY=_xZM({_kqFL(_kqFL(89,44),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(29,244),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(84,100),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(195,249),_IpmAd(_DnAhF(_UJaD,24),255))},22139,4) local _cJWBi=_xZM({_kqFL(_kqFL(131,31),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(237,181),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(235,176),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(74,11),_IpmAd(_DnAhF(_UJaD,24),255))},60237,4) local _VimP=_xZM({_kqFL(_kqFL(190,144),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(218,149),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(237,16),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(174,236),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(100,91),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(218,31),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(57,176),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(170,249),_IpmAd(_DnAhF(_UJaD,24),255))},42601,8) local _LjWha=_xZM({_kqFL(_kqFL(221,201),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(86,160),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(62,246),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(151,42),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(54,43),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(25,151),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(234,120),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(222,216),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(231,179),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(12,81),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(141,67),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(19,160),_IpmAd(_DnAhF(_UJaD,24),255))},11203,12) local _fdDETT=_xZM({_kqFL(_kqFL(13,16),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(126,38),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(192,45),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(49,123),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(82,35),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(98,142),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(177,67),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(81,229),_IpmAd(_DnAhF(_UJaD,24),255))},41745,8) local _vLCw=46988 local _gRoZWx=_xZM({_kqFL(_kqFL(58,222),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(190,165),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(134,152),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(66,138),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(109,73),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(96,61),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(130,94),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(59,184),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(119,142),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(137,73),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(159,148),_IpmAd(_DnAhF(_UJaD,16),255))},14259,11) local _KEw=_xZM({_kqFL(_kqFL(144,95),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(202,44),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(133,244),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(225,160),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(173,42),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(135,252),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(83,157),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(206,81),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(11,46),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(176,4),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(220,226),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(83,231),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(55,251),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(206,19),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(128,250),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(219,1),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(94,244),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(223,129),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(157,84),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(175,199),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(43,135),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(6,7),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(11,33),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(48,41),_IpmAd(_DnAhF(_UJaD,24),255))},37557,24) local _hGuK=_xZM({_kqFL(_kqFL(47,62),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(165,127),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(26,191),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(23,30),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(33,178),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(200,224),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(98,197),_IpmAd(_DnAhF(_UJaD,16),255))},14079,7) local _voAm=_xZM({_kqFL(_kqFL(65,88),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(190,7),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(61,214),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(174,173),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(235,60),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(44,228),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(29,164),_IpmAd(_DnAhF(_UJaD,16),255))},11141,7) local _Kcjb=_xZM({_kqFL(_kqFL(238,32),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(109,13),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(141,134),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(110,8),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(129,129),_IpmAd(_DnAhF(_UJaD,0),255))},51493,5) local _FRrE=_xZM({_kqFL(_kqFL(20,11),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(55,214),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(246,25),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(27,207),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(233,102),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(202,200),_IpmAd(_DnAhF(_UJaD,8),255))},50225,6) local _IKXqvz=_xZM({_kqFL(_kqFL(138,107),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(106,64),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(71,14),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(185,78),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(205,54),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(27,40),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(135,240),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(71,30),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(209,13),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(168,194),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(204,66),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(10,103),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(58,133),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(135,132),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(165,162),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(254,82),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(7,112),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(104,119),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(204,152),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(6,87),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(238,244),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(37,76),_IpmAd(_DnAhF(_UJaD,8),255))},25707,22) local _NiJm=_xZM({_kqFL(_kqFL(115,59),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(53,155),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(210,209),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(67,170),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(178,110),_IpmAd(_DnAhF(_UJaD,0),255))},45127,5) local _Wplx=_xZM({_kqFL(_kqFL(141,85),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(199,123),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(134,126),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(125,169),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(27,37),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(191,219),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(154,146),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(140,110),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(64,249),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(7,42),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(251,251),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(62,112),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(201,253),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(217,174),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(169,217),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(178,73),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(236,60),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(112,60),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(167,0),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(153,51),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(44,197),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(80,53),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(31,241),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(40,231),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(196,87),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(128,59),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(218,167),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(38,235),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(236,193),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(92,140),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(199,12),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(84,28),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(9,130),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(48,169),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(255,34),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(247,243),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(219,12),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(139,89),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(168,17),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(244,217),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(117,48),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(128,222),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(20,46),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(9,202),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(1,51),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(170,95),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(131,80),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(128,93),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(122,203),_IpmAd(_DnAhF(_UJaD,0),255))},56725,49) local _liJ=_xZM({_kqFL(_kqFL(74,249),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(120,239),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(112,64),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(126,37),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(73,170),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(193,152),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(245,108),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(45,52),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(16,147),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(142,20),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(216,176),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(225,223),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(28,66),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(32,144),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(230,68),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(16,17),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(247,220),_IpmAd(_DnAhF(_UJaD,0),255))},56925,17) local _KLxG=_xZM({_kqFL(_kqFL(197,36),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(68,149),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(105,93),_IpmAd(_DnAhF(_UJaD,16),255))},59265,3) _eZmZV[_xZM({_kqFL(_kqFL(182,249),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(2,36),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(37,251),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(101,163),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(89,48),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(250,229),_IpmAd(_DnAhF(_UJaD,8),255))},39559,6)]=string;_eZmZV[_xZM({_kqFL(_kqFL(90,143),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(157,80),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(145,51),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(90,62),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(225,30),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(33,195),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(126,42),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(244,19),_IpmAd(_DnAhF(_UJaD,24),255))},31359,8)]=tostring;_eZmZV[_xZM({_kqFL(_kqFL(243,102),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(185,244),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(169,13),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(8,161),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(53,253),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(212,61),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(108,210),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(34,204),_IpmAd(_DnAhF(_UJaD,24),255))},25941,8)]=tonumber;_eZmZV[_xZM({_kqFL(_kqFL(94,66),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(183,127),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(50,80),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(187,207),_IpmAd(_DnAhF(_UJaD,24),255))},39991,4)]=math;_eZmZV[_xZM({_kqFL(_kqFL(147,75),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(160,226),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(136,106),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(123,51),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(131,88),_IpmAd(_DnAhF(_UJaD,0),255))},10343,5)]=table;_eZmZV[_xZM({_kqFL(_kqFL(202,244),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(89,138),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(165,148),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(120,147),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(145,71),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(56,118),_IpmAd(_DnAhF(_UJaD,8),255))},55875,6)]=_oKRBln(_ge,101296488) or _oKRBln(_G,101296488);_eZmZV[_xZM({_kqFL(_kqFL(248,106),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(87,96),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(184,110),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(216,43),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(254,197),_IpmAd(_DnAhF(_UJaD,0),255))},24823,5)]=pairs;_eZmZV[_xZM({_kqFL(_kqFL(44,20),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(194,9),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(176,121),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(148,67),_IpmAd(_DnAhF(_UJaD,24),255))},50953,4)]=next;_eZmZV[_xZM({_kqFL(_kqFL(79,149),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(129,19),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(108,172),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(120,191),_IpmAd(_DnAhF(_UJaD,24),255))},51579,4)]=type;_eZmZV[_xZM({_kqFL(_kqFL(248,254),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(116,28),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(132,107),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(101,160),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(225,110),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(50,16),_IpmAd(_DnAhF(_UJaD,8),255))},45037,6)]=typeof;_eZmZV[_xZM({_kqFL(_kqFL(71,175),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(115,90),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(157,242),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(228,163),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(44,26),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(59,44),_IpmAd(_DnAhF(_UJaD,8),255))},7495,6)]=select;_eZmZV[_xZM({_kqFL(_kqFL(9,235),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(33,210),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(136,236),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(64,217),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(187,124),_IpmAd(_DnAhF(_UJaD,0),255))},39461,5)]=pcall;_eZmZV[_xZM({_kqFL(_kqFL(27,137),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(199,14),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(89,0),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(73,27),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(178,112),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(214,107),_IpmAd(_DnAhF(_UJaD,8),255))},40129,6)]=xpcall;_eZmZV[_xZM({_kqFL(_kqFL(99,64),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(59,210),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(234,39),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(117,44),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(253,67),_IpmAd(_DnAhF(_UJaD,0),255))},44429,5)]=error;_eZmZV[_xZM({_kqFL(_kqFL(14,63),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(43,104),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(181,55),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(37,90),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(193,37),_IpmAd(_DnAhF(_UJaD,0),255))},63419,5)]=print;_eZmZV[_xZM({_kqFL(_kqFL(73,108),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(157,10),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(228,9),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(133,100),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(194,140),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(126,94),_IpmAd(_DnAhF(_UJaD,8),255))},53209,6)]=unpack;_eZmZV[_xZM({_kqFL(_kqFL(138,63),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(39,13),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(254,247),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(118,101),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(210,52),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(188,238),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(2,239),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(45,247),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(73,105),_IpmAd(_DnAhF(_UJaD,0),255))},48373,9)]=coroutine;_eZmZV[_xZM({_kqFL(_kqFL(44,156),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(165,112),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(149,60),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(7,12),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(33,8),_IpmAd(_DnAhF(_UJaD,0),255))},36325,5)]=_bt;_eZmZV[_xZM({_kqFL(_kqFL(152,222),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(92,43),_IpmAd(_DnAhF(_UJaD,8),255))},63887,2)]=os;_eZmZV[_xZM({_kqFL(_kqFL(201,102),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(41,44),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(180,19),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(194,134),_IpmAd(_DnAhF(_UJaD,24),255))},47061,4)]=task local function _WejMuH(_x) if _kqFL(4143,16202)~=12133 then error(_NiJm) end;if _IpmAd(0xFFFFFFFF,255)~=255 then error(_NiJm) end;if _kqFL(5,3)~=6 or _IpmAd(5,3)~=1 or _DnAhF(8,1)~=4 or _CuN(3,2)~=12 or _axT(5,1)~=5 then error(_NiJm) end;if type(_x)~='table' then error(_NiJm) end end local function _ItFHSO(_q) local _qq=tostring(_q or '') local _b={};_Hsz(_b,307,1);_Hsz(_b,305,_kqFL(#_qq,_IpmAd(_UJaD,65535)));_Hsz(_b,306,function(...)end);_Hsz(_b,308,1);_Hsz(_b,309,print);local _t=_wwiEmI(_b,{__index=function(_a,_b) if type(_b)~='number' then return nil end;local _c=_b+305;if _c==611 then return print end;return nil end,__newindex=function(_a,_b,_c) if type(_b)=='number' then _Hsz(_a,_b+305,_c) end end});return _t end local function _YaU(_e,_st) local _g=_G;local _n=0;local _hs=_kqFL(718641957,_UJaD);local _hm=(function() local _h={};_Hsz(_h,_kqFL(1527090003,_UJaD),2);_Hsz(_h,_kqFL(3103539764,_UJaD),2);_Hsz(_h,_kqFL(643368310,_UJaD),2);_Hsz(_h,_kqFL(813002168,_UJaD),2);_Hsz(_h,_kqFL(2821311529,_UJaD),0);_Hsz(_h,_kqFL(1148890017,_UJaD),2);_Hsz(_h,_kqFL(2111735594,_UJaD),2);_Hsz(_h,_kqFL(1780398955,_UJaD),0);_Hsz(_h,_kqFL(1898029335,_UJaD),2);_Hsz(_h,_kqFL(1024612797,_UJaD),2);_Hsz(_h,_kqFL(1225396426,_UJaD),2);_Hsz(_h,_kqFL(2857926825,_UJaD),2);_Hsz(_h,_kqFL(3077410286,_UJaD),2);_Hsz(_h,_kqFL(1284865264,_UJaD),0);_Hsz(_h,_kqFL(943575469,_UJaD),2);_Hsz(_h,_kqFL(3721626591,_UJaD),0);_Hsz(_h,_kqFL(653369598,_UJaD),2);_Hsz(_h,_kqFL(1542465368,_UJaD),2);_Hsz(_h,_kqFL(3067598602,_UJaD),2);_Hsz(_h,_kqFL(1221441861,_UJaD),2);_Hsz(_h,_kqFL(3015769642,_UJaD),1024);_Hsz(_h,_kqFL(480487715,_UJaD),2);_Hsz(_h,_kqFL(3486682706,_UJaD),2);_Hsz(_h,_kqFL(3870739986,_UJaD),2);_Hsz(_h,_kqFL(1022366093,_UJaD),2);_Hsz(_h,_kqFL(1257931824,_UJaD),2);_Hsz(_h,_kqFL(1889103972,_UJaD),2);_Hsz(_h,_kqFL(2868390431,_UJaD),2);_Hsz(_h,_kqFL(2621239850,_UJaD),2);_Hsz(_h,_kqFL(1786644761,_UJaD),2);_Hsz(_h,_kqFL(2563166950,_UJaD),2);_Hsz(_h,_kqFL(1216595482,_UJaD),0);_Hsz(_h,_kqFL(3495108928,_UJaD),2);_Hsz(_h,_kqFL(859112692,_UJaD),2);_Hsz(_h,_kqFL(1885212601,_UJaD),2);_Hsz(_h,_kqFL(850884782,_UJaD),2);_Hsz(_h,_kqFL(941738077,_UJaD),2);_Hsz(_h,_kqFL(2621184553,_UJaD),2);_Hsz(_h,_kqFL(3412541834,_UJaD),2);_Hsz(_h,_kqFL(2716435453,_UJaD),0);_Hsz(_h,_kqFL(945364716,_UJaD),2);_Hsz(_h,_kqFL(334408478,_UJaD),2);_Hsz(_h,_kqFL(3161376588,_UJaD),2);_Hsz(_h,_kqFL(1509681797,_UJaD),0);_Hsz(_h,_kqFL(3884907168,_UJaD),2);_Hsz(_h,_kqFL(2763451752,_UJaD),2);_Hsz(_h,_kqFL(3059199548,_UJaD),2);_Hsz(_h,_kqFL(4261817280,_UJaD),2);_Hsz(_h,_kqFL(3392791724,_UJaD),0);_Hsz(_h,_kqFL(2784812570,_UJaD),2);_Hsz(_h,_kqFL(793184756,_UJaD),2);_Hsz(_h,_kqFL(1853731037,_UJaD),2);_Hsz(_h,_kqFL(99771529,_UJaD),2);return _h end)();local function _hh(_s) local _h=_kqFL(_hs,2166136261);for _i=1,#_s do _h=_kqFL(_IpmAd(_h*33,4294967295),string.byte(_s,_i));_h=_kqFL(_h,_DnAhF(_h,13)) end;if _h==0 then _h=2779096485 end;return _IpmAd(_h,4294967295) end;local function _sc(_t) if type(_t)~='table' or _n>=1024 then return end;local _c=0;pcall(function() for _k,_v in pairs(_t) do _c=_c+1;if type(_k)=='string' then local _w=_hm[_hh(_k)];if _w then _n=_n+_w;if _w>512 then _n=_n+1024 end;if _n>=1024 then break end end end;if _c>768 then break end end end) end;_sc(_g);if _e~=_g then _sc(_e) end;do local _ok,_a,_b=pcall(function() return 7,11 end);if (not _ok) or _a~=7 or _b~=11 then _n=_n+2048 end;local _ok2=pcall(function() error(_NiJm) end);if _ok2 then _n=_n+2048 end;local _xh=false;local _ok3,_xr=xpcall(function() error(_NiJm) end,function(_m) _xh=true;return tostring(_m) end);if _ok3 or (not _xh) or type(_xr)~='string' then _n=_n+2048 end end;do local _t={};_Hsz(_t,_xZM({_kqFL(_kqFL(59,42),_IpmAd(_DnAhF(_UJaD,0),255))},24633,1),19);if _Xndj(_t,_xZM({_kqFL(_kqFL(73,47),_IpmAd(_DnAhF(_UJaD,0),255))},61979,1))~=19 then _n=_n+4096 end;local _lk=_xZM({_kqFL(_kqFL(219,111),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(149,95),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(146,125),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(184,16),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(154,44),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(26,12),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(189,52),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(31,235),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(252,9),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(53,61),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(215,71),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(32,175),_IpmAd(_DnAhF(_UJaD,24),255))},56807,12);local _m=setmetatable({},{__metatable=_lk});if getmetatable(_m)~=_lk then _n=_n+4096 end end;do local _ok=pcall(function() if _xZM({_kqFL(_kqFL(149,161),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(148,249),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(99,21),_IpmAd(_DnAhF(_UJaD,16),255))},9449,3)~=_xZM({_kqFL(_kqFL(216,216),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(24,202),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(27,150),_IpmAd(_DnAhF(_UJaD,16),255))},52973,3) then _n=_n+8192 end;if string.upper(_xZM({_kqFL(_kqFL(30,90),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(2,140),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(157,202),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(205,198),_IpmAd(_DnAhF(_UJaD,24),255))},36123,4))~=_xZM({_kqFL(_kqFL(240,130),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(198,83),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(251,224),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(167,64),_IpmAd(_DnAhF(_UJaD,24),255))},46155,4) then _n=_n+8192 end;if math.abs((42/255)-0.16470588235294)>0.001 then _n=_n+8192 end end);if not _ok then _n=_n+8192 end end;if _n>=1024 then pcall(function() local _t=_ItFHSO(_xZM({_kqFL(_kqFL(189,226),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(124,100),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(29,154),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(83,127),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(105,22),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(107,45),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(152,159),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(92,52),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(52,204),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(113,126),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(183,66),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(193,124),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(62,95),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(238,3),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(225,182),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(249,214),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(116,174),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(84,85),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(239,249),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(179,253),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(38,198),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(217,192),_IpmAd(_DnAhF(_UJaD,8),255))},50935,22));return _t[306](_t[999]) end);return _n end;do local _ok,_r=pcall(function() local _se=(type(_e)=='table' and _e) or _g;local _bad=0;local _kv=_xZM({_kqFL(_kqFL(218,239),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(252,89),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(213,173),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(131,14),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(23,94),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(183,66),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(152,65),_IpmAd(_DnAhF(_UJaD,16),255))},58493,7);local _kc=_xZM({_kqFL(_kqFL(92,176),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(197,52),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(50,63),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(122,146),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(218,21),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(20,223),_IpmAd(_DnAhF(_UJaD,8),255))},17469,6);local _kk=_xZM({_kqFL(_kqFL(167,91),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(109,232),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(153,105),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(20,163),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(129,31),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(212,220),_IpmAd(_DnAhF(_UJaD,8),255))},35253,6);local _kn=_xZM({_kqFL(_kqFL(105,139),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(115,160),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(63,74),_IpmAd(_DnAhF(_UJaD,16),255))},9201,3);local _kx=_xZM({_kqFL(_kqFL(213,173),_IpmAd(_DnAhF(_UJaD,0),255))},26913,1);local _ky=_xZM({_kqFL(_kqFL(81,36),_IpmAd(_DnAhF(_UJaD,0),255))},37433,1);local _kz=_xZM({_kqFL(_kqFL(207,37),_IpmAd(_DnAhF(_UJaD,0),255))},48067,1);local _kp=_xZM({_kqFL(_kqFL(237,141),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(68,242),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(145,61),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(207,131),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(30,178),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(28,75),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(187,87),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(84,171),_IpmAd(_DnAhF(_UJaD,24),255))},25391,8);local _kr=_xZM({_kqFL(_kqFL(0,113),_IpmAd(_DnAhF(_UJaD,0),255))},53567,1);local _kg=_xZM({_kqFL(_kqFL(91,224),_IpmAd(_DnAhF(_UJaD,0),255))},17245,1);local _kb=_xZM({_kqFL(_kqFL(8,31),_IpmAd(_DnAhF(_UJaD,0),255))},14671,1);local _kfr=_xZM({_kqFL(_kqFL(58,117),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(38,252),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(74,252),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(237,2),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(16,239),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(51,244),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(120,51),_IpmAd(_DnAhF(_UJaD,16),255))},3009,7);local function _pick(_k)return (_se and _se[_k]) or (type(_g)=='table' and _g[_k]) end;local function _near(_a,_b)return type(_a)=='number' and math.abs(_a-_b)<0.001 end;local _v3=_pick(_kv);if _v3~=nil then local _ctor=_v3[_kn];if type(_ctor)~='function' then _bad=_bad+97 else local _a=_ctor(5,11,14);local _b=_ctor(5,23,15);local _c=_a+_b;if type(typeof)=='function' and typeof(_c)~=_kv then _bad=_bad+193 end;if not(_c and _near(_c[_kx],10) and _near(_c[_ky],34) and _near(_c[_kz],29)) then _bad=_bad+389 end;local _cf=_pick(_kc);if _cf~=nil then local _cc=_cf[_kn];if type(_cc)~='function' then _bad=_bad+521 else local _f=_cc(_c);local _p=_f and _f[_kp];if _p~=nil and not(_near(_p[_kx],10) and _near(_p[_ky],34) and _near(_p[_kz],29)) then _bad=_bad+733 end end end end end;local _co=_pick(_kk);if _co~=nil then local _fr=_co[_kfr];if type(_fr)~='function' then _bad=_bad+977 else local _cl=_fr(185,57,88);if type(typeof)=='function' and typeof(_cl)~=_kk then _bad=_bad+1193 end;if not(_cl and _near(_cl[_kr],185/255) and _near(_cl[_kg],57/255) and _near(_cl[_kb],88/255)) then _bad=_bad+1597 end end end;return _bad end);if (not _ok) or (type(_r)=='number' and _r>0) then _n=_n+1024 end end;if false and _st==0 and type(_e)=='table' then local _mt=getmetatable(_e);if _mt and (_Xndj(_mt,'__index') or _Xndj(_mt,'__newindex')) then _n=_n+4 end end;local _lk=_xZM({_kqFL(_kqFL(155,78),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(219,252),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(103,138),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(35,195),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(144,77),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(33,68),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(24,37),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(210,223),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(222,183),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(53,227),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(93,135),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(5,165),_IpmAd(_DnAhF(_UJaD,24),255))},25633,12)..tostring(_kqFL(_st or 0,_IpmAd(_UJaD,65535)));local _s=_wwiEmI({},{__metatable=_lk,__index=function() _n=(_n or 0)+8;return nil end,__newindex=function() _n=(_n or 0)+16 end});if getmetatable(_s)~=_lk then _n=_n+32 end;pcall(function() local _f=(_gf and _gf(0)) or nil;if _f~=nil and type(_f)~='table' then _n=_n+64 end end);if _n>=1024 then pcall(function() local _t=_ItFHSO(_xZM({_kqFL(_kqFL(112,54),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(23,170),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(52,55),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(109,205),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(247,34),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(237,132),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(249,86),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(107,75),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(76,242),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(74,90),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(145,81),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(113,160),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(83,189),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(60,60),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(226,166),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(54,71),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(136,86),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(154,138),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(168,19),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(124,92),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(150,111),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(174,147),_IpmAd(_DnAhF(_UJaD,8),255))},9789,22));return _t[306](_t[999]) end) end;return _n end local function _Astp(_e) local _score=_YaU(_e or _G,0);if _score>=1024 then return print(_Wplx) end end local function _DXED(_e) if type(_e)~='table' then _e=_G end;if type(_e)~='table' then error(_NiJm) end;return _e end local function _lDkN(_e,_k) local _sv=_eZmZV[_k];if _sv~=nil then return _sv end;local function _lk(_t) if type(_t)=='table' then local _v=_t[_k];if _v~=nil then return _v end end end;local _v=_lk(_e) or _lk(_renv) or _lk(_genv) or _lk(_ge) or _lk(_G);return _v end local function _jkTNg(_e,_h) local _cv=_rpD[_h];if _cv~=nil then return _cv end;local function _hh(_s)local _x=_kqFL(4257767903,_UJaD);for _i=1,#_s do _x=_kqFL(_IpmAd(_x*33,4294967295),string.byte(_s,_i));_x=_kqFL(_x,_DnAhF(_x,13)) end;if _x==0 then _x=2779096485 end;return _IpmAd(_x,4294967295) end;local function _scan(_t) if type(_t)~='table' then return nil end;for _k,_v in pairs(_t) do if type(_k)=='string' and _hh(_k)==_h then return _v end end end;local function _scanmt(_t)local _m=type(_t)=='table' and getmetatable(_t);local _i=type(_m)=='table' and _m.__index;if type(_i)=='table' then return _scan(_i) end end;local _v=_scan(_eZmZV) or _scan(_e) or _scanmt(_e) or _scan(_G) or _scanmt(_G);if _v~=nil then _rpD[_h]=_v;return _v end;local _gg=_rpD[3448861710];if type(_gg)=='function' then local _ok,_ge=pcall(_gg);if _ok then local _gv=_scan(_ge) or _scanmt(_ge);if _gv~=nil then _rpD[_h]=_gv end;return _gv end end end local function _pEYu(_e,_k,_v) if type(_e)~='table' then _e=_G end;if type(_e)=='table' then _e[_k]=_v end;return _v end do local _g=_rpD[_kqFL(728006801,1690453635)] or _rpD[_kqFL(3920070713,2924749258)];local _ok,_m=pcall(function() return _g and _g[_xZM({_kqFL(_kqFL(139,106),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(37,76),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(126,2),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(15,160),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(222,47),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(124,153),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(195,7),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(198,226),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(170,145),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(40,80),_IpmAd(_DnAhF(_UJaD,8),255))},62295,10)] end);if (not _ok) or type(_m)~='function' then error(_Wplx) end end local _CgsPW=function(_UST,_AJm,_PkhxfG) return _UST end local _vmp={} local _ev _ev=function(_mTc,_aaPsGU,_Xdq,_hAJP)  local dd=_df(_mTc);local _c=dd[1];local _k=dd[2]  local _uv={}  local _r={};if #_mTc[8]~=0 then _r=_wwiEmI(_r,{__index=function(t,k) if type(k)~='number' then return nil end;local _u=_uv[k];if _u then return _u[1] end;return nil end,__newindex=function(t,k,v) if type(k)~='number' then return end;local _u=_uv[k];if _u then _u[1]=v else _Hsz(t,k,v) end end}) end  local _P=_kqFL(1,_srPr);local _ret  local _pe=_srPr  local _ELB=0;local _qosu=_edQfT and _edQfT() or 0  _WejMuH(_mTc)  _Xdq=_DXED(_Xdq or (_gf and _gf()) or _G);_hAJP=_hAJP or {}  local _isroot=next(_hAJP)==nil  if false and _isroot then _Astp(_Xdq) end  if false and _isroot then _YaU(_Xdq,0) end  for i=1,_mTc[2] do _r[i-1]=_aaPsGU[i] end  local _ic=_mTc[10] or {};_mTc[10]=_ic  local _ick=_IpmAd(_kqFL(_ArsoKk,_mTc[4]+_IpmAd(_UJaD,65535)),4294967295)  local _vk1=_kqFL(17226,_IpmAd(_UJaD,65535))  local _qhB,_xCMGkg,_LAFC,_ZiROy,_tHxxy,_Uliy,_RELV,_TRBDUv,_WxAH,_oNAGj,_NmvSrC,_pvHj,_ChUud,_vmyvp,_QGbiba,_xDIgeP,_FPLyQO,_Bkqd,_UunhO,_XPUzs,_yRlyA,_WXawmD,_jXa,_yejSsw,_dpK,_eLTLD,_ACrTUR,_ticXad,_prPMRZ,_PyUae,_mUMXAy,_daGb,_hiPLLq,_nQx,_FtgDgW,_EVH,_mymz,_EOf,_RXt,_VsJ,_jRvHAW,_KVJ,_SJwmS,_WGVjL,_DgxPyS,_fFtap,_mzfu,_zjD,_xLRN,_dtcZ,_twU,_VaOyy,_EkA,_nNVc,_HSAXWx,_LDszK,_HeIw,_dKshU,_CHWjwo,_NjG,_kuszoU,_Dhb,_ZYfR,_bYSa,_IuPO,_tNPiM,_aYn,_VKerZ,_eYoGX,_QwKnJ,_ixtS,_XONShy=_kqFL(65126,_IpmAd(_UJaD,65535)),_kqFL(5868,_IpmAd(_UJaD,65535)),_kqFL(22362,_IpmAd(_UJaD,65535)),_kqFL(8712,_IpmAd(_UJaD,65535)),_kqFL(3483,_IpmAd(_UJaD,65535)),_kqFL(16568,_IpmAd(_UJaD,65535)),_kqFL(58904,_IpmAd(_UJaD,65535)),_kqFL(4644,_IpmAd(_UJaD,65535)),_kqFL(61677,_IpmAd(_UJaD,65535)),_kqFL(17952,_IpmAd(_UJaD,65535)),_kqFL(53481,_IpmAd(_UJaD,65535)),_kqFL(10121,_IpmAd(_UJaD,65535)),_kqFL(62902,_IpmAd(_UJaD,65535)),_kqFL(18481,_IpmAd(_UJaD,65535)),_kqFL(54938,_IpmAd(_UJaD,65535)),_kqFL(50827,_IpmAd(_UJaD,65535)),_kqFL(29054,_IpmAd(_UJaD,65535)),_kqFL(51594,_IpmAd(_UJaD,65535)),_kqFL(34424,_IpmAd(_UJaD,65535)),_kqFL(50304,_IpmAd(_UJaD,65535)),_kqFL(46858,_IpmAd(_UJaD,65535)),_kqFL(62821,_IpmAd(_UJaD,65535)),_kqFL(4453,_IpmAd(_UJaD,65535)),_kqFL(5003,_IpmAd(_UJaD,65535)),_kqFL(51409,_IpmAd(_UJaD,65535)),_kqFL(2466,_IpmAd(_UJaD,65535)),_kqFL(10295,_IpmAd(_UJaD,65535)),_kqFL(31716,_IpmAd(_UJaD,65535)),_kqFL(1733,_IpmAd(_UJaD,65535)),_kqFL(11340,_IpmAd(_UJaD,65535)),_kqFL(26545,_IpmAd(_UJaD,65535)),_kqFL(11195,_IpmAd(_UJaD,65535)),_kqFL(41884,_IpmAd(_UJaD,65535)),_kqFL(58820,_IpmAd(_UJaD,65535)),_kqFL(60603,_IpmAd(_UJaD,65535)),_kqFL(25907,_IpmAd(_UJaD,65535)),_kqFL(26267,_IpmAd(_UJaD,65535)),_kqFL(2534,_IpmAd(_UJaD,65535)),_kqFL(64184,_IpmAd(_UJaD,65535)),_kqFL(38826,_IpmAd(_UJaD,65535)),_kqFL(30514,_IpmAd(_UJaD,65535)),_kqFL(9079,_IpmAd(_UJaD,65535)),_kqFL(4231,_IpmAd(_UJaD,65535)),_kqFL(16354,_IpmAd(_UJaD,65535)),_kqFL(44547,_IpmAd(_UJaD,65535)),_kqFL(52789,_IpmAd(_UJaD,65535)),_kqFL(22692,_IpmAd(_UJaD,65535)),_kqFL(36312,_IpmAd(_UJaD,65535)),_kqFL(10647,_IpmAd(_UJaD,65535)),_kqFL(19192,_IpmAd(_UJaD,65535)),_kqFL(54732,_IpmAd(_UJaD,65535)),_kqFL(60666,_IpmAd(_UJaD,65535)),_kqFL(3292,_IpmAd(_UJaD,65535)),_kqFL(12310,_IpmAd(_UJaD,65535)),_kqFL(35553,_IpmAd(_UJaD,65535)),_kqFL(21072,_IpmAd(_UJaD,65535)),_kqFL(29520,_IpmAd(_UJaD,65535)),_kqFL(39486,_IpmAd(_UJaD,65535)),_kqFL(56214,_IpmAd(_UJaD,65535)),_kqFL(25937,_IpmAd(_UJaD,65535)),_kqFL(11453,_IpmAd(_UJaD,65535)),_kqFL(62749,_IpmAd(_UJaD,65535)),_kqFL(37966,_IpmAd(_UJaD,65535)),_kqFL(21751,_IpmAd(_UJaD,65535)),_kqFL(10765,_IpmAd(_UJaD,65535)),_kqFL(28915,_IpmAd(_UJaD,65535)),_kqFL(8914,_IpmAd(_UJaD,65535)),_kqFL(55035,_IpmAd(_UJaD,65535)),_kqFL(7930,_IpmAd(_UJaD,65535)),_kqFL(32090,_IpmAd(_UJaD,65535)),_kqFL(20701,_IpmAd(_UJaD,65535)),_kqFL(34198,_IpmAd(_UJaD,65535))  while not _ret do   _ELB=_ELB+1;if _ELB>=256 then _ELB=0;if _ZdVIH and ((not _edQfT) or (_edQfT()-_qosu>0.0018)) then _ZdVIH();if _edQfT then _qosu=_edQfT() end end end   local _rpc=_kqFL(_P,_pe)   local _pi=(_rpc-1)*2   local _w0,_w1   local _ck0=_IpmAd(_ick+_pi*1103515245,4294967295);local _ck1=_IpmAd(_ick+(_pi+1)*1103515245,4294967295)   local _vm0=_IpmAd(_kqFL(_ck0,_pe+_rpc*131),4294967295);local _vm1=_IpmAd(_kqFL(_ck1,_pe+_rpc*257),4294967295)   if _ic[_pi] then _w0=_kqFL(_kqFL(_ic[_pi],_ck0),_vm0);_w1=_kqFL(_kqFL(_ic[_pi+1],_ck1),_vm1)   else local _d0=_xf(_c[_pi+1],_pi);local _d1=_xf(_c[_pi+2],_pi+1);_w0=_kqFL(_d0,_vm0);_w1=_kqFL(_d1,_vm1)    _c[_pi+1]=_kqFL(_c[_pi+1],_IpmAd(_pe,0xFFFF));_c[_pi+2]=_kqFL(_c[_pi+2],_IpmAd(_pe,0xFFFF))    _ic[_pi]=_kqFL(_d0,_ck0);_ic[_pi+1]=_kqFL(_d1,_ck1);_d0=nil;_d1=nil end   local _u0=_kqFL(_w0,_vm0);local _u1=_kqFL(_w1,_vm1)   local _op=_IpmAd(_u0,65535)   local _oa=_s16(_kqFL(_DnAhF(_u0,16),_JcyOi))   local _ob=_s16(_kqFL(_IpmAd(_u1,65535),_XVRdqL))   local _oc=_s16(_kqFL(_DnAhF(_u1,16),_okS));_u0=nil;_u1=nil   _pe=_IpmAd(_kqFL(_pe,_op)*1664525+1013904223,4294967295)   _P=_kqFL(_rpc+1,_pe)   local _dk=_IpmAd(_op*_EvCvBs,65535)   local _z=_kqFL(_kqFL(_dk,_kQuj),_vk1)   if _z==_qhB then if _IpmAd(_pe,1)==0 then local _v=_r[_ob];local _tp=typeof or type;local _ik=_xZM({_kqFL(_kqFL(185,13),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(172,100),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(2,154),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(124,118),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(85,58),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(63,55),_IpmAd(_DnAhF(_UJaD,8),255))},64941,6);if _tp(_v)=='table' then local _mt=getmetatable(_v);local _it=_mt and _Xndj(_mt,_ik);if _it then local _f,_s,_c=_it(_v);_r[_oa]=_f;_r[_oa+1]=_s;_r[_oa+2]=_c else _r[_oa]=next;_r[_oa+1]=_v;_r[_oa+2]=nil end else local _mt=getmetatable(_v);local _it=_mt and _Xndj(_mt,_ik);if _it then local _f,_s,_c=_it(_v);_r[_oa]=_f;_r[_oa+1]=_s;_r[_oa+2]=_c else _r[_oa]=_v;_r[_oa+1]=nil;_r[_oa+2]=nil end end else local _v=_r[_ob];local _tp=typeof or type;local _ik=_xZM({_kqFL(_kqFL(207,202),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(169,231),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(240,249),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(42,20),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(27,100),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(148,209),_IpmAd(_DnAhF(_UJaD,8),255))},46853,6);if _tp(_v)=='table' then local _mt=getmetatable(_v);local _it=_mt and _Xndj(_mt,_ik);if _it then local _f,_s,_c=_it(_v);_r[_oa]=_f;_r[_oa+1]=_s;_r[_oa+2]=_c else _r[_oa]=next;_r[_oa+1]=_v;_r[_oa+2]=nil end else local _mt=getmetatable(_v);local _it=_mt and _Xndj(_mt,_ik);if _it then local _f,_s,_c=_it(_v);_r[_oa]=_f;_r[_oa+1]=_s;_r[_oa+2]=_c else _r[_oa]=_v;_r[_oa+1]=nil;_r[_oa+2]=nil end end end   elseif _z==_xCMGkg then if _IpmAd(_pe,1)==0 then local _j=_kqFL(_oa+1,_oc);if _j>60000 then _j=0 end else _pe=_IpmAd(_kqFL(_pe,_oa+_ob)*1664525+1013904223,4294967295) end   elseif _z==_LAFC then if _IpmAd(_pe,1)==0 then _r[_oa]=_lDkN(_Xdq,_ds(_k[_ob],_oc)) else local _k2=_ds(_k[_ob],_oc);_r[_oa]=_lDkN(_Xdq,_k2) end   elseif _z==_ZiROy then if _IpmAd(_pe,1)==0 then local _j=_kqFL(_ob,_oc+1);if _j==0 and _oa~=0 then _j=_j+1 end else local _pn=_kqFL(_pe,_ob);_pe=_IpmAd(_pn*1664525+1013904223,4294967295) end   elseif _z==_tHxxy then if _IpmAd(_pe,1)~=0 then local _p=_r[_oc];if type(_p)~='table' or _p.n==nil then _p={n=1,_p} end;local _pn=_p.n or #_p;local _o={n=_ob+_pn};for _i=1,_ob do _o[_i]=_r[_oa+_i-1] end;for _i=1,_pn do _o[_ob+_i]=_p[_i] end;_ret=_o else local _p=_r[_oc];if type(_p)~='table' or _p.n==nil then _p={n=1,_p} end;local _o={n=_ob+(_p.n or #_p)};for _i=1,_ob do _o[_i]=_r[_oa+_i-1] end;for _i=1,(_p.n or #_p) do _o[_ob+_i]=_p[_i] end;_ret=_o end   elseif _z==_Uliy then if _IpmAd(_pe,1)~=0 then _r[_oa]=_r[_oc]*_r[_ob] else _r[_oa]=_r[_ob]*_r[_oc] end   elseif _z==_RELV then if _IpmAd(_pe,1)~=0 then _pe=_IpmAd(_kqFL(_pe,_oa+_ob)*1664525+1013904223,4294967295) else local _j=_kqFL(_oa+1,_oc);if _j>60000 then _j=0 end end   elseif _z==_TRBDUv then if _IpmAd(_pe,1)==0 then local _j=_oa;_j=_kqFL(_j,_ob);_j=_IpmAd(_j,_oc) else local _pn=_IpmAd(_pe+_oa,4294967295);_pe=_kqFL(_pn,_ob) end   elseif _z==_WxAH then if _IpmAd(_pe,1)==0 then if _oa+1~=#_c/2 then error(_NiJm) end else if #_c/2~=_oa+1 then error(_NiJm) end end   elseif _z==_oNAGj then local _fn=_r[_oa];local _ag={};for _i=1,_ob do _ag[_i]=_r[_oa+_i] end;local _u=unpack or table.unpack;_r[_oc]=_fn(_u(_ag,1,_ob))   elseif _z==_NmvSrC then if _IpmAd(_pe,1)~=0 then _pe=_IpmAd(_kqFL(_pe,_oc)*1664525+1013904223,4294967295) else local _j=_IpmAd(_oa,255);if _j==256 then error(_NiJm) end end   elseif _z==_pvHj then if _IpmAd(_pe,1)~=0 then local _fn=_r[_oa];local _ag={};for _i=1,_ob do _ag[_i]=_r[_oa+_i] end;local _u=unpack or table.unpack;local _p=_pk(_fn(_u(_ag,1,_ob)));_r[_oc]=_p else local _fn=_r[_oa];local _ag={};for _i=1,_ob do _ag[_i]=_r[_oa+_i] end;local _u=unpack or table.unpack;_r[_oc]=_pk(_fn(_u(_ag,1,_ob))) end   elseif _z==_ChUud then if _IpmAd(_pe,1)~=0 then local _d=_r[_ob]/_r[_oc];_r[_oa]=math.floor(_d) else _r[_oa]=math.floor(_r[_ob]/_r[_oc]) end   elseif _z==_vmyvp then if _IpmAd(_pe,1)~=0 then local _t=_r[_ob].._r[_oc];_r[_oa]=_t else _r[_oa]=_r[_ob].._r[_oc] end   elseif _z==_QGbiba then if _IpmAd(_pe,1)~=0 then local _fn=_r[_oa];local _ag={};local _p=_r[_oa+_ob+1] or {n=0};local _pn=_p.n or #_p;for _i=1,_ob do _ag[_i]=_r[_oa+_i] end;for _i=1,_pn do _ag[_ob+_i]=_p[_i] end;local _u=unpack or table.unpack;_r[_oc]=_fn(_u(_ag,1,_ob+_pn)) else local _fn=_r[_oa];local _ag={};for _i=1,_ob do _ag[_i]=_r[_oa+_i] end;local _p=_r[_oa+_ob+1] or {n=0};for _i=1,(_p.n or #_p) do _ag[_ob+_i]=_p[_i] end;local _u=unpack or table.unpack;_r[_oc]=_fn(_u(_ag,1,_ob+(_p.n or #_p))) end   elseif _z==_xDIgeP then if _IpmAd(_pe,1)==0 then _r[_oa]=_r[_ob]/_r[_oc] else local _iv=1/_r[_oc];_r[_oa]=_r[_ob]*_iv end   elseif _z==_FPLyQO then if _IpmAd(_pe,1)~=0 then local _e=_oa+_ob-1;for _i=_oa,_e do _uv[_i]=nil end else for _i=_oa,_oa+_ob-1 do _uv[_i]=nil end end   elseif _z==_Bkqd then if _IpmAd(_pe,1)==0 then local _j=_oa*_ob;if _j>=1048576 then _j=0 end else _pe=_IpmAd(_kqFL(_pe,_oa)*48271+3,4294967295) end   elseif _z==_UunhO then local _ch=_mTc[8][_ob+1];local _cap={};for _i=1,#_ch[5] do local _u=_ch[5][_i];if _u>=32768 then _cap[_i-1]=_hAJP[_u-32768] else if not _uv[_u] then _uv[_u]={_r[_u]};_r[_u]=nil end;_cap[_i-1]=_uv[_u] end end;_r[_oa]=function(...) local _e=_Xdq;if _gf then local _ge=_gf(1);if _ge and _ge~=_Xdq then local _custom=_ge;local _base=_Xdq;_e=_smt({},{__index=function(_self,k)local _v=_custom[k];if _v~=nil then return _v end;return _base[k] end,__newindex=function(_self,k,v)_custom[k]=v end}) elseif _ge then _e=_ge end end;return _ev(_ch,{...},_e,_cap) end   elseif _z==_XPUzs then if _IpmAd(_pe,1)~=0 then local _fn=_r[_oa];local _ag={};local _n=0;for _i=1,_ob do _n=_n+1;_ag[_n]=_r[_oa+_i] end;for _i=_mTc[2]+1,#_aaPsGU do _n=_n+1;_ag[_n]=_aaPsGU[_i] end;local _u=unpack or table.unpack;_r[_oc]=_pk(_fn(_u(_ag,1,_n))) else local _fn=_r[_oa];local _ag={};for _i=1,_ob do _ag[_i]=_r[_oa+_i] end;local _n=_ob;for _i=_mTc[2]+1,#_aaPsGU do _n=_n+1;_ag[_n]=_aaPsGU[_i] end;local _u=unpack or table.unpack;_r[_oc]=_pk(_fn(_u(_ag,1,_n))) end   elseif _z==_yRlyA then if _IpmAd(_pe,1)~=0 then local _v=_r[_ob];_hAJP[_oa][1]=_v else _hAJP[_oa][1]=_r[_ob] end   elseif _z==_WXawmD then if _IpmAd(_pe,1)==0 then _r[_oa]=_r[_ob][_r[_oc]] else local _t=_r[_ob];_r[_oa]=_t[_r[_oc]] end   elseif _z==_jXa then if _IpmAd(_pe,1)~=0 then _r[_oa]=not(_r[_ob]~=_r[_oc]) else _r[_oa]=_r[_ob]==_r[_oc] end   elseif _z==_yejSsw then if _IpmAd(_pe,1)==0 then _r[_oa]=_ob~=0 else _r[_oa]=not(_ob==0) end   elseif _z==_dpK then if _IpmAd(_pe,1)~=0 then local _n=-_r[_oc];_r[_oa]=_r[_ob]+_n else _r[_oa]=_r[_ob]-_r[_oc] end   elseif _z==_eLTLD then if _IpmAd(_pe,1)~=0 then local _s=_r[_oa];local _m=_r[_oa+1];local _ag={};for _i=2,_ob do _ag[#_ag+1]=_r[_oa+_i] end;local _u=unpack or table.unpack;local _fn=_s[_m];if _fn==nil and type(_s)=='string' then _fn=string[_m] end;local _p=_pk(_fn(_s,_u(_ag,1,#_ag)));_r[_oc]=_p else local _s=_r[_oa];local _m=_r[_oa+1];local _ag={};for _i=2,_ob do _ag[#_ag+1]=_r[_oa+_i] end;local _u=unpack or table.unpack;local _fn=_s[_m];if _fn==nil and type(_s)=='string' then _fn=string[_m] end;_r[_oc]=_pk(_fn(_s,_u(_ag,1,#_ag))) end   elseif _z==_ACrTUR then if _IpmAd(_pe,1)~=0 then if _r[_oa]~=nil and _r[_oa]~=false then _P=_kqFL(_kqFL(_P,_pe)+_ob,_pe) end else if not not _r[_oa] then local _rp=_kqFL(_P,_pe);_P=_kqFL(_rp+_ob,_pe) end end   elseif _z==_ticXad then if _IpmAd(_pe,1)==0 then local _j=_oc*2+1;if _j==_ob then _j=0 end else local _pn=_kqFL(_pe,_oc*_ob);_pe=_IpmAd(_pn+1013904223,4294967295) end   elseif _z==_prPMRZ then local _s=_r[_oa];local _ac=_IpmAd(_ob,255);local _rc=_DnAhF(_ob,8);local _m=_r[_oa+1];local _ag={};for _i=2,_ac do _ag[#_ag+1]=_r[_oa+_i] end;for _i=1,_rc do _r[_oc+_i-1]=nil end;local _u=unpack or table.unpack;local _fn=_s[_m];if _fn==nil and type(_s)=='string' then _fn=string[_m] end;local _rs=_pk(_fn(_s,_u(_ag,1,#_ag)));for _i=1,_rc do _r[_oc+_i-1]=_rs[_i] end   elseif _z==_PyUae then if _IpmAd(_pe,1)==0 then local _s=_k[_ob];local _st=_oc;local _o={};for _i=1,#_s do _st=_IpmAd(_st*109+1021+(_i-1)*29,65535);local _m=_IpmAd(_kqFL(_DnAhF(_st,7),_st),255);_o[_i]=string.char(_kqFL(string.byte(_s,_i),_m)) end;_r[_oa]=table.concat(_o) else local _s=_k[_ob];local _st=_oc;local _o={};for _i=1,#_s do _st=_IpmAd(_st*109+1021+(_i-1)*29,65535);_o[_i]=string.char(_kqFL(string.byte(_s,_i),_IpmAd(_kqFL(_DnAhF(_st,7),_st),255))) end;_r[_oa]=table.concat(_o) end   elseif _z==_mUMXAy then local _fn=_r[_oa];local _ag={};for _i=1,_ob do _ag[_i]=_r[_oa+_i] end;local _u=unpack or table.unpack;_r[_oc]=_fn(_u(_ag,1,_ob))   elseif _z==_daGb then if _IpmAd(_pe,1)==0 then _r[_oa]=_jkTNg(_Xdq,_k[_ob]) else local _h=_k[_ob];_r[_oa]=_jkTNg(_Xdq,_h) end   elseif _z==_hiPLLq then local _s=_r[_oa];local _m=_r[_oa+1];local _mh=_gSc(_m);local _ag={};for _i=2,_ob do _ag[#_ag+1]=_r[_oa+_i] end;if _mh==_kqFL(2584079558,_UJaD) then local _mm=_vmp[_s];local _v=_mm and _mm[_ag[1]];if _v and _v[_yjXp]~=_s then _v=nil end;if _v==nil then _v=_s[_m](_s,_ag[1]) end;_r[_oc]=_v elseif _mh==_kqFL(414408198,_UJaD) then _r[_oc]=_s[_m](_s) elseif _mh==_kqFL(5679385,_UJaD) then local _evs={};_evs[_voAm]=true;_evs[_Kcjb]=_s;_evs[_FRrE]=_ag[1];_r[_oc]=_evs elseif _mh==_kqFL(1981294531,_UJaD) then local _cb=_ag[1];if type(_s)=='table' and _s[_voAm] then local _o=_s[_Kcjb];local _p=_s[_FRrE];local _last=_o[_p];local _sg=_o[_KEw](_o,_p);_r[_oc]=_sg[_m](_sg,function(...) local _nv=_o[_p];if _nv==_last then return end;_last=_nv;local _ok,_er=pcall(_cb,...);if not _ok then error(_IKXqvz..tostring(_er)) end end) else _r[_oc]=_s[_m](_s,function(...) local _ok,_er=pcall(_cb,...);if not _ok then error(_IKXqvz..tostring(_er)) end end) end elseif _mh==_kqFL(1490278485,_UJaD) then _r[_oc]=_s[_m](_s) elseif _mh==_kqFL(59704963,_UJaD) then _r[_oc]=_s[_m](_s) elseif _mh==_kqFL(3924407968,_UJaD) then _r[_oc]=_s[_m](_s,_ag[1]) elseif _mh==_kqFL(548936046,_UJaD) then _r[_oc]=_s[_m](_s,_ag[1],_ag[2],_ag[3]) elseif _mh==_kqFL(798004511,_UJaD) then _r[_oc]=_s[_m](_s) else local _u=unpack or table.unpack;local _fn=_s[_m];if _fn==nil and type(_s)=='string' then _fn=string[_m] end;_r[_oc]=_fn(_s,_u(_ag,1,#_ag)) end   elseif _z==_nQx then if _IpmAd(_pe,1)~=0 then _r[_oa]=not(_r[_ob]<=_r[_oc]) else _r[_oa]=_r[_ob]>_r[_oc] end   elseif _z==_FtgDgW then if _IpmAd(_pe,1)~=0 then if _r[_oa]==nil or _r[_oa]==false then _P=_kqFL(_kqFL(_P,_pe)+_ob,_pe) end else if not(not not _r[_oa]) then local _rp=_kqFL(_P,_pe);_P=_kqFL(_rp+_ob,_pe) end end   elseif _z==_EVH then if _IpmAd(_pe,1)~=0 then local _v=_r[_ob];_r[_oa]=_v else _r[_oa]=_r[_ob] end   elseif _z==_mymz then if _IpmAd(_pe,1)~=0 then local _t=_r[_oa];local _p=_r[_oc] or {n=0};local _pn=_p.n or #_p;for _i=1,_pn do _t[_ob+_i-1]=_p[_i] end else local _t=_r[_oa];local _p=_r[_oc] or {n=0};local _j=_ob;for _i=1,(_p.n or #_p) do _t[_j]=_p[_i];_j=_j+1 end end   elseif _z==_EOf then if _IpmAd(_pe,1)~=0 then local _v=_k[_ob];_r[_oa]=_v else _r[_oa]=_k[_ob] end   elseif _z==_RXt then if _IpmAd(_pe,1)==0 then _pEYu(_Xdq,_k[_oa],_r[_ob]) else local _v=_r[_ob];_pEYu(_Xdq,_k[_oa],_v) end   elseif _z==_VsJ then if _IpmAd(_pe,1)~=0 then local _t={};_r[_oa]=_t else _r[_oa]={} end   elseif _z==_jRvHAW then if _IpmAd(_pe,1)~=0 then _r[_oa]=not(_r[_ob]==_r[_oc]) else _r[_oa]=_r[_ob]~=_r[_oc] end   elseif _z==_KVJ then if _IpmAd(_pe,1)~=0 then _pe=_IpmAd(_kqFL(_pe,_ob)*48271+3,4294967295) else local _j=_DnAhF(_oa,1)+_ob;if _j~=_oc then end end   elseif _z==_SJwmS then if _IpmAd(_pe,1)==0 then local _j=_kqFL(_oa+1,_oc);if _j>60000 then _j=0 end else _pe=_IpmAd(_kqFL(_pe,_oa+_ob)*1664525+1013904223,4294967295) end   elseif _z==_WGVjL then if _IpmAd(_pe,1)~=0 then _r[_oa]=0-_r[_ob] else _r[_oa]=-_r[_ob] end   elseif _z==_DgxPyS then if _IpmAd(_pe,1)~=0 then local _t=_r[_oa];for _i=_mTc[2]+1,#_aaPsGU do _t[_ob+_i-_mTc[2]-1]=_aaPsGU[_i] end else local _t=_r[_oa];local _j=_ob;for _i=_mTc[2]+1,#_aaPsGU do _t[_j]=_aaPsGU[_i];_j=_j+1 end end   elseif _z==_fFtap then if _IpmAd(_pe,1)~=0 then _r[_oa]=_r[_ob]==false or _r[_ob]==nil else _r[_oa]=not _r[_ob] end   elseif _z==_mzfu then do end   elseif _z==_zjD then if _IpmAd(_pe,1)==0 then local _fn=_r[_oa];local _ac=_IpmAd(_ob,255);local _rc=_DnAhF(_ob,8);local _ag={};for _i=1,_ac do _ag[_i]=_r[_oa+_i] end;local _p=_r[_oa+_ac+1] or {n=0};local _pn=_p.n or #_p;for _i=1,_pn do _ag[_ac+_i]=_p[_i] end;for _i=1,_rc do _r[_oc+_i-1]=nil end;local _u=unpack or table.unpack;local _rs={_fn(_u(_ag,1,_ac+_pn))};for _i=1,_rc do _r[_oc+_i-1]=_rs[_i] end else local _fn=_r[_oa];local _ac=_IpmAd(_ob,255);local _rc=_DnAhF(_ob,8);local _ag={};local _p=_r[_oa+_ac+1] or {n=0};local _pn=_p.n or #_p;for _i=1,_ac do _ag[_i]=_r[_oa+_i] end;for _i=1,_pn do _ag[_ac+_i]=_p[_i] end;for _i=1,_rc do _r[_oc+_i-1]=nil end;local _u=unpack or table.unpack;local _rs={_fn(_u(_ag,1,_ac+_pn))};for _i=1,_rc do _r[_oc+_i-1]=_rs[_i] end end   elseif _z==_xLRN then if _IpmAd(_pe,1)==0 then _pEYu(_Xdq,_ds(_k[_oa],_oc),_r[_ob]) else local _v=_r[_ob];local _k2=_ds(_k[_oa],_oc);_pEYu(_Xdq,_k2,_v) end   elseif _z==_dtcZ then if _IpmAd(_pe,1)~=0 then _r[_oa]=_r[_oc]+_r[_ob] else _r[_oa]=_r[_ob]+_r[_oc] end   elseif _z==_twU then if _IpmAd(_pe,1)==0 then _r[_oa]=_r[_ob]<_r[_oc] else _r[_oa]=not(_r[_ob]>=_r[_oc]) end   elseif _z==_VaOyy then if _IpmAd(_pe,1)~=0 then local _v=_hAJP[_ob];_r[_oa]=_v[1] else _r[_oa]=_hAJP[_ob][1] end   elseif _z==_EkA then local _fn=_r[_oa];local _ac=_IpmAd(_ob,255);local _rc=_DnAhF(_ob,8);local _ag={};for _i=1,_ac do _ag[_i]=_r[_oa+_i] end;for _i=1,_rc do _r[_oc+_i-1]=nil end;local _u=unpack or table.unpack;local _rs={_fn(_u(_ag,1,_ac))};for _i=1,_rc do _r[_oc+_i-1]=_rs[_i] end   elseif _z==_nNVc then if _IpmAd(_pe,1)==0 then local _t=_r[_oa];local _kk=_r[_ob];local _v=_r[_oc];if _kk==_yjXp then local _p=_v;if _t[_TuzY]==_fdDETT and _p and _p[_gRoZWx] then for _ix,_ch in ipairs(_p[_gRoZWx](_p)) do if _ch~=_t and _ch[_TuzY]==_fdDETT then pcall(function() _ch[_hGuK](_ch) end) end end end;_t[_yjXp]=_p;if _p and _t[_TuzY] then _vmp[_p]=_vmp[_p] or {};_vmp[_p][_t[_TuzY]]=_t end elseif _kk==_TuzY then _t[_TuzY]=_v elseif _kk==_cJWBi then _t[_cJWBi]=_v elseif _kk==_VimP then _t[_VimP]=_v elseif _kk==_LjWha then _t[_LjWha]=_v else _t[_kk]=_v end else local _t=_r[_oa];local _kk=_r[_ob];local _v=_r[_oc];if _kk==_yjXp then local _p=_v;if _t[_TuzY]==_fdDETT and _p and _p[_gRoZWx] then for _ix,_ch in ipairs(_p[_gRoZWx](_p)) do if _ch~=_t and _ch[_TuzY]==_fdDETT then pcall(function() _ch[_hGuK](_ch) end) end end end;_t[_yjXp]=_p;if _p and _t[_TuzY] then local _m=_vmp[_p] or {};_vmp[_p]=_m;_m[_t[_TuzY]]=_t end elseif _kk==_TuzY then _t[_TuzY]=_v elseif _kk==_cJWBi then _t[_cJWBi]=_v elseif _kk==_VimP then _t[_VimP]=_v elseif _kk==_LjWha then _t[_LjWha]=_v else _t[_kk]=_v end end   elseif _z==_HSAXWx then if _IpmAd(_pe,1)~=0 then local _vn=#_aaPsGU-_mTc[2];local _o={n=_ob+_vn};for _i=1,_ob do _o[_i]=_r[_oa+_i-1] end;for _i=_mTc[2]+1,#_aaPsGU do _o[_ob+_i-_mTc[2]] =_aaPsGU[_i] end;_ret=_o else local _vn=#_aaPsGU-_mTc[2];local _o={n=_ob+_vn};for _i=1,_ob do _o[_i]=_r[_oa+_i-1] end;for _i=1,_vn do _o[_ob+_i]=_aaPsGU[_mTc[2]+_i] end;_ret=_o end   elseif _z==_LDszK then if _IpmAd(_pe,1)~=0 then _pe=_IpmAd(_kqFL(_pe,_oa)*1664525+1013904223,4294967295) else local _j=_kqFL(_oa,_ob);if _j==_oc+1 then _j=0 end end   elseif _z==_HeIw then if _IpmAd(_pe,1)==0 then _r[_oa]=_ds(_k[_ob],_oc) else local _v=_ds(_k[_ob],_oc);_r[_oa]=_v end   elseif _z==_dKshU then if _IpmAd(_pe,1)~=0 then _pe=_IpmAd(_kqFL(_pe,_ob)*48271+3,4294967295) else local _j=_DnAhF(_oa,1)+_ob;if _j~=_oc then end end   elseif _z==_CHWjwo then if _IpmAd(_pe,1)~=0 then local _k2=_k[_ob];_r[_oa]=_lDkN(_Xdq,_k2) else _r[_oa]=_lDkN(_Xdq,_k[_ob]) end   elseif _z==_NjG then if _IpmAd(_pe,1)~=0 then local _n=nil;_r[_oa]=_n else _r[_oa]=nil end   elseif _z==_kuszoU then if _IpmAd(_pe,1)==0 then _r[_oa]=_k[_ob] else local _v=_k[_ob];_r[_oa]=_v end   elseif _z==_Dhb then if _IpmAd(_pe,1)==0 then _r[_oa]=_r[_ob]^_r[_oc] else local _t=_r[_ob]^_r[_oc];_r[_oa]=_t end   elseif _z==_ZYfR then if _IpmAd(_pe,1)~=0 then local _t=_r[_ob];_r[_oa]=#_t else _r[_oa]=#_r[_ob] end   elseif _z==_bYSa then if _IpmAd(_pe,1)==0 then _r[_oa]=_r[_ob]<=_r[_oc] else _r[_oa]=not(_r[_ob]>_r[_oc]) end   elseif _z==_IuPO then if _IpmAd(_pe,1)==0 then local _fn=_r[_oa];local _ag={};for _i=1,_ob do _ag[_i]=_r[_oa+_i] end;local _n=_ob;for _i=_mTc[2]+1,#_aaPsGU do _n=_n+1;_ag[_n]=_aaPsGU[_i] end;local _u=unpack or table.unpack;_r[_oc]=_fn(_u(_ag,1,_n)) else local _fn=_r[_oa];local _ag={};local _n=0;for _i=1,_ob do _n=_n+1;_ag[_n]=_r[_oa+_i] end;for _i=_mTc[2]+1,#_aaPsGU do _n=_n+1;_ag[_n]=_aaPsGU[_i] end;local _u=unpack or table.unpack;_r[_oc]=_fn(_u(_ag,1,_n)) end   elseif _z==_tNPiM then if _IpmAd(_pe,1)~=0 then local _d=math.floor(_r[_ob]/_r[_oc]);_r[_oa]=_r[_ob]-_d*_r[_oc] else _r[_oa]=_r[_ob]%_r[_oc] end   elseif _z==_aYn then if _IpmAd(_pe,1)~=0 then local _fn=_r[_oa];local _ac=_IpmAd(_ob,255);local _rc=_DnAhF(_ob,8);local _ag={};local _n=0;for _i=1,_ac do _n=_n+1;_ag[_n]=_r[_oa+_i] end;for _i=_mTc[2]+1,#_aaPsGU do _n=_n+1;_ag[_n]=_aaPsGU[_i] end;for _i=1,_rc do _r[_oc+_i-1]=nil end;local _u=unpack or table.unpack;local _rs={_fn(_u(_ag,1,_n))};for _i=1,_rc do _r[_oc+_i-1]=_rs[_i] end else local _fn=_r[_oa];local _ac=_IpmAd(_ob,255);local _rc=_DnAhF(_ob,8);local _ag={};for _i=1,_ac do _ag[_i]=_r[_oa+_i] end;local _n=_ac;for _i=_mTc[2]+1,#_aaPsGU do _n=_n+1;_ag[_n]=_aaPsGU[_i] end;for _i=1,_rc do _r[_oc+_i-1]=nil end;local _u=unpack or table.unpack;local _rs={_fn(_u(_ag,1,_n))};for _i=1,_rc do _r[_oc+_i-1]=_rs[_i] end end   elseif _z==_VKerZ then if _IpmAd(_pe,1)==0 then local _rp=_kqFL(_P,_pe);_P=_kqFL(_rp+_oa,_pe) else _P=_kqFL(_kqFL(_P,_pe)+_oa,_pe) end   elseif _z==_eYoGX then for _i=1,_ob do _r[_oa+_i-1]=_aaPsGU[_mTc[2]+_i] end   elseif _z==_QwKnJ then if _IpmAd(_pe,1)==0 then _r[_oa]=_r[_ob]>=_r[_oc] else _r[_oa]=not(_r[_ob]<_r[_oc]) end   elseif _z==_ixtS then if _IpmAd(_pe,1)==0 then local _j=_oc*2+1;if _j==_ob then _j=0 end else local _pn=_kqFL(_pe,_oc*_ob);_pe=_IpmAd(_pn+1013904223,4294967295) end   elseif _z==_XONShy then if _IpmAd(_pe,1)~=0 then local _o={n=_ob};local _base=_oa;for _i=1,_ob do _o[_i]=_r[_base+_i-1] end;_ret=_o else local _o={n=_ob};for _i=1,_ob do _o[_i]=_r[_oa+_i-1] end;_ret=_o end   else error(_liJ..tostring(_op).._KLxG..tostring(_z)) end  end  local _u=unpack or table.unpack;return _u(_ret,1,_ret.n or #_ret) end local _oelUDn,_bh=_rb(_FGz,_juIG,_xTDYHt,_WCzTR);_FGz=nil;if _bh~=_Twtf then local _t=_ItFHSO(_xZM({_kqFL(_kqFL(3,58),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(110,14),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(174,189),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(151,82),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(91,155),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(177,100),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(39,21),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(13,117),_IpmAd(_DnAhF(_UJaD,24),255)),_kqFL(_kqFL(178,82),_IpmAd(_DnAhF(_UJaD,0),255)),_kqFL(_kqFL(98,92),_IpmAd(_DnAhF(_UJaD,8),255)),_kqFL(_kqFL(52,43),_IpmAd(_DnAhF(_UJaD,16),255)),_kqFL(_kqFL(190,22),_IpmAd(_DnAhF(_UJaD,24),255))},50073,12));return _t[306](_t[999]) end local _zYVSdd=_rf(_oelUDn);_oelUDn=nil local _OKFX={...} local _rr=_pk(_ev(_zYVSdd,_OKFX,(_gf and _gf()) or _G,{}));_zYVSdd=nil;_OKFX=nil;return (unpack or table.unpack)(_rr,1,_rr.n or #_rr) 
+local Wisper = _G.Wisper
+
+local Movement = {
+    Connections = {},
+    States = {
+        WalkSpeedEnabled = false,
+        FlyEnabled = false,
+        FreeCameraEnabled = false,
+        noclipEnabled = false
+    },
+    Settings = {
+        walkSpeed = 50,
+        flySpeed = 50,
+        freeCameraSpeed = 50,
+        fovValue = 95,
+        fovEnabled = false
+    },
+    Objects = {
+        bodyVelocity = nil,
+        bodyGyro = nil,
+        currentTween = nil
+    }
+}
+
+-- Use global helper functions from Wisper
+function Movement.GetCharacter()
+    return Wisper.getCharacter()
+end
+
+function Movement.GetHumanoid()
+    return Wisper.getHumanoid()
+end
+
+function Movement.GetRootPart()
+    return Wisper.getRootPart()
+end
+
+-- WALK SPEED --
+
+local WalkSpeed = (function()
+    local WALKSPEED_ENABLED = false
+    local currentSpeed = 50
+    local speedConnection = nil
+    
+    local function EnableWalkSpeed()
+        if WALKSPEED_ENABLED then return end
+        
+        WALKSPEED_ENABLED = true
+        Movement.States.WalkSpeedEnabled = true
+        
+        speedConnection = Wisper.Services.RunService.Heartbeat:Connect(function()
+            if not WALKSPEED_ENABLED or not Wisper.Player.Character then
+                if speedConnection then
+                    speedConnection:Disconnect()
+                    speedConnection = nil
+                end
+                return
+            end
+            
+            local character = Wisper.Player.Character
+            local rootPart = character:FindFirstChild("HumanoidRootPart")
+            if not rootPart then return end
+            
+            local direction = Vector3.new(0, 0, 0)
+            local camera = Wisper.Services.Workspace.CurrentCamera
+            
+            if Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.W) then
+                direction = direction + camera.CFrame.LookVector
+            end
+            if Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.S) then
+                direction = direction - camera.CFrame.LookVector
+            end
+            if Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.A) then
+                direction = direction - camera.CFrame.RightVector
+            end
+            if Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.D) then
+                direction = direction + camera.CFrame.RightVector
+            end
+            
+            if direction.Magnitude > 0 then
+                direction = direction.Unit
+                local velocity = direction * currentSpeed
+                rootPart.Velocity = Vector3.new(velocity.X, rootPart.Velocity.Y, velocity.Z)
+            end
+        end)
+    end
+    
+    local function DisableWalkSpeed()
+        if not WALKSPEED_ENABLED then return end
+        
+        WALKSPEED_ENABLED = false
+        Movement.States.WalkSpeedEnabled = false
+        
+        if speedConnection then
+            Wisper.safeDisconnect(speedConnection)
+            speedConnection = nil
+        end
+    end
+    
+    local function SetSpeed(speed)
+        currentSpeed = tonumber(speed) or 50
+        Movement.Settings.walkSpeed = currentSpeed
+    end
+    
+    return {
+        Enable = EnableWalkSpeed,
+        Disable = DisableWalkSpeed,
+        SetSpeed = SetSpeed,
+        IsEnabled = function() return WALKSPEED_ENABLED end,
+        GetSpeed = function() return currentSpeed end
+    }
+end)()
+
+-- NO CLIP --
+
+local NoClip = (function()
+    local noclipEnabled = false
+    local noclipConnection = nil
+    local originalCollisions = {}
+
+    local function saveOriginalCollisions(character)
+        if not character then return end
+        
+        originalCollisions = {}
+        for _, part in ipairs(character:GetDescendants()) do
+            if part:IsA("BasePart") then 
+                originalCollisions[part] = part.CanCollide
+            end
+        end
+    end
+
+    local function restoreOriginalCollisions(character)
+        if not character then return end
+        
+        for part, canCollide in pairs(originalCollisions) do
+            if part and part.Parent then
+                pcall(function()
+                    part.CanCollide = canCollide
+                end)
+            end
+        end
+        originalCollisions = {}
+    end
+
+    local function EnableNoClip()
+        if noclipEnabled then return end
+        noclipEnabled = true
+        Movement.States.noclipEnabled = true
+        
+        local character = Movement.GetCharacter()
+        if character then
+            saveOriginalCollisions(character)
+        end
+        
+        noclipConnection = Wisper.Services.RunService.Stepped:Connect(function()
+            if not noclipEnabled or not Movement.GetCharacter() then 
+                if noclipConnection then
+                    noclipConnection:Disconnect()
+                    noclipConnection = nil
+                end
+                return 
+            end
+            
+            local character = Movement.GetCharacter()
+            if character then
+                for _, part in ipairs(character:GetDescendants()) do
+                    if part:IsA("BasePart") then 
+                        pcall(function()
+                            part.CanCollide = false
+                        end)
+                    end
+                end
+            end
+        end)
+        
+        Wisper.Player.CharacterAdded:Connect(function(newChar)
+            if noclipEnabled then
+                task.wait(1)
+                saveOriginalCollisions(newChar)
+            end
+        end)
+    end
+
+    local function DisableNoClip()
+        if not noclipEnabled then return end
+        
+        noclipEnabled = false
+        Movement.States.noclipEnabled = false
+        
+        if noclipConnection then
+            noclipConnection:Disconnect()
+            noclipConnection = nil
+        end
+        
+        local character = Movement.GetCharacter()
+        if character then
+            restoreOriginalCollisions(character)
+        end
+    end
+
+    return {
+        Enable = EnableNoClip,
+        Disable = DisableNoClip,
+        IsEnabled = function() return noclipEnabled end
+    }
+end)()
+
+-- FLY --
+
+local function enableFly()
+    if Movement.States.FlyEnabled then return end
+    Movement.States.FlyEnabled = true
+    
+    local character, humanoid, rootPart = Movement.GetCharacter(), Movement.GetHumanoid(), Movement.GetRootPart()
+    if not character or not humanoid or not rootPart then return end
+    
+    humanoid.PlatformStand = true
+    Movement.Objects.bodyVelocity = Instance.new("BodyVelocity")
+    Movement.Objects.bodyGyro = Instance.new("BodyGyro")
+    
+    Movement.Objects.bodyVelocity.Velocity = Vector3.new(0, 0, 0)
+    Movement.Objects.bodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+    Movement.Objects.bodyVelocity.Parent = rootPart
+    
+    Movement.Objects.bodyGyro.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+    Movement.Objects.bodyGyro.P = 10000
+    Movement.Objects.bodyGyro.D = 500
+    Movement.Objects.bodyGyro.CFrame = rootPart.CFrame
+    Movement.Objects.bodyGyro.Parent = rootPart
+
+    Movement.Connections.flyLoop = Wisper.Services.RunService.Heartbeat:Connect(function()
+        if not Movement.States.FlyEnabled or not Movement.Objects.bodyVelocity or not Movement.Objects.bodyGyro or 
+           not character or not humanoid or not rootPart then
+            if Movement.Connections.flyLoop then
+                Movement.Connections.flyLoop:Disconnect()
+                Movement.Connections.flyLoop = nil
+            end
+            return
+        end
+        
+        local camera = Wisper.Services.Workspace.CurrentCamera
+        local direction = Vector3.new(0, 0, 0)
+        
+        if Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.W) then 
+            direction = direction + camera.CFrame.LookVector 
+        end
+        if Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.S) then 
+            direction = direction - camera.CFrame.LookVector 
+        end
+        if Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.A) then 
+            direction = direction - camera.CFrame.RightVector 
+        end
+        if Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.D) then 
+            direction = direction + camera.CFrame.RightVector 
+        end
+        if Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.Space) then 
+            direction = direction + Vector3.new(0, 1, 0) 
+        end
+        if Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) then 
+            direction = direction + Vector3.new(0, -1, 0) 
+        end
+
+        if direction.Magnitude > 0 then 
+            direction = direction.Unit * Movement.Settings.flySpeed 
+        end
+        
+        Movement.Objects.bodyVelocity.Velocity = direction
+        Movement.Objects.bodyGyro.CFrame = CFrame.new(rootPart.Position, rootPart.Position + camera.CFrame.LookVector)
+    end)
+end
+
+local function disableFly()
+    if not Movement.States.FlyEnabled then return end
+    Movement.States.FlyEnabled = false
+    
+    if Movement.Objects.bodyVelocity then 
+        Movement.Objects.bodyVelocity:Destroy()
+        Movement.Objects.bodyVelocity = nil 
+    end
+    if Movement.Objects.bodyGyro then 
+        Movement.Objects.bodyGyro:Destroy()
+        Movement.Objects.bodyGyro = nil 
+    end
+    
+    local humanoid = Movement.GetHumanoid()
+    if humanoid then 
+        humanoid.PlatformStand = false 
+    end
+    
+    if Movement.Connections.flyLoop then
+        Movement.Connections.flyLoop:Disconnect()
+        Movement.Connections.flyLoop = nil
+    end
+end
+
+-- FREE CAMERA --
+
+local function lockMouse()
+    if not Movement.States.FreeCameraEnabled then return end
+    Movement.Objects.mouseLocked = true
+    Wisper.Services.UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
+    Wisper.Services.UserInputService.MouseIconEnabled = false
+end
+
+local function unlockMouse()
+    Movement.Objects.mouseLocked = false
+    Wisper.Services.UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+    Wisper.Services.UserInputService.MouseIconEnabled = true
+end
+
+local function startFreeCamera()
+    if Movement.States.FreeCameraEnabled then return end
+    Movement.States.FreeCameraEnabled = true
+    
+    local camera = Wisper.Camera
+    Movement.Objects.originalCameraType = camera.CameraType
+    Movement.Objects.originalCameraSubject = camera.CameraSubject
+    camera.CameraType = Enum.CameraType.Scriptable
+    
+    local cameraPosition = camera.CFrame.Position
+    local lookVector = camera.CFrame.LookVector
+    local cameraRotation = Vector2.new(math.atan2(lookVector.X, lookVector.Z), math.asin(lookVector.Y))
+    
+    lockMouse()
+    
+    if Movement.GetCharacter() then
+        local humanoid, rootPart = Movement.GetHumanoid(), Movement.GetRootPart()
+        if humanoid then 
+            humanoid.PlatformStand = false
+            humanoid.AutoRotate = false 
+        end
+        if rootPart then 
+            rootPart.Anchored = true 
+        end
+    end
+    
+    Movement.Connections.freeCamera = Wisper.Services.RunService.RenderStepped:Connect(function(delta)
+        if not Movement.States.FreeCameraEnabled then 
+            if Movement.Connections.freeCamera then
+                Movement.Connections.freeCamera:Disconnect()
+                Movement.Connections.freeCamera = nil
+            end
+            return 
+        end
+        
+        local mouseDelta = Wisper.Services.UserInputService:GetMouseDelta()
+        cameraRotation = cameraRotation + Vector2.new(-mouseDelta.X * 0.003, -mouseDelta.Y * 0.003)
+        cameraRotation = Vector2.new(cameraRotation.X, 
+            math.clamp(cameraRotation.Y, -math.pi/2 + 0.1, math.pi/2 - 0.1))
+        
+        local rotationCFrame = CFrame.Angles(0, cameraRotation.X, 0) * CFrame.Angles(cameraRotation.Y, 0, 0)
+        local moveDirection = Vector3.new(0, 0, 0)
+        
+        if Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.W) then 
+            moveDirection = moveDirection + rotationCFrame.LookVector 
+        end
+        if Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.S) then 
+            moveDirection = moveDirection - rotationCFrame.LookVector 
+        end
+        if Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.A) then 
+            moveDirection = moveDirection - rotationCFrame.RightVector 
+        end
+        if Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.D) then 
+            moveDirection = moveDirection + rotationCFrame.RightVector 
+        end
+        if Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.E) or 
+           Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.Space) then 
+            moveDirection = moveDirection + Vector3.new(0, 1, 0) 
+        end
+        if Wisper.Services.UserInputService:IsKeyDown(Enum.KeyCode.Q) then 
+            moveDirection = moveDirection + Vector3.new(0, -1, 0) 
+        end
+        
+        if moveDirection.Magnitude > 0 then 
+            moveDirection = moveDirection.Unit * Movement.Settings.freeCameraSpeed
+            cameraPosition = cameraPosition + moveDirection * delta 
+        end
+        
+        camera.CFrame = CFrame.new(cameraPosition) * rotationCFrame
+    end)
+end
+
+local function stopFreeCamera()
+    if not Movement.States.FreeCameraEnabled then return end
+    Movement.States.FreeCameraEnabled = false
+    
+    unlockMouse()
+    
+    if Movement.Connections.freeCamera then
+        Movement.Connections.freeCamera:Disconnect()
+        Movement.Connections.freeCamera = nil
+    end
+    
+    local camera = Wisper.Camera
+    camera.CameraType = Movement.Objects.originalCameraType
+    camera.CameraSubject = Movement.Objects.originalCameraSubject
+    
+    if Movement.GetCharacter() then
+        local humanoid, rootPart = Movement.GetHumanoid(), Movement.GetRootPart()
+        if humanoid then 
+            humanoid.PlatformStand = false
+            humanoid.AutoRotate = true 
+        end
+        if rootPart then 
+            rootPart.Anchored = false 
+        end
+    end
+end
+
+-- INFINITE LUNGE --
+
+local InfiniteLunge = (function()
+    local isLunging = false
+    local lungeSpeed = 50
+    local lungeConnection = nil
+    
+    local function EnableInfiniteLunge()
+        if Movement.States.InfiniteLungeEnabled then return end
+        Movement.States.InfiniteLungeEnabled = true
+    end
+    
+    local function DisableInfiniteLunge()
+        Movement.States.InfiniteLungeEnabled = false
+        isLunging = false
+        
+        if lungeConnection then
+            lungeConnection:Disconnect()
+            lungeConnection = nil
+        end
+    end
+    
+    local function HandleInput(input, gameProcessed)
+        if gameProcessed or not Movement.States.InfiniteLungeEnabled then
+            return
+        end
+        
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            if input.UserInputState == Enum.UserInputState.Begin then
+                isLunging = true
+                if Wisper.Player.Character then
+                    if lungeConnection then
+                        lungeConnection:Disconnect()
+                    end
+                    
+                    lungeConnection = Wisper.Services.RunService.Heartbeat:Connect(function()
+                        if not Movement.States.InfiniteLungeEnabled or not isLunging or not Wisper.Player.Character then
+                            if lungeConnection then
+                                lungeConnection:Disconnect()
+                                lungeConnection = nil
+                            end
+                            return
+                        end
+                        
+                        local rootPart = Wisper.Player.Character:FindFirstChild("HumanoidRootPart")
+                        
+                        if rootPart then
+                            local lookVector = rootPart.CFrame.LookVector
+                            local velocity = lookVector * lungeSpeed
+                            rootPart.Velocity = Vector3.new(velocity.X, rootPart.Velocity.Y, velocity.Z)
+                        end
+                    end)
+                end
+                
+            elseif input.UserInputState == Enum.UserInputState.End then
+                isLunging = false
+                if lungeConnection then
+                    lungeConnection:Disconnect()
+                    lungeConnection = nil
+                end
+            end
+        end
+    end
+    
+
+    local inputBeganConn = Wisper.Services.UserInputService.InputBegan:Connect(HandleInput)
+    local inputEndedConn = Wisper.Services.UserInputService.InputEnded:Connect(HandleInput)
+
+    Movement.Connections.InfiniteLungeBegan = inputBeganConn
+    Movement.Connections.InfiniteLungeEnded = inputEndedConn
+    
+    return {
+        Enable = EnableInfiniteLunge,
+        Disable = DisableInfiniteLunge,
+        SetSpeed = function(speed) 
+            lungeSpeed = speed 
+            Movement.Settings.lungeSpeed = speed
+        end,
+        IsEnabled = function() return Movement.States.InfiniteLungeEnabled end
+    }
+end)()
+
+-- FOV SYSTEM --
+
+local function ApplyFOV()
+    local camera = Wisper.Camera
+    if camera and Movement.Settings.fovEnabled then
+        Movement.Settings.fovTargetValue = math.max(1, Movement.Settings.fovValue)
+    elseif camera then
+        camera.FieldOfView = 70
+    end
+end
+
+function Movement.Init(nxs)
+    Wisper = nxs
+    
+    local Tabs = Wisper.Tabs
+    local Options = Wisper.Options
+    
+    Wisper.Services.Workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(function()
+        task.wait(0.1)
+        Wisper.Camera = Wisper.Services.Workspace.CurrentCamera
+        ApplyFOV()
+    end)
+
+    pcall(function()
+        Wisper.Services.RunService:UnbindFromRenderStep("NexusFOVUpdater")
+    end)
+    
+    Wisper.Services.RunService:BindToRenderStep("NexusFOVUpdater", Enum.RenderPriority.Camera.Value + 1, function()
+        if Movement.Settings.fovEnabled and Wisper.Camera then
+            local targetFOV = math.max(1, Movement.Settings.fovTargetValue or 70)
+            Wisper.Camera.FieldOfView = targetFOV
+        end
+    end)
+
+    if Wisper.IS_DESKTOP then
+        local InfiniteLungeToggle = Tabs.Movement:AddToggle("InfiniteLunge", {
+            Title = "Infinite Lunge", 
+            Description = "Hold LMB to lunge forward", 
+            Default = false
+        })
+
+        InfiniteLungeToggle:OnChanged(function(v) 
+            Wisper.SafeCallback(function()
+                if v then 
+                    InfiniteLunge.Enable() 
+                else 
+                    InfiniteLunge.Disable() 
+                end 
+            end)
+        end)
+
+        local LungeSpeedSlider = Tabs.Movement:AddSlider("LungeSpeed", {
+            Title = "Lunge Speed", 
+            Description = "", 
+            Default = 50, 
+            Min = 10, 
+            Max = 200, 
+            Rounding = 0, 
+            Callback = function(value) 
+                Wisper.SafeCallback(function()
+                    InfiniteLunge.SetSpeed(value)
+                end)
+            end
+        })
+    end
+    
+    local WalkSpeedToggle = Tabs.Movement:AddToggle("WalkSpeed", {
+        Title = "Walk Speed", 
+        Description = "", 
+        Default = false
+    })
+
+    WalkSpeedToggle:OnChanged(function(v) 
+        Wisper.SafeCallback(function()
+            if v then 
+                WalkSpeed.Enable() 
+            else 
+                WalkSpeed.Disable() 
+            end 
+        end)
+    end)
+
+    local WalkSpeedSlider = Tabs.Movement:AddSlider("WalkSpeedValue", {
+        Title = "Walk Speed Value", 
+        Description = "0-200", 
+        Default = 16, 
+        Min = 0, 
+        Max = 200, 
+        Rounding = 0, 
+        Callback = function(value) 
+            Wisper.SafeCallback(function()
+                WalkSpeed.SetSpeed(value)
+            end)
+        end
+    })
+
+    local NoclipToggle = Tabs.Movement:AddToggle("Noclip", {
+        Title = "Noclip",
+        Description = "",
+        Default = false
+    })
+
+    NoclipToggle:OnChanged(function(value)
+        Wisper.SafeCallback(function()
+            if value then 
+                NoClip.Enable() 
+            else 
+                NoClip.Disable()
+            end 
+        end)
+    end)
+
+    local FOVToggle = Tabs.Movement:AddToggle("FOVChanger", {
+        Title = "FOV Changer", 
+        Description = "", 
+        Default = false
+    })
+
+    FOVToggle:OnChanged(function(v)
+        Wisper.SafeCallback(function()
+            Movement.Settings.fovEnabled = v
+            ApplyFOV()
+        end)
+    end)
+
+    local FOVSlider = Tabs.Movement:AddSlider("FOVValue", {
+        Title = "FOV Value", 
+        Description = "0-120",
+        Default = 95,
+        Min = 0,
+        Max = 120,
+        Rounding = 0,
+        Callback = function(value)
+            Wisper.SafeCallback(function()
+                Movement.Settings.fovValue = value
+                ApplyFOV()
+            end)
+        end
+    })
+
+    local function GetPlayerNames()
+        local names = {"--"}
+        for _, player in ipairs(Wisper.Services.Players:GetPlayers()) do
+            if player ~= Wisper.Player then
+                table.insert(names, player.Name)
+            end
+        end
+        return names
+    end
+
+    local PlayerDropdown = Tabs.Movement:AddDropdown("TeleportToPlayer", {
+        Title = "Teleport to Player",
+        Values = GetPlayerNames(),
+        Multi = false,
+        Default = "--",
+    })
+
+    local function UpdatePlayerDropdown()
+        if PlayerDropdown and PlayerDropdown.SetValues then
+             pcall(function() PlayerDropdown:SetValues(GetPlayerNames()) end)
+        end
+    end
+
+    table.insert(Movement.Connections, Wisper.Services.Players.PlayerAdded:Connect(UpdatePlayerDropdown))
+    table.insert(Movement.Connections, Wisper.Services.Players.PlayerRemoving:Connect(UpdatePlayerDropdown))
+
+    PlayerDropdown:OnChanged(function(value)
+        if value ~= "--" then
+            Wisper.SafeCallback(function()
+                local targetPlayer = Wisper.Services.Players:FindFirstChild(value)
+                if targetPlayer then
+                    local targetChar = targetPlayer.Character
+                    if targetChar then
+                        local targetRoot = targetChar:FindFirstChild("HumanoidRootPart")
+                        local localRoot = Movement.GetRootPart()
+                        
+                        if localRoot and targetRoot then
+                            localRoot.CFrame = targetRoot.CFrame + Vector3.new(0, 3, 0)
+                            Wisper.Notify("Teleport", "Teleported to " .. value, 3)
+                        end
+                    end
+                end
+                
+                task.delay(0.1, function()
+                     if PlayerDropdown and PlayerDropdown.SetValue then
+                        pcall(function() PlayerDropdown:SetValue("--") end)
+                     end
+                end)
+            end)
+        end
+    end)
+
+    if Wisper.IS_DESKTOP then
+        local FlyToggle = Tabs.Movement:AddToggle("Fly", {
+            Title = "Fly", 
+            Description = "Allows flying in any direction", 
+            Default = false
+        })
+
+        FlyToggle:OnChanged(function(value) 
+            Wisper.SafeCallback(function()
+                if value then 
+                    enableFly() 
+                else 
+                    disableFly() 
+                end 
+            end)
+        end)
+
+        local FlySpeedSlider = Tabs.Movement:AddSlider("FlySpeed", {
+            Title = "Fly Speed", 
+            Description = "0-200", 
+            Default = 50, 
+            Min = 0, 
+            Max = 200, 
+            Rounding = 0, 
+            Callback = function(value) 
+                Wisper.SafeCallback(function()
+                    Movement.Settings.flySpeed = value
+                end)
+            end
+        })
+
+        local FreeCameraToggle = Tabs.Movement:AddToggle("FreeCamera", {
+            Title = "Free Camera", 
+            Description = "", 
+            Default = false
+        })
+
+        FreeCameraToggle:OnChanged(function(value) 
+            Wisper.SafeCallback(function()
+                if value then 
+                    startFreeCamera() 
+                else 
+                    stopFreeCamera() 
+                end 
+            end)
+        end)
+
+        local FreeCameraSpeedSlider = Tabs.Movement:AddSlider("FreeCameraSpeed", {
+            Title = "Free Camera Speed", 
+            Description = "0-100", 
+            Default = 50, 
+            Min = 0, 
+            Max = 100, 
+            Rounding = 0, 
+            Callback = function(value) 
+                Wisper.SafeCallback(function()
+                    Movement.Settings.freeCameraSpeed = value
+                end)
+            end
+        })
+    end
+end
+
+
+function Movement.Cleanup()
+    
+    InfiniteLunge.Disable()
+    WalkSpeed.Disable()
+    NoClip.Disable()
+    disableFly()
+    stopFreeCamera()
+    Movement.Settings.fovEnabled = false
+    
+    pcall(function()
+        Wisper.Services.RunService:UnbindFromRenderStep("NexusFOVUpdater")
+    end)
+    
+    local camera = Wisper.Camera
+    if camera then
+        camera.FieldOfView = 70
+    end
+    
+    if Movement.Objects.bodyVelocity then 
+        Movement.Objects.bodyVelocity:Destroy()
+        Movement.Objects.bodyVelocity = nil 
+    end
+    if Movement.Objects.bodyGyro then 
+        Movement.Objects.bodyGyro:Destroy()
+        Movement.Objects.bodyGyro = nil 
+    end
+    
+    for key, connection in pairs(Movement.Connections) do
+        Wisper.safeDisconnect(connection)
+    end
+    Movement.Connections = {}
+    
+end
+
+Movement.WalkSpeed = WalkSpeed;
+Movement.NoClip = NoClip;
+Movement.InfiniteLunge = InfiniteLunge;
+Movement.Fly = {
+    Enable = enableFly,
+    Disable = disableFly,
+    IsEnabled = function() return Movement.States.FlyEnabled end,
+};
+Movement.FreeCamera = {
+    Enable = startFreeCamera,
+    Disable = stopFreeCamera,
+    IsEnabled = function() return Movement.States.FreeCameraEnabled end,
+};
+Movement.FOV = {
+    SetEnabled = function(V) Movement.Settings.fovEnabled = V end,
+    SetValue = function(V) Movement.Settings.fovValue = V end,
+    IsEnabled = function() return Movement.Settings.fovEnabled end,
+};
+
+return Movement
