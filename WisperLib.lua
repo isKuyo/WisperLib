@@ -347,9 +347,7 @@ function WisperLib:CreateWindow(Config)
     Config.Size = Config.Size or UDim2.new(0, 635, 0, 510)
     Config.Position = Config.Position or UDim2.new(0.5, -317, 0.5, -255)
     Config.KeyBind = Config.KeyBind or Enum.KeyCode.RightControl
-    Config.ShowLogo = Config.ShowLogo ~= false and Config.NoLogo ~= true
-    Config.ShowGroupIcons = Config.ShowGroupIcons ~= false and Config.NoGroupIcons ~= true
-    Config.ShowTabIcons = Config.ShowTabIcons ~= false and Config.NoTabIcons ~= true
+    Config.ShowIcons = Config.ShowIcons ~= false
 
     local GuiParent = (typeof(gethui) == "function" and pcall(gethui) and gethui()) or CoreGui;
     -- ScreenGui criado sem parent primeiro; será parentado após os hooks de proteção
@@ -543,7 +541,7 @@ function WisperLib:CreateWindow(Config)
         BorderSizePixel = 0,
         Position = UDim2.new(0, 12, 0.5, -17),
         Size = UDim2.new(0, 34, 0, 34),
-        Visible = Config.ShowLogo
+        Visible = Config.ShowIcons
     })
 
     local AvatarCorner = Create("UICorner", {
@@ -579,7 +577,7 @@ function WisperLib:CreateWindow(Config)
         Name = "TitleContainer",
         Parent = Header,
         BackgroundTransparency = 1,
-        Position = Config.ShowLogo and UDim2.new(0, 54, 0, 8) or UDim2.new(0, 14, 0, 8),
+        Position = Config.ShowIcons and UDim2.new(0, 54, 0, 8) or UDim2.new(0, 14, 0, 8),
         Size = UDim2.new(0, 200, 0, 18),
         ClipsDescendants = true
     })
@@ -648,7 +646,7 @@ function WisperLib:CreateWindow(Config)
         Name = "SubtitleLabel",
         Parent = Header,
         BackgroundTransparency = 1,
-        Position = Config.ShowLogo and UDim2.new(0, 54, 0, 26) or UDim2.new(0, 14, 0, 26),
+        Position = Config.ShowIcons and UDim2.new(0, 54, 0, 26) or UDim2.new(0, 14, 0, 26),
         Size = UDim2.new(0, 200, 0, 14),
         Font = Enum.Font.Gotham,
         Text = ExecutorName,
@@ -813,15 +811,16 @@ function WisperLib:CreateWindow(Config)
         ImageRectOffset = Vector2.new(964, 324),
         ImageRectSize = Vector2.new(36, 36),
         ImageColor3 = Theme.SubText,
-        Rotation = -270
+        Rotation = -270,
+        Visible = Config.ShowIcons
     })
 
     local SearchInput = Create("TextBox", {
         Name = "SearchInput",
         Parent = SearchContainer,
         BackgroundTransparency = 1,
-        Position = UDim2.new(0, 36, 0, 0),
-        Size = UDim2.new(1, -44, 1, 0),
+        Position = Config.ShowIcons and UDim2.new(0, 36, 0, 0) or UDim2.new(0, 14, 0, 0),
+        Size = Config.ShowIcons and UDim2.new(1, -44, 1, 0) or UDim2.new(1, -28, 1, 0),
         Font = Enum.Font.Gotham,
         Text = "",
         PlaceholderText = "Search",
@@ -843,8 +842,8 @@ function WisperLib:CreateWindow(Config)
     local SearchTween = nil
     local function UpdateSearchSize()
         local TextWidth = SearchInput.TextBounds.X
-        local MinWidth = 100
-        local Padding = 50
+        local MinWidth = Config.ShowIcons and 100 or 86
+        local Padding = Config.ShowIcons and 50 or 32
         local TargetWidth = math.max(MinWidth, TextWidth + Padding)
         
         if SearchTween then
@@ -853,15 +852,19 @@ function WisperLib:CreateWindow(Config)
         
         if SearchInput.Text == "" then
             SearchTween = Tween(SearchContainer, {Size = UDim2.new(0, MinWidth, 0, 36)}, 0.2)
-            Tween(SearchIcon, {ImageColor3 = Theme.SubText}, 0.15)
+            if Config.ShowIcons then
+                Tween(SearchIcon, {ImageColor3 = Theme.SubText}, 0.15)
+            end
         else
             SearchContainer.Size = UDim2.new(0, TargetWidth, 0, 36)
-            Tween(SearchIcon, {ImageColor3 = Theme.Text}, 0.15)
+            if Config.ShowIcons then
+                Tween(SearchIcon, {ImageColor3 = Theme.Text}, 0.15)
+            end
         end
     end
 
     local function SetTabActive(TabButtonData, IsActive, TabName)
-        if not Config.ShowTabIcons then
+        if not Config.ShowIcons then
             TabButtonData.Icon.Visible = false
             TabButtonData.Label.Visible = true
             TabButtonData.Label.TextColor3 = IsActive and Color3.fromRGB(0, 0, 0) or Theme.SubText
@@ -949,7 +952,7 @@ function WisperLib:CreateWindow(Config)
             Name = "TabButtonContainer",
             Parent = NavButtonsHolder,
             BackgroundTransparency = 1,
-            Size = Config.ShowTabIcons and UDim2.new(0, 32, 0, 24) or UDim2.new(0, 74, 0, 24),
+            Size = Config.ShowIcons and UDim2.new(0, 32, 0, 24) or UDim2.new(0, 74, 0, 24),
             LayoutOrder = Order,
             ClipsDescendants = true
         })
@@ -988,7 +991,7 @@ function WisperLib:CreateWindow(Config)
             Image = Icon,
             ImageColor3 = Theme.SubText,
             ImageTransparency = 0,
-            Visible = Config.ShowTabIcons,
+            Visible = Config.ShowIcons,
             ZIndex = 2
         })
 
@@ -996,19 +999,19 @@ function WisperLib:CreateWindow(Config)
             Name = "Label",
             Parent = ButtonContainer,
             BackgroundTransparency = 1,
-            Position = Config.ShowTabIcons and UDim2.new(0, 24, 0, 0) or UDim2.new(0, 12, 0, 0),
+            Position = Config.ShowIcons and UDim2.new(0, 24, 0, 0) or UDim2.new(0, 12, 0, 0),
             Size = UDim2.new(0, 50, 1, 0),
             Font = Enum.Font.GothamMedium,
             Text = TabName,
-            TextColor3 = Config.ShowTabIcons and Color3.fromRGB(0, 0, 0) or Theme.SubText,
+            TextColor3 = Config.ShowIcons and Color3.fromRGB(0, 0, 0) or Theme.SubText,
             TextSize = 11,
             TextXAlignment = Enum.TextXAlignment.Left,
-            Visible = not Config.ShowTabIcons,
+            Visible = not Config.ShowIcons,
             ZIndex = 2
         })
 
         local LabelWidth = ButtonLabel.TextBounds.X
-        if not Config.ShowTabIcons then
+        if not Config.ShowIcons then
             ButtonContainer.Size = UDim2.new(0, LabelWidth + 24, 0, 24)
         end
 
@@ -1087,14 +1090,14 @@ function WisperLib:CreateWindow(Config)
         Size = UDim2.new(0, 24, 0, 24),
         Image = "rbxassetid://77341506028972",
         ImageColor3 = Theme.Accent,
-        Visible = Config.ShowLogo
+        Visible = Config.ShowIcons
     })
 
     local FooterTitleContainer = Create("Frame", {
         Name = "FooterTitleContainer",
         Parent = Footer,
         BackgroundTransparency = 1,
-        Position = Config.ShowLogo and UDim2.new(0, 48, 0, 10) or UDim2.new(0, 15, 0, 10),
+        Position = Config.ShowIcons and UDim2.new(0, 48, 0, 10) or UDim2.new(0, 15, 0, 10),
         Size = UDim2.new(0, 0, 0, 16),
         AutomaticSize = Enum.AutomaticSize.X
     })
@@ -1115,7 +1118,7 @@ function WisperLib:CreateWindow(Config)
         Name = "FooterSubtitle",
         Parent = Footer,
         BackgroundTransparency = 1,
-        Position = Config.ShowLogo and UDim2.new(0, 48, 0, 28) or UDim2.new(0, 15, 0, 28),
+        Position = Config.ShowIcons and UDim2.new(0, 48, 0, 28) or UDim2.new(0, 15, 0, 28),
         Size = UDim2.new(0, 200, 0, 14),
         Font = Enum.Font.Gotham,
         Text = GameName,
@@ -1129,7 +1132,8 @@ function WisperLib:CreateWindow(Config)
         Parent = Footer,
         BackgroundTransparency = 1,
         Position = UDim2.new(1, -40, 0.5, -12),
-        Size = UDim2.new(0, 24, 0, 24)
+        Size = UDim2.new(0, 24, 0, 24),
+        Visible = Config.ShowIcons
     })
 
     local FooterButtonsLayout = Create("UIListLayout", {
@@ -1148,7 +1152,8 @@ function WisperLib:CreateWindow(Config)
             Size = UDim2.new(0, 24, 0, 24),
             Image = Icon,
             ImageColor3 = Theme.SubText,
-            LayoutOrder = Order
+            LayoutOrder = Order,
+            Visible = Config.ShowIcons
         })
 
         Button.MouseEnter:Connect(function()
@@ -1267,7 +1272,7 @@ function WisperLib:CreateWindow(Config)
         TabConfig.Name = TabConfig.Name or "Tab"
         TabConfig.Order = TabConfig.Order or (#Tabs + 1)
         
-        local TabIcon = Config.ShowTabIcons and (TabConfig.Icon and GetIcon(TabConfig.Icon) or GetAutoIcon(TabConfig.Name)) or ""
+        local TabIcon = Config.ShowIcons and (TabConfig.Icon and GetIcon(TabConfig.Icon) or GetAutoIcon(TabConfig.Name)) or ""
 
         local TabButtonData = CreateTabButton(TabIcon, TabConfig.Order, TabConfig.Name)
 
@@ -1361,7 +1366,7 @@ function WisperLib:CreateWindow(Config)
         function Tab:CreateGroup(GroupConfig)
             GroupConfig = GroupConfig or {}
             GroupConfig.Name = GroupConfig.Name or "Group"
-            if Config.ShowGroupIcons then
+            if Config.ShowIcons then
                 GroupConfig.Icon = GroupConfig.Icon and GetIcon(GroupConfig.Icon) or GetAutoGroupIcon(GroupConfig.Name)
             else
                 GroupConfig.Icon = nil
@@ -1435,7 +1440,7 @@ function WisperLib:CreateWindow(Config)
             })
 
             local GroupIcon = nil
-            if Config.ShowGroupIcons then
+            if Config.ShowIcons then
                 GroupIcon = Create("ImageLabel", {
                     Name = "GroupIcon",
                     Parent = GroupHeader,
@@ -1451,8 +1456,8 @@ function WisperLib:CreateWindow(Config)
                 Name = "GroupLabel",
                 Parent = GroupHeader,
                 BackgroundTransparency = 1,
-                Position = Config.ShowGroupIcons and UDim2.new(0, 36, 0, 0) or UDim2.new(0, 12, 0, 0),
-                Size = Config.ShowGroupIcons and UDim2.new(1, -46, 1, 0) or UDim2.new(1, -24, 1, 0),
+                Position = Config.ShowIcons and UDim2.new(0, 36, 0, 0) or UDim2.new(0, 12, 0, 0),
+                Size = Config.ShowIcons and UDim2.new(1, -46, 1, 0) or UDim2.new(1, -24, 1, 0),
                 Font = Enum.Font.GothamBold,
                 Text = GroupConfig.Name,
                 TextColor3 = Theme.Text,
@@ -2498,7 +2503,7 @@ function WisperLib:CreateWindow(Config)
                     Parent = InputBox,
                     BackgroundTransparency = 1,
                     Position = UDim2.new(0, 10, 0, 0),
-                    Size = UDim2.new(1, -40, 1, 0),
+                    Size = Config.ShowIcons and UDim2.new(1, -40, 1, 0) or UDim2.new(1, -20, 1, 0),
                     Font = Enum.Font.Gotham,
                     PlaceholderText = InputConfig.Placeholder,
                     PlaceholderColor3 = Theme.SubText,
@@ -2516,7 +2521,8 @@ function WisperLib:CreateWindow(Config)
                     Position = UDim2.new(1, -28, 0.5, -8),
                     Size = UDim2.new(0, 16, 0, 16),
                     Image = "rbxassetid://7743870210",
-                    ImageColor3 = Theme.SubText
+                    ImageColor3 = Theme.SubText,
+                    Visible = Config.ShowIcons
                 })
 
                 InputFrame.MouseEnter:Connect(function()
@@ -2635,7 +2641,7 @@ function WisperLib:CreateWindow(Config)
                     Parent = ComboboxButton,
                     BackgroundTransparency = 1,
                     Position = UDim2.new(0, 10, 0, 0),
-                    Size = UDim2.new(1, -40, 1, 0),
+                    Size = Config.ShowIcons and UDim2.new(1, -40, 1, 0) or UDim2.new(1, -20, 1, 0),
                     Font = Enum.Font.Gotham,
                     Text = GetSelectedText(),
                     TextColor3 = Theme.SubText,
@@ -2653,7 +2659,8 @@ function WisperLib:CreateWindow(Config)
                     Image = "rbxassetid://3926307971",
                     ImageRectOffset = Vector2.new(564, 364),
                     ImageRectSize = Vector2.new(36, 36),
-                    ImageColor3 = Theme.SubText
+                    ImageColor3 = Theme.SubText,
+                    Visible = Config.ShowIcons
                 })
 
                 local ComboboxDropdown = Create("Frame", {
@@ -3385,7 +3392,7 @@ function WisperLib:CreateWindow(Config)
         local TitleWidth = game:GetService("TextService"):GetTextSize(NotifyConfig.Title, 13, Enum.Font.GothamBold, Vector2.new(math.huge, 16)).X
         local DescWidth = game:GetService("TextService"):GetTextSize(NotifyConfig.Description, 12, Enum.Font.Gotham, Vector2.new(math.huge, 16)).X
         local ContentWidth = math.max(TitleWidth, DescWidth)
-        local NotificationWidth = 50 + ContentWidth + 15
+        local NotificationWidth = (Config.ShowIcons and 50 or 15) + ContentWidth + 15
 
         local NotificationHolder = Create("Frame", {
             Name = "NotificationHolder_" .. NotificationCount,
@@ -3416,59 +3423,62 @@ function WisperLib:CreateWindow(Config)
             Thickness = 1
         })
 
-        local CheckContainer = Create("Frame", {
-            Name = "CheckContainer",
-            Parent = NotificationFrame,
-            BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-            BorderSizePixel = 0,
-            Position = UDim2.new(0, 10, 0.5, -15),
-            Size = UDim2.new(0, 30, 0, 30),
-            ClipsDescendants = true
-        })
+        local CheckButton = nil
+        if Config.ShowIcons then
+            local CheckContainer = Create("Frame", {
+                Name = "CheckContainer",
+                Parent = NotificationFrame,
+                BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+                BorderSizePixel = 0,
+                Position = UDim2.new(0, 10, 0.5, -15),
+                Size = UDim2.new(0, 30, 0, 30),
+                ClipsDescendants = true
+            })
 
-        local CheckCorner = Create("UICorner", {
-            CornerRadius = UDim.new(0, 6),
-            Parent = CheckContainer
-        })
+            local CheckCorner = Create("UICorner", {
+                CornerRadius = UDim.new(0, 6),
+                Parent = CheckContainer
+            })
 
-        local CheckGradient = Create("UIGradient", {
-            Parent = CheckContainer,
-            Color = ColorSequence.new({
-                ColorSequenceKeypoint.new(0, Theme.GradientColor1),
-                ColorSequenceKeypoint.new(1, Theme.GradientColor2)
-            }),
-            Rotation = 0
-        })
+            local CheckGradient = Create("UIGradient", {
+                Parent = CheckContainer,
+                Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Theme.GradientColor1),
+                    ColorSequenceKeypoint.new(1, Theme.GradientColor2)
+                }),
+                Rotation = 0
+            })
 
-        local CheckIcon = Create("ImageLabel", {
-            Name = "CheckIcon",
-            Parent = CheckContainer,
-            BackgroundTransparency = 1,
-            AnchorPoint = Vector2.new(0.5, 0.5),
-            Position = UDim2.new(0.5, 0, 0.5, 0),
-            Size = UDim2.new(0, 20, 0, 20),
-            Image = "rbxassetid://3926305904",
-            ImageRectOffset = Vector2.new(312, 4),
-            ImageRectSize = Vector2.new(24, 24),
-            ImageColor3 = Color3.fromRGB(0, 0, 0)
-        })
+            local CheckIcon = Create("ImageLabel", {
+                Name = "CheckIcon",
+                Parent = CheckContainer,
+                BackgroundTransparency = 1,
+                AnchorPoint = Vector2.new(0.5, 0.5),
+                Position = UDim2.new(0.5, 0, 0.5, 0),
+                Size = UDim2.new(0, 20, 0, 20),
+                Image = "rbxassetid://3926305904",
+                ImageRectOffset = Vector2.new(312, 4),
+                ImageRectSize = Vector2.new(24, 24),
+                ImageColor3 = Color3.fromRGB(0, 0, 0)
+            })
 
-        local CheckButton = Create("TextButton", {
-            Name = "CheckButton",
-            Parent = CheckContainer,
-            BackgroundTransparency = 1,
-            Size = UDim2.new(1, 0, 1, 0),
-            Text = "",
-            AutoButtonColor = false,
-            ZIndex = 2
-        })
+            CheckButton = Create("TextButton", {
+                Name = "CheckButton",
+                Parent = CheckContainer,
+                BackgroundTransparency = 1,
+                Size = UDim2.new(1, 0, 1, 0),
+                Text = "",
+                AutoButtonColor = false,
+                ZIndex = 2
+            })
+        end
 
         local NotificationTitle = Create("TextLabel", {
             Name = "Title",
             Parent = NotificationFrame,
             BackgroundTransparency = 1,
-            Position = UDim2.new(0, 50, 0, 8),
-            Size = UDim2.new(1, -60, 0, 16),
+            Position = Config.ShowIcons and UDim2.new(0, 50, 0, 8) or UDim2.new(0, 15, 0, 8),
+            Size = Config.ShowIcons and UDim2.new(1, -60, 0, 16) or UDim2.new(1, -30, 0, 16),
             Font = Enum.Font.GothamBold,
             Text = NotifyConfig.Title,
             TextColor3 = Theme.Text,
@@ -3480,8 +3490,8 @@ function WisperLib:CreateWindow(Config)
             Name = "Description",
             Parent = NotificationFrame,
             BackgroundTransparency = 1,
-            Position = UDim2.new(0, 50, 0, 26),
-            Size = UDim2.new(1, -60, 0, 16),
+            Position = Config.ShowIcons and UDim2.new(0, 50, 0, 26) or UDim2.new(0, 15, 0, 26),
+            Size = Config.ShowIcons and UDim2.new(1, -60, 0, 16) or UDim2.new(1, -30, 0, 16),
             Font = Enum.Font.Gotham,
             Text = NotifyConfig.Description,
             TextColor3 = Theme.SubText,
@@ -3498,10 +3508,12 @@ function WisperLib:CreateWindow(Config)
             end)
         end
 
-        CheckButton.MouseButton1Click:Connect(function()
-            NotifyConfig.Callback()
-            CloseNotification()
-        end)
+        if CheckButton then
+            CheckButton.MouseButton1Click:Connect(function()
+                NotifyConfig.Callback()
+                CloseNotification()
+            end)
+        end
 
         task.delay(NotifyConfig.Duration, function()
             if NotificationFrame and NotificationFrame.Parent then
@@ -3621,16 +3633,17 @@ function WisperLib:CreateWindow(Config)
         BackgroundTransparency = 1,
         Position = UDim2.new(0, 10, 0.5, -8),
         Size = UDim2.new(0, 16, 0, 16),
-        Image = GetIcon("keyboard"),
+        Image = Config.ShowIcons and GetIcon("keyboard") or "",
         ImageColor3 = Theme.SubText,
+        Visible = Config.ShowIcons,
         ZIndex = 202,
     });
 
     Create("TextLabel", {
         Parent = KeybindPanelHeader,
         BackgroundTransparency = 1,
-        Position = UDim2.new(0, 34, 0, 0),
-        Size = UDim2.new(1, -44, 1, 0),
+        Position = Config.ShowIcons and UDim2.new(0, 34, 0, 0) or UDim2.new(0, 12, 0, 0),
+        Size = Config.ShowIcons and UDim2.new(1, -44, 1, 0) or UDim2.new(1, -24, 1, 0),
         Font = Enum.Font.GothamBold,
         Text = "Keybinds",
         TextColor3 = Theme.Text,
