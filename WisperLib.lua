@@ -1583,6 +1583,7 @@ function WisperLib:CreateWindow(Config)
                     ImageRectSize = Vector2.new(24, 24),
                     ImageColor3 = Toggled and Color3.fromRGB(0, 0, 0) or Color3.fromRGB(255, 255, 255),
                     ImageTransparency = Toggled and 0 or 1,
+                    Visible = Config.ShowIcons,
                     ZIndex = 2
                 })
 
