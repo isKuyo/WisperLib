@@ -347,6 +347,9 @@ function WisperLib:CreateWindow(Config)
     Config.Size = Config.Size or UDim2.new(0, 635, 0, 510)
     Config.Position = Config.Position or UDim2.new(0.5, -317, 0.5, -255)
     Config.KeyBind = Config.KeyBind or Enum.KeyCode.RightControl
+    Config.ShowLogo = Config.ShowLogo ~= false and Config.NoLogo ~= true
+    Config.ShowGroupIcons = Config.ShowGroupIcons ~= false and Config.NoGroupIcons ~= true
+    Config.ShowTabIcons = Config.ShowTabIcons ~= false and Config.NoTabIcons ~= true
 
     local GuiParent = (typeof(gethui) == "function" and pcall(gethui) and gethui()) or CoreGui;
     -- ScreenGui criado sem parent primeiro; será parentado após os hooks de proteção
@@ -539,7 +542,8 @@ function WisperLib:CreateWindow(Config)
         BackgroundTransparency = 1,
         BorderSizePixel = 0,
         Position = UDim2.new(0, 12, 0.5, -17),
-        Size = UDim2.new(0, 34, 0, 34)
+        Size = UDim2.new(0, 34, 0, 34),
+        Visible = Config.ShowLogo
     })
 
     local AvatarCorner = Create("UICorner", {
@@ -575,7 +579,7 @@ function WisperLib:CreateWindow(Config)
         Name = "TitleContainer",
         Parent = Header,
         BackgroundTransparency = 1,
-        Position = UDim2.new(0, 54, 0, 8),
+        Position = Config.ShowLogo and UDim2.new(0, 54, 0, 8) or UDim2.new(0, 14, 0, 8),
         Size = UDim2.new(0, 200, 0, 18),
         ClipsDescendants = true
     })
@@ -644,7 +648,7 @@ function WisperLib:CreateWindow(Config)
         Name = "SubtitleLabel",
         Parent = Header,
         BackgroundTransparency = 1,
-        Position = UDim2.new(0, 54, 0, 26),
+        Position = Config.ShowLogo and UDim2.new(0, 54, 0, 26) or UDim2.new(0, 14, 0, 26),
         Size = UDim2.new(0, 200, 0, 14),
         Font = Enum.Font.Gotham,
         Text = ExecutorName,
@@ -857,6 +861,15 @@ function WisperLib:CreateWindow(Config)
     end
 
     local function SetTabActive(TabButtonData, IsActive, TabName)
+        if not Config.ShowTabIcons then
+            TabButtonData.Icon.Visible = false
+            TabButtonData.Label.Visible = true
+            TabButtonData.Label.TextColor3 = IsActive and Color3.fromRGB(0, 0, 0) or Theme.SubText
+            Tween(TabButtonData.Fill, {Size = IsActive and UDim2.new(1, 0, 1, 0) or UDim2.new(0, 0, 0, 0)}, 0.2)
+            Tween(TabButtonData.Container, {Size = UDim2.new(0, TabButtonData.LabelWidth + 24, 0, 24)}, 0.2)
+            return
+        end
+
         if IsActive then
             TabButtonData.Icon.ImageTransparency = 0
             TabButtonData.Icon.ImageColor3 = Color3.fromRGB(0, 0, 0)
@@ -936,7 +949,7 @@ function WisperLib:CreateWindow(Config)
             Name = "TabButtonContainer",
             Parent = NavButtonsHolder,
             BackgroundTransparency = 1,
-            Size = UDim2.new(0, 32, 0, 24),
+            Size = Config.ShowTabIcons and UDim2.new(0, 32, 0, 24) or UDim2.new(0, 74, 0, 24),
             LayoutOrder = Order,
             ClipsDescendants = true
         })
@@ -975,6 +988,7 @@ function WisperLib:CreateWindow(Config)
             Image = Icon,
             ImageColor3 = Theme.SubText,
             ImageTransparency = 0,
+            Visible = Config.ShowTabIcons,
             ZIndex = 2
         })
 
@@ -982,18 +996,21 @@ function WisperLib:CreateWindow(Config)
             Name = "Label",
             Parent = ButtonContainer,
             BackgroundTransparency = 1,
-            Position = UDim2.new(0, 24, 0, 0),
+            Position = Config.ShowTabIcons and UDim2.new(0, 24, 0, 0) or UDim2.new(0, 12, 0, 0),
             Size = UDim2.new(0, 50, 1, 0),
             Font = Enum.Font.GothamMedium,
             Text = TabName,
-            TextColor3 = Color3.fromRGB(0, 0, 0),
+            TextColor3 = Config.ShowTabIcons and Color3.fromRGB(0, 0, 0) or Theme.SubText,
             TextSize = 11,
             TextXAlignment = Enum.TextXAlignment.Left,
-            Visible = false,
+            Visible = not Config.ShowTabIcons,
             ZIndex = 2
         })
 
         local LabelWidth = ButtonLabel.TextBounds.X
+        if not Config.ShowTabIcons then
+            ButtonContainer.Size = UDim2.new(0, LabelWidth + 24, 0, 24)
+        end
 
         local Button = Create("TextButton", {
             Name = "ClickArea",
@@ -1069,14 +1086,15 @@ function WisperLib:CreateWindow(Config)
         Position = UDim2.new(0, 15, 0.5, -12),
         Size = UDim2.new(0, 24, 0, 24),
         Image = "rbxassetid://77341506028972",
-        ImageColor3 = Theme.Accent
+        ImageColor3 = Theme.Accent,
+        Visible = Config.ShowLogo
     })
 
     local FooterTitleContainer = Create("Frame", {
         Name = "FooterTitleContainer",
         Parent = Footer,
         BackgroundTransparency = 1,
-        Position = UDim2.new(0, 48, 0, 10),
+        Position = Config.ShowLogo and UDim2.new(0, 48, 0, 10) or UDim2.new(0, 15, 0, 10),
         Size = UDim2.new(0, 0, 0, 16),
         AutomaticSize = Enum.AutomaticSize.X
     })
@@ -1097,7 +1115,7 @@ function WisperLib:CreateWindow(Config)
         Name = "FooterSubtitle",
         Parent = Footer,
         BackgroundTransparency = 1,
-        Position = UDim2.new(0, 48, 0, 28),
+        Position = Config.ShowLogo and UDim2.new(0, 48, 0, 28) or UDim2.new(0, 15, 0, 28),
         Size = UDim2.new(0, 200, 0, 14),
         Font = Enum.Font.Gotham,
         Text = GameName,
@@ -1249,7 +1267,7 @@ function WisperLib:CreateWindow(Config)
         TabConfig.Name = TabConfig.Name or "Tab"
         TabConfig.Order = TabConfig.Order or (#Tabs + 1)
         
-        local TabIcon = TabConfig.Icon and GetIcon(TabConfig.Icon) or GetAutoIcon(TabConfig.Name)
+        local TabIcon = Config.ShowTabIcons and (TabConfig.Icon and GetIcon(TabConfig.Icon) or GetAutoIcon(TabConfig.Name)) or ""
 
         local TabButtonData = CreateTabButton(TabIcon, TabConfig.Order, TabConfig.Name)
 
@@ -1343,7 +1361,11 @@ function WisperLib:CreateWindow(Config)
         function Tab:CreateGroup(GroupConfig)
             GroupConfig = GroupConfig or {}
             GroupConfig.Name = GroupConfig.Name or "Group"
-            GroupConfig.Icon = GroupConfig.Icon and GetIcon(GroupConfig.Icon) or GetAutoGroupIcon(GroupConfig.Name)
+            if Config.ShowGroupIcons then
+                GroupConfig.Icon = GroupConfig.Icon and GetIcon(GroupConfig.Icon) or GetAutoGroupIcon(GroupConfig.Name)
+            else
+                GroupConfig.Icon = nil
+            end
             GroupConfig.Column = GroupConfig.Column or "Left"
 
             GroupCount = GroupCount + 1
@@ -1412,22 +1434,25 @@ function WisperLib:CreateWindow(Config)
                 Size = UDim2.new(1, 0, 0, 1)
             })
 
-            local GroupIcon = Create("ImageLabel", {
-                Name = "GroupIcon",
-                Parent = GroupHeader,
-                BackgroundTransparency = 1,
-                Position = UDim2.new(0, 12, 0.5, -8),
-                Size = UDim2.new(0, 16, 0, 16),
-                Image = GroupConfig.Icon,
-                ImageColor3 = Theme.SubText
-            })
+            local GroupIcon = nil
+            if Config.ShowGroupIcons then
+                GroupIcon = Create("ImageLabel", {
+                    Name = "GroupIcon",
+                    Parent = GroupHeader,
+                    BackgroundTransparency = 1,
+                    Position = UDim2.new(0, 12, 0.5, -8),
+                    Size = UDim2.new(0, 16, 0, 16),
+                    Image = GroupConfig.Icon,
+                    ImageColor3 = Theme.SubText
+                })
+            end
 
             local GroupLabel = Create("TextLabel", {
                 Name = "GroupLabel",
                 Parent = GroupHeader,
                 BackgroundTransparency = 1,
-                Position = UDim2.new(0, 36, 0, 0),
-                Size = UDim2.new(1, -46, 1, 0),
+                Position = Config.ShowGroupIcons and UDim2.new(0, 36, 0, 0) or UDim2.new(0, 12, 0, 0),
+                Size = Config.ShowGroupIcons and UDim2.new(1, -46, 1, 0) or UDim2.new(1, -24, 1, 0),
                 Font = Enum.Font.GothamBold,
                 Text = GroupConfig.Name,
                 TextColor3 = Theme.Text,
