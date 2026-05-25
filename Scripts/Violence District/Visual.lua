@@ -51,7 +51,7 @@ local Visual = {
             boxFillColorName = "White",
             boxFillTransparency = 0.9,
             healthBarLeftOffset = 10,
-            updateInterval = 0.05,
+            updateInterval = 0,
             healthStripes = 24
         },
         colorMap = {
@@ -1110,8 +1110,13 @@ function Visual.StartAdvancedESP()
     
     local LastAdvancedUpdate = 0
     Visual.AdvancedESP.connections.renderStepped = Wisper.Services.RunService.RenderStepped:Connect(function()
-        local Now = tick()
         local Interval = Visual.AdvancedESP.settings.updateInterval or 0.05
+        if Interval <= 0 then
+            Visual.UpdateAdvancedESP()
+            return
+        end
+
+        local Now = tick()
         if Now - LastAdvancedUpdate >= Interval then
             LastAdvancedUpdate = Now
             Visual.UpdateAdvancedESP()
