@@ -970,6 +970,7 @@ function Library:Destroy()
     end
     self._PreviousMouseBehavior = nil
     self._PreviousMouseIconEnabled = nil
+    self._MouseUnlockChecked = false
     if self.Screen and self._AutoSaveReady and not self._RestoringConfig then
         self:AutoSave()
     end
@@ -3195,31 +3196,40 @@ function Library:CreateWindow(Options)
         end
     end
 
-    -- Release the cursor while the menu is visible, even if the game
-    -- continuously re-locks it in first person or shift-lock mode.
+    -- Only override cursor behavior if the game had locked the mouse.
+    -- If the mouse is already free, leave the game's input handling untouched.
     local function UpdateMouseUnlock()
         if self.GuiVisible and Screen.Parent then
-            if not self._MouseUnlockActive then
-                self._PreviousMouseBehavior = UserInputService.MouseBehavior
-                self._PreviousMouseIconEnabled = UserInputService.MouseIconEnabled
-                self._MouseUnlockActive = true
+            if not self._MouseUnlockActive and not self._MouseUnlockChecked then
+                self._MouseUnlockChecked = true
+                local CurrentBehavior = UserInputService.MouseBehavior
+                if CurrentBehavior == Enum.MouseBehavior.LockCenter
+                    or CurrentBehavior == Enum.MouseBehavior.LockCurrentPosition then
+                    self._PreviousMouseBehavior = CurrentBehavior
+                    self._PreviousMouseIconEnabled = UserInputService.MouseIconEnabled
+                    self._MouseUnlockActive = true
+                end
             end
-            UserInputService.MouseBehavior = Enum.MouseBehavior.Default
-            UserInputService.MouseIconEnabled = true
-        elseif self._MouseUnlockActive then
-            self._MouseUnlockActive = false
-            if self._PreviousMouseBehavior then
-                UserInputService.MouseBehavior = self._PreviousMouseBehavior
+            if self._MouseUnlockActive then
+                UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+                UserInputService.MouseIconEnabled = true
             end
-            if self._PreviousMouseIconEnabled ~= nil then
-                UserInputService.MouseIconEnabled = self._PreviousMouseIconEnabled
+        else
+            if self._MouseUnlockActive then
+                self._MouseUnlockActive = false
+                if self._PreviousMouseBehavior then
+                    UserInputService.MouseBehavior = self._PreviousMouseBehavior
+                end
+                if self._PreviousMouseIconEnabled ~= nil then
+                    UserInputService.MouseIconEnabled = self._PreviousMouseIconEnabled
+                end
             end
             self._PreviousMouseBehavior = nil
             self._PreviousMouseIconEnabled = nil
+            self._MouseUnlockChecked = false
         end
     end
 
-    -- RenderStepped runs after the standard camera update in most games.
     self._MouseUnlockConnection = RunService.RenderStepped:Connect(UpdateMouseUnlock)
     UpdateMouseUnlock()
 
