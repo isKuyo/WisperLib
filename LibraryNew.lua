@@ -526,9 +526,34 @@ function Library:SaveConfig(Name, Snapshot)
     return self:_WriteConfigStorage()
 end
 
+-- Auto-save to a default config
+function Library:AutoSave()
+    if self._RestoringConfig or not self._AutoSaveReady then return false end
+    local ConfigName = "__AutoSave__"
+    local Snapshot = self:CaptureConfig()
+    local Saved = self:SaveConfig(ConfigName, Snapshot)
+    if Saved then
+        local Ok, Signature = pcall(function()
+            return HttpService:JSONEncode(Snapshot)
+        end)
+        if Ok then self._LastAutoSaveSignature = Signature end
+    end
+    return Saved
+end
+
+function Library:AutoLoad()
+    local ConfigName = "__AutoSave__"
+    if self.ConfigRecords and self.ConfigRecords[ConfigName] then
+        return self:LoadConfig(ConfigName)
+    end
+    return false
+end
+
 function Library:LoadConfig(Name)
     local Snapshot = self.ConfigRecords and self.ConfigRecords[Name]
     if type(Snapshot) ~= "table" then return false end
+    local WasRestoring = self._RestoringConfig
+    self._RestoringConfig = true
     for _, State in ipairs(Snapshot.Components or {}) do
         local Element
         if State.TabName and State.CategoryName and State.GroupName and State.Name then
@@ -586,6 +611,7 @@ function Library:LoadConfig(Name)
             end
         end
     end
+    self._RestoringConfig = WasRestoring
     self.ActiveConfigName = Name
     if self.UpdateKeybindList then self.UpdateKeybindList() end
     return true
@@ -929,6 +955,25 @@ function Library:SetTheme(Name)
 end
 
 function Library:Destroy()
+    if self._MouseUnlockConnection then
+        self._MouseUnlockConnection:Disconnect()
+        self._MouseUnlockConnection = nil
+    end
+    if self._MouseUnlockActive then
+        self._MouseUnlockActive = false
+        if self._PreviousMouseBehavior then
+            UserInputService.MouseBehavior = self._PreviousMouseBehavior
+        end
+        if self._PreviousMouseIconEnabled ~= nil then
+            UserInputService.MouseIconEnabled = self._PreviousMouseIconEnabled
+        end
+    end
+    self._PreviousMouseBehavior = nil
+    self._PreviousMouseIconEnabled = nil
+    if self.Screen and self._AutoSaveReady and not self._RestoringConfig then
+        self:AutoSave()
+    end
+    self._AutoSaveReady = false
     if self.Screen then
         self.Screen:Destroy()
         self.Screen = nil
@@ -1438,6 +1483,9 @@ function Library:CreateWindow(Options)
             self.ActiveTab = Name
             if TabChanged and UpdateCategoryButton then
                 UpdateCategoryButton(Tab)
+            end
+            if UpdateCategoryContent then
+                UpdateCategoryContent(Tab)
             end
         end)
 
@@ -3147,6 +3195,34 @@ function Library:CreateWindow(Options)
         end
     end
 
+    -- Release the cursor while the menu is visible, even if the game
+    -- continuously re-locks it in first person or shift-lock mode.
+    local function UpdateMouseUnlock()
+        if self.GuiVisible and Screen.Parent then
+            if not self._MouseUnlockActive then
+                self._PreviousMouseBehavior = UserInputService.MouseBehavior
+                self._PreviousMouseIconEnabled = UserInputService.MouseIconEnabled
+                self._MouseUnlockActive = true
+            end
+            UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+            UserInputService.MouseIconEnabled = true
+        elseif self._MouseUnlockActive then
+            self._MouseUnlockActive = false
+            if self._PreviousMouseBehavior then
+                UserInputService.MouseBehavior = self._PreviousMouseBehavior
+            end
+            if self._PreviousMouseIconEnabled ~= nil then
+                UserInputService.MouseIconEnabled = self._PreviousMouseIconEnabled
+            end
+            self._PreviousMouseBehavior = nil
+            self._PreviousMouseIconEnabled = nil
+        end
+    end
+
+    -- RenderStepped runs after the standard camera update in most games.
+    self._MouseUnlockConnection = RunService.RenderStepped:Connect(UpdateMouseUnlock)
+    UpdateMouseUnlock()
+
     local function ApplyGuiVisibility()
         Main.Visible = self.GuiVisible
         Search.Visible = self.GuiVisible
@@ -3165,6 +3241,7 @@ function Library:CreateWindow(Options)
             CloseVisibilityDropdown()
         end
         ApplyGuiVisibility()
+        UpdateMouseUnlock()
     end
 
     UserInputService.InputBegan:Connect(function(Input)
@@ -4382,15 +4459,18 @@ function Library:CreateWindow(Options)
             local ActiveCategory = Tab and Tab.Categories[Tab.ActiveCategoryIndex or 1]
             GroupArea.Visible = ActiveCategory ~= nil and #ActiveCategory.Groups > 0
 
-            for _, Category in ipairs(Tab and Tab.Categories or {}) do
-                if Category.ColumnRow then
-                    Category.ColumnRow.Visible = Category == ActiveCategory
-                end
-                if Category.ColumnBottomMask then
-                    Category.ColumnBottomMask.Visible = Category == ActiveCategory
-                end
-                for _, Group in ipairs(Category.Groups) do
-                    Group.Wrapper.Visible = Category == ActiveCategory
+            for _, OtherTab in ipairs(Tabs) do
+                for _, Category in ipairs(OtherTab.Categories) do
+                    local IsActiveCategory = OtherTab == Tab and Category == ActiveCategory
+                    if Category.ColumnRow then
+                        Category.ColumnRow.Visible = IsActiveCategory
+                    end
+                    if Category.ColumnBottomMask then
+                        Category.ColumnBottomMask.Visible = IsActiveCategory
+                    end
+                    for _, Group in ipairs(Category.Groups) do
+                        Group.Wrapper.Visible = IsActiveCategory
+                    end
                 end
             end
 
@@ -5152,6 +5232,13 @@ function Library:CreateWindow(Options)
                         if type(Options.Callback) == "function" then
                             Options.Callback(Item.Value)
                         end
+                        
+                        -- Auto-save after callback
+                        if self.Tab and self.Tab.Library and self.Tab.Library.AutoSave then
+                            task.defer(function()
+                                self.Tab.Library:AutoSave()
+                            end)
+                        end
                     end
 
                     if KeybindButton then
@@ -5389,6 +5476,10 @@ function Library:CreateWindow(Options)
 
                         if Animated and type(Options.Callback) == "function" then
                             Options.Callback(Item.Value)
+                            -- Auto-save after slider change
+                            task.defer(function()
+                                self.Tab.Library:AutoSave()
+                            end)
                         end
                     end
 
@@ -5824,6 +5915,10 @@ function Library:CreateWindow(Options)
                         }):Play()
                         if type(Options.CheckboxCallback) == "function" then
                             Options.CheckboxCallback(Item.CheckboxValue)
+                            -- Auto-save after color picker checkbox change
+                            task.defer(function()
+                                self.Tab.Library:AutoSave()
+                            end)
                         end
                     end
                     function Item:SetCheckbox(Value)
@@ -5886,6 +5981,10 @@ function Library:CreateWindow(Options)
                         }):Play()
                         if FireCallback and type(Options.Callback) == "function" then
                             Options.Callback(Color)
+                            -- Auto-save after color change
+                            task.defer(function()
+                                self.Tab.Library:AutoSave()
+                            end)
                         end
                     end
 
@@ -6176,6 +6275,10 @@ function Library:CreateWindow(Options)
 
                         if Animated and type(Options.Callback) == "function" then
                             Options.Callback(Item.MinValue, Item.MaxValue)
+                            -- Auto-save after double slider change
+                            task.defer(function()
+                                self.Tab.Library:AutoSave()
+                            end)
                         end
                     end
 
@@ -6332,6 +6435,10 @@ function Library:CreateWindow(Options)
                     Input.FocusLost:Connect(function(EnterPressed)
                         if type(Options.Callback) == "function" then
                             Options.Callback(Input.Text, EnterPressed)
+                            -- Auto-save after textbox change
+                            task.defer(function()
+                                self.Tab.Library:AutoSave()
+                            end)
                         end
                     end)
 
@@ -6806,6 +6913,10 @@ function Library:CreateWindow(Options)
                                 else
                                     Options.Callback(Value)
                                 end
+                                -- Auto-save after dropdown change
+                                task.defer(function()
+                                    self.Tab.Library:AutoSave()
+                                end)
                             end
                         end)
                     end
@@ -6909,26 +7020,37 @@ function Library:CreateWindow(Options)
     self.BreadcrumbCategoryLabel = BreadcrumbCategoryLabel
     self.GroupArea = GroupArea
     self.MainScale = MainScale
-    task.spawn(function()
-        local LastSnapshot
-        while Screen.Parent do
-            task.wait(0.5)
-            if self.ActiveConfigName then
-                local Snapshot = self:CaptureConfig()
-                local Success, Signature = pcall(function()
-                    return HttpService:JSONEncode(Snapshot)
-                end)
-                if Success and Signature ~= LastSnapshot then
-                    self.ConfigRecords[self.ActiveConfigName] = Snapshot
-                    self:_WriteConfigStorage()
-                    LastSnapshot = Signature
-                end
-            end
-        end
-    end)
+    -- Restore once the caller has finished creating its tabs and controls.
+    self._AutoSaveReady = false
+    self._RestoringConfig = true
     task.defer(function()
+        if not Screen.Parent then return end
         if AutoLoadConfigName and self.ConfigRecords and self.ConfigRecords[AutoLoadConfigName] then
             self:LoadConfig(AutoLoadConfigName)
+        end
+        -- The automatic snapshot takes precedence over an optional named preset.
+        self:AutoLoad()
+        self._RestoringConfig = false
+        self._AutoSaveReady = true
+        local Ok, Signature = pcall(function()
+            return HttpService:JSONEncode(self:CaptureConfig())
+        end)
+        self._LastAutoSaveSignature = Ok and Signature or nil
+    end)
+    task.spawn(function()
+        while Screen.Parent do
+            task.wait(0.3)
+            if self._AutoSaveReady and not self._RestoringConfig then
+                local Snapshot = self:CaptureConfig()
+                local Ok, Signature = pcall(function()
+                    return HttpService:JSONEncode(Snapshot)
+                end)
+                if Ok and Signature ~= self._LastAutoSaveSignature then
+                    if self:SaveConfig("__AutoSave__", Snapshot) then
+                        self._LastAutoSaveSignature = Signature
+                    end
+                end
+            end
         end
     end)
     GetGlobalEnvironment().__WisperLibraryNewInstance = Screen
