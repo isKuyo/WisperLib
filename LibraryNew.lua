@@ -1,3 +1,4 @@
+print("checking")
 local Players = game:GetService("Players")
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
@@ -1105,9 +1106,11 @@ function Library:CreateWindow(Options)
         ZIndex = -1,
     }, Main)
     local MainScale = UI.ResponsiveScale(Main, 710, 470)
+    -- Existing responsive scaling fits the 710x470 window to phone viewports.
 
     Main.Active = true
     local MainDragging = false
+    local MainDragInput
     local MainDragStart
     local MainStartPosition
     local MainTargetPosition = Main.Position
@@ -1120,14 +1123,16 @@ function Library:CreateWindow(Options)
         end
 
         MainDragging = true
+        MainDragInput = Input
         MainDragStart = Input.Position
         MainStartPosition = MainTargetPosition
     end))
 
     table.insert(DragConnections, UserInputService.InputChanged:Connect(function(Input)
         if not MainDragging then return end
-        if Input.UserInputType ~= Enum.UserInputType.MouseMovement
-            and Input.UserInputType ~= Enum.UserInputType.Touch then
+        if MainDragInput and MainDragInput.UserInputType == Enum.UserInputType.Touch then
+            if Input ~= MainDragInput then return end
+        elseif Input.UserInputType ~= Enum.UserInputType.MouseMovement then
             return
         end
 
@@ -1142,9 +1147,9 @@ function Library:CreateWindow(Options)
     end))
 
     table.insert(DragConnections, UserInputService.InputEnded:Connect(function(Input)
-        if Input.UserInputType == Enum.UserInputType.MouseButton1
-            or Input.UserInputType == Enum.UserInputType.Touch then
+        if Input == MainDragInput then
             MainDragging = false
+            MainDragInput = nil
         end
     end))
 
@@ -3254,12 +3259,92 @@ function Library:CreateWindow(Options)
         UpdateMouseUnlock()
     end
 
-    UserInputService.InputBegan:Connect(function(Input)
+    -- Set false after testing to show the floating button only on touch devices.
+    -- Can also be overridden per window: CreateWindow({FloatingButtonOnPC = false}).
+    local FloatingButtonOnPC = Options.FloatingButtonOnPC
+    if FloatingButtonOnPC == nil then FloatingButtonOnPC = Library.FloatingButtonOnPC end
+    if FloatingButtonOnPC == nil then FloatingButtonOnPC = true end
+    self.FloatingButtonOnPC = FloatingButtonOnPC
+
+    if UserInputService.TouchEnabled or FloatingButtonOnPC then
+        local FloatingButton = UI.Create("TextButton", {
+            Name = "WisperFloatingToggle",
+            AnchorPoint = Vector2.new(0, 0),
+            Position = UDim2.new(0, 18, 0.45, 0),
+            Size = UDim2.fromOffset(48, 48),
+            BackgroundColor3 = Color3.fromRGB(12, 12, 14),
+            BorderSizePixel = 0,
+            AutoButtonColor = false,
+            Text = "W",
+            TextColor3 = Color3.fromRGB(255, 255, 255),
+            TextSize = 25,
+            Font = Enum.Font.GothamBold,
+            ZIndex = 1000,
+            Active = true,
+        }, Screen)
+        UI.Corner(FloatingButton, 9)
+        UI.Stroke(FloatingButton, Color3.fromRGB(55, 55, 60), 1)
+        -- Keep the button usable but compact on phones and small viewports.
+        local FloatingScale = UI.ResponsiveScale(FloatingButton, 48, 48)
+        FloatingScale.Scale = 1
+        local FloatingDragInput
+        local FloatingDragStart
+        local FloatingStartPosition
+        local FloatingMoved = false
+        local FloatingDragging = false
+        local FloatingConnections = {}
+        local function ClampFloating(Position)
+            local Camera = workspace.CurrentCamera
+            local Viewport = Camera and Camera.ViewportSize or Vector2.new(1920, 1080)
+            local Size = FloatingButton.AbsoluteSize
+            return UDim2.fromOffset(
+                math.clamp(Position.X, 0, math.max(0, Viewport.X - Size.X)),
+                math.clamp(Position.Y, 0, math.max(0, Viewport.Y - Size.Y))
+            )
+        end
+        table.insert(FloatingConnections, FloatingButton.InputBegan:Connect(function(Input)
+            if Input.UserInputType ~= Enum.UserInputType.Touch
+                and Input.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
+            FloatingDragInput = Input
+            FloatingDragStart = Input.Position
+            FloatingStartPosition = FloatingButton.AbsolutePosition
+            FloatingMoved = false
+            FloatingDragging = true
+        end))
+        table.insert(FloatingConnections, UserInputService.InputChanged:Connect(function(Input)
+            if not FloatingDragging or not FloatingDragInput then return end
+            if FloatingDragInput.UserInputType == Enum.UserInputType.Touch then
+                if Input ~= FloatingDragInput then return end
+            elseif Input.UserInputType ~= Enum.UserInputType.MouseMovement then
+                return
+            end
+            local Delta = Input.Position - FloatingDragStart
+            if Delta.Magnitude > 8 then FloatingMoved = true end
+            if FloatingMoved then
+                FloatingButton.Position = ClampFloating(FloatingStartPosition + Delta)
+            end
+        end))
+        table.insert(FloatingConnections, UserInputService.InputEnded:Connect(function(Input)
+            if Input ~= FloatingDragInput then return end
+            if FloatingDragging and not FloatingMoved then
+                ToggleGuiVisibility()
+            end
+            FloatingDragging = false
+            FloatingDragInput = nil
+        end))
+        self.FloatingButton = FloatingButton
+        for _, Connection in ipairs(FloatingConnections) do
+            table.insert(DragConnections, Connection)
+        end
+    end
+
+    table.insert(DragConnections, UserInputService.InputBegan:Connect(function(Input, GameProcessed)
+        if not Screen.Parent or GameProcessed then return end
         if Input.UserInputType == Enum.UserInputType.Keyboard
             and Input.KeyCode == Enum.KeyCode.RightControl then
             ToggleGuiVisibility()
         end
-    end)
+    end))
 
     StyleButton.Activated:Connect(ToggleThemeDropdown)
     KeybindButton.Activated:Connect(ToggleKeybindList)
