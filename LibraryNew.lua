@@ -1,4 +1,4 @@
-print("checking")
+print("check")
 local Players = game:GetService("Players")
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
@@ -3270,7 +3270,7 @@ function Library:CreateWindow(Options)
         local FloatingButton = UI.Create("TextButton", {
             Name = "WisperFloatingToggle",
             AnchorPoint = Vector2.new(0, 0),
-            Position = UDim2.new(0, 18, 0.45, 0),
+            Position = UDim2.new(0.5, -24, 0, 50),
             Size = UDim2.fromOffset(48, 48),
             BackgroundColor3 = Color3.fromRGB(12, 12, 14),
             BorderSizePixel = 0,
@@ -3283,10 +3283,9 @@ function Library:CreateWindow(Options)
             Active = true,
         }, Screen)
         UI.Corner(FloatingButton, 9)
-        UI.Stroke(FloatingButton, Color3.fromRGB(55, 55, 60), 1)
+        UI.Stroke(FloatingButton, Color3.fromRGB(255, 255, 255), 3)
         -- Keep the button usable but compact on phones and small viewports.
-        local FloatingScale = UI.ResponsiveScale(FloatingButton, 48, 48)
-        FloatingScale.Scale = 1
+        local FloatingScale = UI.Create("UIScale", {Scale = 1}, FloatingButton)
         local FloatingDragInput
         local FloatingDragStart
         local FloatingStartPosition
@@ -3306,7 +3305,7 @@ function Library:CreateWindow(Options)
             if Input.UserInputType ~= Enum.UserInputType.Touch
                 and Input.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
             FloatingDragInput = Input
-            FloatingDragStart = Input.Position
+            FloatingDragStart = Vector2.new(Input.Position.X, Input.Position.Y)
             FloatingStartPosition = FloatingButton.AbsolutePosition
             FloatingMoved = false
             FloatingDragging = true
@@ -3318,14 +3317,19 @@ function Library:CreateWindow(Options)
             elseif Input.UserInputType ~= Enum.UserInputType.MouseMovement then
                 return
             end
-            local Delta = Input.Position - FloatingDragStart
+            local Delta = Vector2.new(Input.Position.X, Input.Position.Y) - FloatingDragStart
             if Delta.Magnitude > 8 then FloatingMoved = true end
             if FloatingMoved then
                 FloatingButton.Position = ClampFloating(FloatingStartPosition + Delta)
             end
         end))
         table.insert(FloatingConnections, UserInputService.InputEnded:Connect(function(Input)
-            if Input ~= FloatingDragInput then return end
+            if not FloatingDragInput then return end
+            if FloatingDragInput.UserInputType == Enum.UserInputType.Touch then
+                if Input ~= FloatingDragInput then return end
+            elseif Input.UserInputType ~= Enum.UserInputType.MouseButton1 then
+                return
+            end
             if FloatingDragging and not FloatingMoved then
                 ToggleGuiVisibility()
             end
