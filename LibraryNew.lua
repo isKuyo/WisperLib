@@ -1,4 +1,3 @@
-print("check")
 local Players = game:GetService("Players")
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
@@ -3263,7 +3262,7 @@ function Library:CreateWindow(Options)
     -- Can also be overridden per window: CreateWindow({FloatingButtonOnPC = false}).
     local FloatingButtonOnPC = Options.FloatingButtonOnPC
     if FloatingButtonOnPC == nil then FloatingButtonOnPC = Library.FloatingButtonOnPC end
-    if FloatingButtonOnPC == nil then FloatingButtonOnPC = true end
+    if FloatingButtonOnPC == nil then FloatingButtonOnPC = false end
     self.FloatingButtonOnPC = FloatingButtonOnPC
 
     if UserInputService.TouchEnabled or FloatingButtonOnPC then
@@ -3283,12 +3282,15 @@ function Library:CreateWindow(Options)
             Active = true,
         }, Screen)
         UI.Corner(FloatingButton, 9)
-        UI.Stroke(FloatingButton, Color3.fromRGB(255, 255, 255), 3)
+        -- Border-only stroke: do not outline the W glyph.
+        local FloatingOutline = UI.Stroke(FloatingButton, Color3.fromRGB(255, 255, 255), 3)
+        FloatingOutline.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
         -- Keep the button usable but compact on phones and small viewports.
         local FloatingScale = UI.Create("UIScale", {Scale = 1}, FloatingButton)
         local FloatingDragInput
         local FloatingDragStart
         local FloatingStartPosition
+        local FloatingStartAbsolute
         local FloatingMoved = false
         local FloatingDragging = false
         local FloatingConnections = {}
@@ -3306,7 +3308,8 @@ function Library:CreateWindow(Options)
                 and Input.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
             FloatingDragInput = Input
             FloatingDragStart = Vector2.new(Input.Position.X, Input.Position.Y)
-            FloatingStartPosition = FloatingButton.AbsolutePosition
+            FloatingStartPosition = FloatingButton.Position
+            FloatingStartAbsolute = FloatingButton.AbsolutePosition
             FloatingMoved = false
             FloatingDragging = true
         end))
@@ -3320,7 +3323,16 @@ function Library:CreateWindow(Options)
             local Delta = Vector2.new(Input.Position.X, Input.Position.Y) - FloatingDragStart
             if Delta.Magnitude > 8 then FloatingMoved = true end
             if FloatingMoved then
-                FloatingButton.Position = ClampFloating(FloatingStartPosition + Delta)
+                -- Preserve the original UDim2 scale/offset and clamp in screen space.
+                -- Converting AbsolutePosition straight to Position caused a vertical jump.
+                local Clamped = ClampFloating(FloatingStartAbsolute + Delta)
+                local AdjustedDelta = Vector2.new(Clamped.X.Offset, Clamped.Y.Offset) - FloatingStartAbsolute
+                FloatingButton.Position = UDim2.new(
+                    FloatingStartPosition.X.Scale,
+                    FloatingStartPosition.X.Offset + AdjustedDelta.X,
+                    FloatingStartPosition.Y.Scale,
+                    FloatingStartPosition.Y.Offset + AdjustedDelta.Y
+                )
             end
         end))
         table.insert(FloatingConnections, UserInputService.InputEnded:Connect(function(Input)
